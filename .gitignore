@@ -1,0 +1,12 @@
+# Ignore these files.
+bin
+obj
+.source
+*.speccache
+*.sln
+packages/**
+*.csproj
+
+.vs/
+Protogame/
+*.csproj.user

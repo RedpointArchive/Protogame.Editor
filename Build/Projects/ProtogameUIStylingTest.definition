@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Name="ProtogameUIStylingTest" Path="ProtogameUIStylingTest" Type="App">
+  <References>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="protobuf-net" />
+    <Reference Include="Protoinject" />
+    <Reference Include="MonoGame.Framework" />
+    <Reference Include="Protogame" />
+    <Reference Include="Protogame.ThirdParty" />
+    <Reference Include="Protogame.EntryPoint" />
+    <Reference Include="ProtogameUIStylingTest.Content" />
+  </References>
+  <Files>
+    <Compile Include="ExampleEntity.cs" />
+    <Compile Include="IEntityFactory.cs" />
+    <Compile Include="NuiButtonSkinRenderer.cs" />
+    <Compile Include="NuiCanvasSkinRenderer.cs" />
+    <Compile Include="NuiCheckBoxSkinRenderer.cs" />
+    <Compile Include="NuiLabelSkinRenderer.cs" />
+    <Compile Include="NuiRenderer.cs" />
+    <Compile Include="ProtogameUIStylingTestGame.cs" />
+    <Compile Include="ProtogameUIStylingTestGameConfiguration.cs" />
+    <Compile Include="ProtogameUIStylingTestModule.cs" />
+    <Compile Include="ProtogameUIStylingTestWorld.cs" />
+    <Content Include="Properties\AndroidManifest.xml">
+      <Platforms>Android,Ouya</Platforms>
+    </Content>
+    <None Include="iOS\Info.plist">
+      <Link>Info.plist</Link>
+      <Platforms>iOS</Platforms>
+    </None>
+    <None Include="MacOS\Info.plist">
+      <Link>Info.plist</Link>
+      <Platforms>MacOS</Platforms>
+    </None>
+  </Files>
+</Project>

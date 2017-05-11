@@ -1,0 +1,1 @@
+This is the location where you store source assets, such as PNG files and other content.  If you are targeting non-desktop platforms, you must run compile.bat to compile assets.
