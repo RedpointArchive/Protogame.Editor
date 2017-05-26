@@ -15,17 +15,21 @@ namespace ProtogameUIStylingTest
         private ISkinLayout _skinLayout;
         private ISkinDelegator _skinDelegator;
         private IAssetManager _assetManager;
+        private List<Button> _toolButtons = new List<Button>();
+        private readonly IMainMenuController _mainMenuController;
 
         public ProtogameUIStylingTestWorld(
             INode worldNode,
             IHierarchy hierarchy,
             ISkinLayout skinLayout,
             ISkinDelegator skinDelegator,
-            IAssetManager assetManager)
+            IAssetManager assetManager,
+            IMainMenuController mainMenuController)
         {
             _skinLayout = skinLayout;
             _skinDelegator = skinDelegator;
             _assetManager = assetManager;
+            _mainMenuController = mainMenuController;
 
             SetupCanvas();
 
@@ -102,8 +106,6 @@ namespace ProtogameUIStylingTest
             _canvas.SetChild(verticalContainer);
         }
 
-        private List<Button> _toolButtons = new List<Button>();
-
         private Button CreateToolButton(string texture, string tool)
         {
             var button = new Button
@@ -141,9 +143,11 @@ namespace ProtogameUIStylingTest
 
         public void Update(IGameContext gameContext, IUpdateContext updateContext)
         {
+            _mainMenuController.Update(gameContext, updateContext);
         }
 
         public IEnumerable<KeyValuePair<Canvas, Rectangle>> Canvases { get; }
+
         public bool CanvasesEnabled { get; }
     }
 }

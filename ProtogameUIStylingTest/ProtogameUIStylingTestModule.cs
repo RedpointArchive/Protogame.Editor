@@ -17,6 +17,13 @@ namespace ProtogameUIStylingTest
             kernel.Rebind<ISkinRenderer<Label>>().To<NuiLabelSkinRenderer>().InSingletonScope();
             kernel.Rebind<ISkinRenderer<DockableLayoutContainer>>().To<NuiDockableLayoutContainerSkinRenderer>().InSingletonScope();
             kernel.Rebind<ISkinRenderer<SingleContainer>>().To<NuiSingleContainerSkinRenderer>().InSingletonScope();
+
+#if PLATFORM_WINDOWS
+            kernel.Bind<IMainMenuController>().To<WindowsMainMenuController>().InSingletonScope();
+#endif
+
+            kernel.Bind<IMenuProvider>().To<ProjectManager>().InSingletonScope();
+            kernel.Bind<IMenuProvider>().To<ActionManager>().InSingletonScope();
         }
     }
 }
