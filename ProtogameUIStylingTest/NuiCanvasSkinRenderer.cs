@@ -15,7 +15,7 @@ namespace ProtogameUIStylingTest
 
         public void Render(IRenderContext renderContext, Rectangle layout, Canvas canvas)
         {
-            _renderUtilities.RenderRectangle(renderContext, layout, new Color(194, 194, 194, 255), true);
+            _renderUtilities.RenderRectangle(renderContext, layout, new Color(162, 162, 162, 255), true);
         }
 
         public Vector2 MeasureText(IRenderContext renderContext, string text, Canvas container)

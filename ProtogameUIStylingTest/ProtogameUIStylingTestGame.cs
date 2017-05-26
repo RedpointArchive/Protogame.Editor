@@ -15,6 +15,9 @@ namespace ProtogameUIStylingTest
         public override void PrepareGameWindow(IGameWindow window)
         {
             IsMouseVisible = true;
+            window.AllowUserResizing = true;
+            window.Title = "Protogame 7.0.0 (Build c510ef6)";
+            window.Maximize();
         }
 
         protected override void ConfigureRenderPipeline(IRenderPipeline pipeline, IKernel kernel)

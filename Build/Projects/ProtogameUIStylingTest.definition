@@ -15,17 +15,23 @@
     <Reference Include="ProtogameUIStylingTest.Content" />
   </References>
   <Files>
+    <Compile Include="DockableLayoutContainer.cs" />
     <Compile Include="ExampleEntity.cs" />
+    <Compile Include="IDockableContainer.cs" />
     <Compile Include="IEntityFactory.cs" />
+    <Compile Include="ITabbableContainer.cs" />
     <Compile Include="NuiButtonSkinRenderer.cs" />
     <Compile Include="NuiCanvasSkinRenderer.cs" />
     <Compile Include="NuiCheckBoxSkinRenderer.cs" />
+    <Compile Include="NuiDockableLayoutContainerSkinRenderer.cs" />
     <Compile Include="NuiLabelSkinRenderer.cs" />
     <Compile Include="NuiRenderer.cs" />
+    <Compile Include="NuiSingleContainerSkinRenderer.cs" />
     <Compile Include="ProtogameUIStylingTestGame.cs" />
     <Compile Include="ProtogameUIStylingTestGameConfiguration.cs" />
     <Compile Include="ProtogameUIStylingTestModule.cs" />
     <Compile Include="ProtogameUIStylingTestWorld.cs" />
+    <Compile Include="SingleTabbedContainer.cs" />
     <Content Include="Properties\AndroidManifest.xml">
       <Platforms>Android,Ouya</Platforms>
     </Content>

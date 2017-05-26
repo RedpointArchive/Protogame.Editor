@@ -19,7 +19,11 @@ namespace ProtogameUIStylingTest
 
         public void Render(IRenderContext renderContext, Rectangle layout, Button button)
         {
-            if (button.State == ButtonUIState.Clicked)
+            if (button.Toggled)
+            {
+                _nuiRenderer.RenderToggledButton(renderContext, layout);
+            }
+            else if (button.State == ButtonUIState.Clicked)
             {
                 _nuiRenderer.RenderPressedButton(renderContext, layout);
             }
@@ -28,15 +32,30 @@ namespace ProtogameUIStylingTest
                 _nuiRenderer.RenderButton(renderContext, layout);
             }
 
-            _renderUtilities.RenderText(
-                renderContext,
-                new Vector2(layout.Center.X, layout.Center.Y + 1),
-                button.Text,
-                _fontAsset,
-                HorizontalAlignment.Center,
-                VerticalAlignment.Center,
-                textColor: Color.Black,
-                renderShadow: false);
+            if (button.Text != null)
+            {
+                _renderUtilities.RenderText(
+                    renderContext,
+                    new Vector2(layout.Center.X, layout.Center.Y + 1),
+                    button.Text,
+                    _fontAsset,
+                    HorizontalAlignment.Center,
+                    VerticalAlignment.Center,
+                    textColor: Color.Black,
+                    renderShadow: false);
+            }
+            
+            if (button.Icon != null)
+            {
+                var size = layout.Width - 10;
+
+                _renderUtilities.RenderTexture(
+                    renderContext,
+                    new Vector2(layout.Center.X - size / 2, layout.Center.Y - size / 2),
+                    button.Icon,
+                    new Vector2(size, size),
+                    (button.State == ButtonUIState.Clicked || button.Toggled) ? Color.White : Color.Black);
+            }
         }
 
         public Vector2 MeasureText(IRenderContext renderContext, string text, Button container)

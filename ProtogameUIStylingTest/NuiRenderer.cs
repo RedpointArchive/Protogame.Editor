@@ -32,20 +32,47 @@ namespace ProtogameUIStylingTest
             RenderPressedButtonInternal(renderContext,
                 new Rectangle(rectangle.X, rectangle.Y, rectangle.Width - 1, rectangle.Height - 1));
         }
+        
+        public void RenderToggledButton(IRenderContext renderContext, Rectangle rectangle)
+        {
+            RenderToggledButtonInternal(renderContext,
+                new Rectangle(rectangle.X, rectangle.Y, rectangle.Width - 1, rectangle.Height - 1));
+        }
 
         private void RenderButtonInternal(IRenderContext renderContext, Rectangle rectangle)
         {
-            RenderRoundedRectangle(renderContext, rectangle, 3, GetBackgroundColorAt, false);
-            RenderRoundedRectangle(renderContext, rectangle, 3, GetBorderColorAt, true);
+            RenderRoundedRectangle(renderContext, rectangle, 3, GetBackgroundColorAt, false, false);
+            RenderRoundedRectangle(renderContext, rectangle, 3, GetBorderColorAt, true, false);
         }
 
         private void RenderPressedButtonInternal(IRenderContext renderContext, Rectangle rectangle)
         {
-            RenderRoundedRectangle(renderContext, rectangle, 3, GetPressedBackgroundColorAt, false);
-            RenderRoundedRectangle(renderContext, new Rectangle(rectangle.X + 2, rectangle.Y + 3, rectangle.Width - 4, rectangle.Height - 4), 2f, GetPressedDropShadowAt2, true);
-            RenderRoundedRectangle(renderContext, new Rectangle(rectangle.X + 1, rectangle.Y + 2, rectangle.Width - 2, rectangle.Height - 2), 2.5f, GetPressedDropShadowAt, true);
-            RenderRoundedRectangle(renderContext, new Rectangle(rectangle.X, rectangle.Y + 1, rectangle.Width, rectangle.Height), 3f, GetPressedDropShadowAtTopCorners, true);
-            RenderRoundedRectangle(renderContext, rectangle, 3, GetPressedBorderColorAt, true);
+            RenderRoundedRectangle(renderContext, rectangle, 3, GetPressedBackgroundColorAt, false, false);
+            RenderRoundedRectangle(renderContext, new Rectangle(rectangle.X + 2, rectangle.Y + 3, rectangle.Width - 4, rectangle.Height - 4), 2f, GetPressedDropShadowAt2, true, false);
+            RenderRoundedRectangle(renderContext, new Rectangle(rectangle.X + 1, rectangle.Y + 2, rectangle.Width - 2, rectangle.Height - 2), 2.5f, GetPressedDropShadowAt, true, false);
+            RenderRoundedRectangle(renderContext, new Rectangle(rectangle.X, rectangle.Y + 1, rectangle.Width, rectangle.Height), 3f, GetPressedDropShadowAtTopCorners, true, false);
+            RenderRoundedRectangle(renderContext, rectangle, 3, GetPressedBorderColorAt, true, false);
+        }
+
+        private void RenderToggledButtonInternal(IRenderContext renderContext, Rectangle rectangle)
+        {
+            RenderRoundedRectangle(renderContext, rectangle, 3, GetToggledBackgroundColorAt, false, false);
+            RenderRoundedRectangle(renderContext, new Rectangle(rectangle.X + 2, rectangle.Y + 3, rectangle.Width - 4, rectangle.Height - 4), 2f, GetPressedDropShadowAt2, true, false);
+            RenderRoundedRectangle(renderContext, new Rectangle(rectangle.X + 1, rectangle.Y + 2, rectangle.Width - 2, rectangle.Height - 2), 2.5f, GetPressedDropShadowAt, true, false);
+            RenderRoundedRectangle(renderContext, new Rectangle(rectangle.X, rectangle.Y + 1, rectangle.Width, rectangle.Height), 3f, GetPressedDropShadowAtTopCorners, true, false);
+            RenderRoundedRectangle(renderContext, rectangle, 3, GetPressedBorderColorAt, true, false);
+        }
+
+        public void RenderTab(IRenderContext renderContext, Rectangle rectangle)
+        {
+            RenderTabInternal(renderContext,
+                new Rectangle(rectangle.X, rectangle.Y, rectangle.Width - 1, rectangle.Height - 1));
+        }
+
+        private void RenderTabInternal(IRenderContext renderContext, Rectangle rectangle)
+        {
+            RenderRoundedRectangle(renderContext, rectangle, 3, GetBackgroundColorAt, false, true);
+            RenderRoundedRectangle(renderContext, rectangle, 3, GetBorderColorAt, true, true);
         }
 
         private delegate Color ColorFetchCallback(float localX, float localY, float width, float height);
@@ -101,13 +128,31 @@ namespace ProtogameUIStylingTest
             return Color.Lerp(col1, col2, localY / height);
         }
 
-        private void RenderRoundedRectangle(IRenderContext renderContext, Rectangle rectangle, float pixelCorners, ColorFetchCallback getColor, bool isBorder)
+        private Color GetToggledBackgroundColorAt(float localX, float localY, float width, float height)
         {
+            var col1 = new Color(64, 64, 64, 255);
+            var col2 = new Color(114, 114, 114, 255);
+            return Color.Lerp(col1, col2, localY / height);
+        }
+
+        private void RenderRoundedRectangle(IRenderContext renderContext, Rectangle rectangle, float pixelCorners, ColorFetchCallback getColor, bool isBorder, bool isTab)
+        {
+            float topLeftPixelCorners = pixelCorners;
+            float topRightPixelCorners = pixelCorners;
+            float bottomLeftPixelCorners = pixelCorners;
+            float bottomRightPixelCorners = pixelCorners;
+
+            if (isTab)
+            {
+                bottomLeftPixelCorners = 0;
+                bottomRightPixelCorners = 0;
+            }
+            
             if (_surfaceEffect.IsReady)
             {
                 var points = new List<VertexPositionColor>();
-                points.Add(new VertexPositionColor(new Vector3(rectangle.X + pixelCorners, rectangle.Y, 0), getColor(pixelCorners, 0, rectangle.Width, rectangle.Height)));
-                points.Add(new VertexPositionColor(new Vector3(rectangle.X + rectangle.Width - pixelCorners, rectangle.Y, 0), getColor(rectangle.Width - pixelCorners, 0, rectangle.Width, rectangle.Height)));
+                points.Add(new VertexPositionColor(new Vector3(rectangle.X + topLeftPixelCorners, rectangle.Y, 0), getColor(topLeftPixelCorners, 0, rectangle.Width, rectangle.Height)));
+                points.Add(new VertexPositionColor(new Vector3(rectangle.X + rectangle.Width - topRightPixelCorners, rectangle.Y, 0), getColor(rectangle.Width - topRightPixelCorners, 0, rectangle.Width, rectangle.Height)));
                 if (!isBorder)
                 {
                     points.Add(new VertexPositionColor(new Vector3(rectangle.X + rectangle.Width / 2f, rectangle.Y + rectangle.Height / 2f, 0), getColor(rectangle.Width / 2f, rectangle.Height / 2f, rectangle.Width, rectangle.Height)));
@@ -116,19 +161,19 @@ namespace ProtogameUIStylingTest
                 {
                     var i = a + MathHelper.PiOver2 * 1;
                     points.Add(new VertexPositionColor(
-                        new Vector3(rectangle.X + rectangle.Width - pixelCorners - (float)Math.Cos(i) * pixelCorners, rectangle.Y + pixelCorners - (float)Math.Sin(i) * pixelCorners, 0),
-                        getColor(rectangle.Width - pixelCorners - (float)Math.Cos(i) * pixelCorners, pixelCorners - (float)Math.Sin(i) * pixelCorners, rectangle.Width, rectangle.Height)));
+                        new Vector3(rectangle.X + rectangle.Width - topRightPixelCorners - (float)Math.Cos(i) * topRightPixelCorners, rectangle.Y + topRightPixelCorners - (float)Math.Sin(i) * topRightPixelCorners, 0),
+                        getColor(rectangle.Width - topRightPixelCorners - (float)Math.Cos(i) * topRightPixelCorners, topRightPixelCorners - (float)Math.Sin(i) * topRightPixelCorners, rectangle.Width, rectangle.Height)));
                     if (!isBorder)
                     {
                         points.Add(new VertexPositionColor(new Vector3(rectangle.X + rectangle.Width / 2f, rectangle.Y + rectangle.Height / 2f, 0), getColor(rectangle.Width / 2f, rectangle.Height / 2f, rectangle.Width, rectangle.Height)));
                     }
                 }
-                points.Add(new VertexPositionColor(new Vector3(rectangle.X + rectangle.Width, rectangle.Y + pixelCorners, 0), getColor(rectangle.Width, pixelCorners, rectangle.Width, rectangle.Height)));
+                points.Add(new VertexPositionColor(new Vector3(rectangle.X + rectangle.Width, rectangle.Y + topRightPixelCorners, 0), getColor(rectangle.Width, topRightPixelCorners, rectangle.Width, rectangle.Height)));
                 if (!isBorder)
                 {
                     points.Add(new VertexPositionColor(new Vector3(rectangle.X + rectangle.Width / 2f, rectangle.Y + rectangle.Height / 2f, 0), getColor(rectangle.Width / 2f, rectangle.Height / 2f, rectangle.Width, rectangle.Height)));
                 }
-                points.Add(new VertexPositionColor(new Vector3(rectangle.X + rectangle.Width, rectangle.Y + rectangle.Height - pixelCorners, 0), getColor(rectangle.Width, rectangle.Height - pixelCorners, rectangle.Width, rectangle.Height)));
+                points.Add(new VertexPositionColor(new Vector3(rectangle.X + rectangle.Width, rectangle.Y + rectangle.Height - bottomRightPixelCorners, 0), getColor(rectangle.Width, rectangle.Height - bottomRightPixelCorners, rectangle.Width, rectangle.Height)));
                 if (!isBorder)
                 {
                     points.Add(new VertexPositionColor(new Vector3(rectangle.X + rectangle.Width / 2f, rectangle.Y + rectangle.Height / 2f, 0), getColor(rectangle.Width / 2f, rectangle.Height / 2f, rectangle.Width, rectangle.Height)));
@@ -137,19 +182,19 @@ namespace ProtogameUIStylingTest
                 {
                     var i = a + MathHelper.PiOver2 * 2;
                     points.Add(new VertexPositionColor(
-                        new Vector3(rectangle.X + rectangle.Width - pixelCorners - (float)Math.Cos(i) * pixelCorners, rectangle.Y + rectangle.Height - pixelCorners - (float)Math.Sin(i) * pixelCorners, 0),
-                        getColor(rectangle.Width - pixelCorners - (float)Math.Cos(i) * pixelCorners, rectangle.Height - pixelCorners - (float)Math.Sin(i) * pixelCorners, rectangle.Width, rectangle.Height)));
+                        new Vector3(rectangle.X + rectangle.Width - bottomRightPixelCorners - (float)Math.Cos(i) * bottomRightPixelCorners, rectangle.Y + rectangle.Height - bottomRightPixelCorners - (float)Math.Sin(i) * bottomRightPixelCorners, 0),
+                        getColor(rectangle.Width - bottomRightPixelCorners - (float)Math.Cos(i) * bottomRightPixelCorners, rectangle.Height - bottomRightPixelCorners - (float)Math.Sin(i) * bottomRightPixelCorners, rectangle.Width, rectangle.Height)));
                     if (!isBorder)
                     {
                         points.Add(new VertexPositionColor(new Vector3(rectangle.X + rectangle.Width / 2f, rectangle.Y + rectangle.Height / 2f, 0), getColor(rectangle.Width / 2f, rectangle.Height / 2f, rectangle.Width, rectangle.Height)));
                     }
                 }
-                points.Add(new VertexPositionColor(new Vector3(rectangle.X + rectangle.Width - pixelCorners, rectangle.Y + rectangle.Height, 0), getColor(rectangle.Width - pixelCorners, rectangle.Height, rectangle.Width, rectangle.Height)));
+                points.Add(new VertexPositionColor(new Vector3(rectangle.X + rectangle.Width - bottomRightPixelCorners, rectangle.Y + rectangle.Height, 0), getColor(rectangle.Width - bottomRightPixelCorners, rectangle.Height, rectangle.Width, rectangle.Height)));
                 if (!isBorder)
                 {
                     points.Add(new VertexPositionColor(new Vector3(rectangle.X + rectangle.Width / 2f, rectangle.Y + rectangle.Height / 2f, 0), getColor(rectangle.Width / 2f, rectangle.Height / 2f, rectangle.Width, rectangle.Height)));
                 }
-                points.Add(new VertexPositionColor(new Vector3(rectangle.X + pixelCorners, rectangle.Y + rectangle.Height, 0), getColor(pixelCorners, rectangle.Height, rectangle.Width, rectangle.Height)));
+                points.Add(new VertexPositionColor(new Vector3(rectangle.X + bottomLeftPixelCorners, rectangle.Y + rectangle.Height, 0), getColor(bottomLeftPixelCorners, rectangle.Height, rectangle.Width, rectangle.Height)));
                 if (!isBorder)
                 {
                     points.Add(new VertexPositionColor(new Vector3(rectangle.X + rectangle.Width / 2f, rectangle.Y + rectangle.Height / 2f, 0), getColor(rectangle.Width / 2f, rectangle.Height / 2f, rectangle.Width, rectangle.Height)));
@@ -158,19 +203,19 @@ namespace ProtogameUIStylingTest
                 {
                     var i = a + MathHelper.PiOver2 * 3;
                     points.Add(new VertexPositionColor(
-                        new Vector3(rectangle.X + pixelCorners - (float)Math.Cos(i) * pixelCorners, rectangle.Y + rectangle.Height - pixelCorners - (float)Math.Sin(i) * pixelCorners, 0),
-                        getColor(pixelCorners - (float)Math.Cos(i) * pixelCorners, rectangle.Height - pixelCorners - (float)Math.Sin(i) * pixelCorners, rectangle.Width, rectangle.Height)));
+                        new Vector3(rectangle.X + bottomLeftPixelCorners - (float)Math.Cos(i) * bottomLeftPixelCorners, rectangle.Y + rectangle.Height - bottomLeftPixelCorners - (float)Math.Sin(i) * bottomLeftPixelCorners, 0),
+                        getColor(bottomLeftPixelCorners - (float)Math.Cos(i) * bottomLeftPixelCorners, rectangle.Height - bottomLeftPixelCorners - (float)Math.Sin(i) * bottomLeftPixelCorners, rectangle.Width, rectangle.Height)));
                     if (!isBorder)
                     {
                         points.Add(new VertexPositionColor(new Vector3(rectangle.X + rectangle.Width / 2f, rectangle.Y + rectangle.Height / 2f, 0), getColor(rectangle.Width / 2f, rectangle.Height / 2f, rectangle.Width, rectangle.Height)));
                     }
                 }
-                points.Add(new VertexPositionColor(new Vector3(rectangle.X, rectangle.Y + rectangle.Height - pixelCorners, 0), getColor(0, rectangle.Height - pixelCorners, rectangle.Width, rectangle.Height))); ;
+                points.Add(new VertexPositionColor(new Vector3(rectangle.X, rectangle.Y + rectangle.Height - bottomLeftPixelCorners, 0), getColor(0, rectangle.Height - bottomLeftPixelCorners, rectangle.Width, rectangle.Height)));
                 if (!isBorder)
                 {
                     points.Add(new VertexPositionColor(new Vector3(rectangle.X + rectangle.Width / 2f, rectangle.Y + rectangle.Height / 2f, 0), getColor(rectangle.Width / 2f, rectangle.Height / 2f, rectangle.Width, rectangle.Height)));
                 }
-                points.Add(new VertexPositionColor(new Vector3(rectangle.X, rectangle.Y + pixelCorners, 0), getColor(0, pixelCorners, rectangle.Width, rectangle.Height)));
+                points.Add(new VertexPositionColor(new Vector3(rectangle.X, rectangle.Y + topLeftPixelCorners, 0), getColor(0, topLeftPixelCorners, rectangle.Width, rectangle.Height)));
                 if (!isBorder)
                 {
                     points.Add(new VertexPositionColor(new Vector3(rectangle.X + rectangle.Width / 2f, rectangle.Y + rectangle.Height / 2f, 0), getColor(rectangle.Width / 2f, rectangle.Height / 2f, rectangle.Width, rectangle.Height)));
@@ -179,14 +224,14 @@ namespace ProtogameUIStylingTest
                 {
                     var i = a + MathHelper.PiOver2 * 0;
                     points.Add(new VertexPositionColor(
-                        new Vector3(rectangle.X + pixelCorners - (float)Math.Cos(i) * pixelCorners, rectangle.Y + pixelCorners - (float)Math.Sin(i) * pixelCorners, 0),
-                        getColor(pixelCorners - (float)Math.Cos(i) * pixelCorners, pixelCorners - (float)Math.Sin(i) * pixelCorners, rectangle.Width, rectangle.Height)));
+                        new Vector3(rectangle.X + topLeftPixelCorners - (float)Math.Cos(i) * topLeftPixelCorners, rectangle.Y + topLeftPixelCorners - (float)Math.Sin(i) * topLeftPixelCorners, 0),
+                        getColor(topLeftPixelCorners - (float)Math.Cos(i) * topLeftPixelCorners, topLeftPixelCorners - (float)Math.Sin(i) * topLeftPixelCorners, rectangle.Width, rectangle.Height)));
                     if (!isBorder)
                     {
                         points.Add(new VertexPositionColor(new Vector3(rectangle.X + rectangle.Width / 2f, rectangle.Y + rectangle.Height / 2f, 0), getColor(rectangle.Width / 2f, rectangle.Height / 2f, rectangle.Width, rectangle.Height)));
                     }
                 }
-                points.Add(new VertexPositionColor(new Vector3(rectangle.X + pixelCorners, rectangle.Y, 0), getColor(pixelCorners, 0, rectangle.Width, rectangle.Height)));
+                points.Add(new VertexPositionColor(new Vector3(rectangle.X + topLeftPixelCorners, rectangle.Y, 0), getColor(topLeftPixelCorners, 0, rectangle.Width, rectangle.Height)));
                 if (!isBorder)
                 {
                     points.Add(new VertexPositionColor(new Vector3(rectangle.X + rectangle.Width / 2f, rectangle.Y + rectangle.Height / 2f, 0), getColor(rectangle.Width / 2f, rectangle.Height / 2f, rectangle.Width, rectangle.Height)));
