@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Protogame;
 using System.Collections.Generic;
 
-namespace ProtogameUIStylingTest
+namespace Protogame.Editor.Nui
 {
     public class NuiRenderer
     {

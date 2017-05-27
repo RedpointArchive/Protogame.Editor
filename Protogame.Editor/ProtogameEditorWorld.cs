@@ -1,14 +1,17 @@
-namespace ProtogameUIStylingTest
+using System.Collections.Generic;
+
+using Microsoft.Xna.Framework;
+
+using Protoinject;
+
+using Protogame;
+using Protogame.Editor.Nui;
+using Protogame.Editor.Menu;
+using Protogame.Editor.Layout;
+
+namespace Protogame.Editor
 {
-    using System.Collections.Generic;
-
-    using Microsoft.Xna.Framework;
-
-    using Protoinject;
-
-    using Protogame;
-
-    public class ProtogameUIStylingTestWorld : IWorld, IHasCanvases
+    public class ProtogameEditorWorld : IWorld, IHasCanvases
     {
         private readonly NuiRenderer _nuiRenderer;
         private Canvas _canvas;
@@ -18,7 +21,7 @@ namespace ProtogameUIStylingTest
         private List<Button> _toolButtons = new List<Button>();
         private readonly IMainMenuController _mainMenuController;
 
-        public ProtogameUIStylingTestWorld(
+        public ProtogameEditorWorld(
             INode worldNode,
             IHierarchy hierarchy,
             ISkinLayout skinLayout,

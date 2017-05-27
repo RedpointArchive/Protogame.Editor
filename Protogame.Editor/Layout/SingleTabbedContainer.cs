@@ -1,6 +1,6 @@
 ﻿using Protogame;
 
-namespace ProtogameUIStylingTest
+namespace Protogame.Editor.Layout
 {
     public class SingleTabbedContainer : SingleContainer, ITabbableContainer
     {

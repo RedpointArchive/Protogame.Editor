@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ProtogameUIStylingTest
+namespace Protogame.Editor.Menu
 {
     public class ActionManagerMenuProvider : IMenuProvider
     {

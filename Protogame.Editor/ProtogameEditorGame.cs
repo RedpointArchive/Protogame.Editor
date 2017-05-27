@@ -1,13 +1,13 @@
-namespace ProtogameUIStylingTest
+using Protoinject;
+
+using Protogame;
+using Microsoft.Xna.Framework;
+
+namespace Protogame.Editor
 {
-    using Protoinject;
-
-    using Protogame;
-    using Microsoft.Xna.Framework;
-
-    public class ProtogameUIStylingTestGame : CoreGame<ProtogameUIStylingTestWorld>
+    public class ProtogameEditorGame : CoreGame<ProtogameEditorWorld>
     {
-        public ProtogameUIStylingTestGame(IKernel kernel)
+        public ProtogameEditorGame(IKernel kernel)
             : base(kernel)
         {
         }

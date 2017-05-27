@@ -2,9 +2,9 @@ using Microsoft.Xna.Framework;
 using Protogame;
 using Protoinject;
 
-namespace ProtogameUIStylingTest
+namespace Protogame.Editor
 {
-    public class ProtogameUIStylingTestGameConfiguration : IGameConfiguration
+    public class ProtogameEditorGameConfiguration : IGameConfiguration
     {
         public void ConfigureKernel(IKernel kernel)
         {
@@ -12,12 +12,12 @@ namespace ProtogameUIStylingTest
             kernel.Load<ProtogameAssetModule>();
             kernel.Load<ProtogameEventsModule>();
             kernel.Load<ProtogameUserInterfaceModule>();
-            kernel.Load<ProtogameUIStylingTestModule>();
+            kernel.Load<ProtogameEditorModule>();
         }
         
         public ICoreGame ConstructGame(IKernel kernel)
         {
-            return new ProtogameUIStylingTestGame(kernel);
+            return new ProtogameEditorGame(kernel);
         }
     }
 }

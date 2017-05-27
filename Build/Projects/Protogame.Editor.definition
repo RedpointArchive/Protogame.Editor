@@ -15,31 +15,30 @@
     <Reference Include="Protogame.Editor.Content" />
   </References>
   <Files>
-    <Compile Include="ActionManagerMenuProvider.cs" />
-    <Compile Include="DockableLayoutContainer.cs" />
-    <Compile Include="ExampleEntity.cs" />
-    <Compile Include="IDockableContainer.cs" />
-    <Compile Include="IEntityFactory.cs" />
-    <Compile Include="IMainMenuController.cs" />
-    <Compile Include="IMenuProvider.cs" />
-    <Compile Include="IProjectManager.cs" />
-    <Compile Include="ITabbableContainer.cs" />
-    <Compile Include="MenuEntry.cs" />
-    <Compile Include="NuiButtonSkinRenderer.cs" />
-    <Compile Include="NuiCanvasSkinRenderer.cs" />
-    <Compile Include="NuiCheckBoxSkinRenderer.cs" />
-    <Compile Include="NuiDockableLayoutContainerSkinRenderer.cs" />
-    <Compile Include="NuiLabelSkinRenderer.cs" />
-    <Compile Include="NuiRenderer.cs" />
-    <Compile Include="NuiSingleContainerSkinRenderer.cs" />
-    <Compile Include="ProjectManager.cs" />
-    <Compile Include="ProjectManagerMenuProvider.cs" />
-    <Compile Include="ProtogameUIStylingTestGame.cs" />
-    <Compile Include="ProtogameUIStylingTestGameConfiguration.cs" />
-    <Compile Include="ProtogameUIStylingTestModule.cs" />
-    <Compile Include="ProtogameUIStylingTestWorld.cs" />
-    <Compile Include="SingleTabbedContainer.cs" />
-    <Compile Include="WindowsMainMenuController.cs" />
+    <Compile Include="Layout\DockableLayoutContainer.cs" />
+    <Compile Include="Layout\IDockableContainer.cs" />
+    <Compile Include="Layout\ITabbableContainer.cs" />
+    <Compile Include="Layout\SingleTabbedContainer.cs" />
+    <Compile Include="Menu\ActionManagerMenuProvider.cs" />
+    <Compile Include="Menu\IMainMenuController.cs" />
+    <Compile Include="Menu\IMenuProvider.cs" />
+    <Compile Include="Menu\MenuEntry.cs" />
+    <Compile Include="Menu\ProjectManagerMenuProvider.cs" />
+    <Compile Include="Menu\WindowsMainMenuController.cs" />
+    <Compile Include="Nui\NuiButtonSkinRenderer.cs" />
+    <Compile Include="Nui\NuiCanvasSkinRenderer.cs" />
+    <Compile Include="Nui\NuiCheckBoxSkinRenderer.cs" />
+    <Compile Include="Nui\NuiDockableLayoutContainerSkinRenderer.cs" />
+    <Compile Include="Nui\NuiLabelSkinRenderer.cs" />
+    <Compile Include="Nui\NuiRenderer.cs" />
+    <Compile Include="Nui\NuiSingleContainerSkinRenderer.cs" />
+    <Compile Include="ProjectManagement\IProjectManager.cs" />
+    <Compile Include="ProjectManagement\Project.cs" />
+    <Compile Include="ProjectManagement\ProjectManager.cs" />
+    <Compile Include="ProtogameEditorGame.cs" />
+    <Compile Include="ProtogameEditorGameConfiguration.cs" />
+    <Compile Include="ProtogameEditorModule.cs" />
+    <Compile Include="ProtogameEditorWorld.cs" />
     <Content Include="Properties\AndroidManifest.xml">
       <Platforms>Android,Ouya</Platforms>
     </Content>

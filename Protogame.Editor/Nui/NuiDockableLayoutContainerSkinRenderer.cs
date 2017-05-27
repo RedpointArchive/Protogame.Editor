@@ -1,8 +1,9 @@
 ﻿using Protogame;
 using Microsoft.Xna.Framework;
 using System;
+using Protogame.Editor.Layout;
 
-namespace ProtogameUIStylingTest
+namespace Protogame.Editor.Nui
 {
     public class NuiDockableLayoutContainerSkinRenderer : ISkinRenderer<DockableLayoutContainer>
     {

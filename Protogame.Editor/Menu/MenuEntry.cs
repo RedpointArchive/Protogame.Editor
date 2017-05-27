@@ -1,7 +1,7 @@
 ﻿using Protogame;
 using System;
 
-namespace ProtogameUIStylingTest
+namespace Protogame.Editor.Menu
 {
     public class MenuEntry
     {

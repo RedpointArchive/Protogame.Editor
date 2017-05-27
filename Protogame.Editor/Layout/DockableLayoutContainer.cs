@@ -4,7 +4,7 @@ using Protogame;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ProtogameUIStylingTest
+namespace Protogame.Editor.Layout
 {
     /// <summary>
     /// A layout container where <see cref="DockableContainer"/>s can be placed.  Each dockable layout container

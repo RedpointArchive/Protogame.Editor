@@ -1,15 +1,17 @@
 using System;
 using Protogame;
 using Protoinject;
+using Protogame.Editor.Nui;
+using Protogame.Editor.Layout;
+using Protogame.Editor.Menu;
+using Protogame.Editor.ProjectManagement;
 
-namespace ProtogameUIStylingTest
+namespace Protogame.Editor
 {
-    public class ProtogameUIStylingTestModule : IProtoinjectModule
+    public class ProtogameEditorModule : IProtoinjectModule
     {
         public void Load(IKernel kernel)
         {
-            kernel.Bind<IEntityFactory>().ToFactory();
-
             kernel.Bind<IBasicSkin>().To<DefaultBasicSkin>().InSingletonScope();
             kernel.Rebind<ISkinRenderer<Button>>().To<NuiButtonSkinRenderer>().InSingletonScope();
             kernel.Rebind<ISkinRenderer<CheckBox>>().To<NuiCheckBoxSkinRenderer>().InSingletonScope();

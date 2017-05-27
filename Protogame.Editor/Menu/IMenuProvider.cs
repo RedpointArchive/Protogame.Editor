@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ProtogameUIStylingTest
+namespace Protogame.Editor.Menu
 {
     public interface IMenuProvider
     {

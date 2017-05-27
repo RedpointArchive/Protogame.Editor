@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Protogame;
 
-namespace ProtogameUIStylingTest
+namespace Protogame.Editor.Nui
 {
     public class NuiLabelSkinRenderer : ISkinRenderer<Label>
     {

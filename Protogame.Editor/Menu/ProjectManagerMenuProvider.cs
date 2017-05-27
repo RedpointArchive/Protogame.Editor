@@ -1,11 +1,7 @@
-﻿using Protogame;
-using System;
+﻿using Protogame.Editor.ProjectManagement;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ProtogameUIStylingTest
+namespace Protogame.Editor.Menu
 {
     public class ProjectManagerMenuProvider : IMenuProvider
     {

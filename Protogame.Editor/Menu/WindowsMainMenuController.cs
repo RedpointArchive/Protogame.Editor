@@ -1,15 +1,9 @@
 ﻿#if PLATFORM_WINDOWS
 
-using Protogame;
 using System.Linq;
-using System;
-using Form = System.Windows.Forms.Form;
-using MainMenu = System.Windows.Forms.MainMenu;
-using MenuItem = System.Windows.Forms.MenuItem;
 using System.Collections.Generic;
-using System.Windows.Forms;
 
-namespace ProtogameUIStylingTest
+namespace Protogame.Editor.Menu
 {
     public class WindowsMainMenuController : IMainMenuController
     {
@@ -38,10 +32,10 @@ namespace ProtogameUIStylingTest
 
             var menuStrip = CreateMainMenuControlIfNecessary(gameContext);
 
-            var existingMenuItems = new Dictionary<string, MenuItem>();
+            var existingMenuItems = new Dictionary<string, System.Windows.Forms.MenuItem>();
 
             // Add menu items.
-            foreach (var menuItem in menuStrip.MenuItems.OfType<MenuItem>())
+            foreach (var menuItem in menuStrip.MenuItems.OfType<System.Windows.Forms.MenuItem>())
             {
                 AddMenuItems(existingMenuItems, string.Empty, menuItem);
             }
@@ -49,7 +43,7 @@ namespace ProtogameUIStylingTest
             // Configure menu items.
             foreach (var menuEntry in menuEntries)
             {
-                MenuItem menuItem;
+                System.Windows.Forms.MenuItem menuItem;
                 if (existingMenuItems.ContainsKey(menuEntry.Path))
                 {
                     menuItem = existingMenuItems[menuEntry.Path];
@@ -80,18 +74,18 @@ namespace ProtogameUIStylingTest
             }
 
             // Add menu seperators.
-            foreach (var menuItem in menuStrip.MenuItems.OfType<MenuItem>())
+            foreach (var menuItem in menuStrip.MenuItems.OfType<System.Windows.Forms.MenuItem>())
             {
                 UpdateMenuSeperators(menuItem);
             }
         }
 
-        private void UpdateMenuSeperators(MenuItem menuItem)
+        private void UpdateMenuSeperators(System.Windows.Forms.MenuItem menuItem)
         {
             var lastOrder = 0;
             var index = 0;
             var didHaveSeperator = false;
-            foreach (var child in menuItem.MenuItems.OfType<MenuItem>())
+            foreach (var child in menuItem.MenuItems.OfType<System.Windows.Forms.MenuItem>())
             {
                 var tag = child.Tag as MenuItemTag;
                 if (tag == null && child.Text == "-")
@@ -112,7 +106,7 @@ namespace ProtogameUIStylingTest
                     // Insert menu seperator.
                     if (!didHaveSeperator)
                     {
-                        menuItem.MenuItems.Add(index, new MenuItem("-"));
+                        menuItem.MenuItems.Add(index, new System.Windows.Forms.MenuItem("-"));
                     }
                     didHaveSeperator = true;
                 }
@@ -127,14 +121,14 @@ namespace ProtogameUIStylingTest
             }
         }
 
-        private MenuItem BuildMenuItemPath(MainMenu menuStrip, string[] components, int? lastOrder)
+        private System.Windows.Forms.MenuItem BuildMenuItemPath(System.Windows.Forms.MainMenu menuStrip, string[] components, int? lastOrder)
         {
             if (components.Length == 0)
             {
                 return menuStrip.MenuItems[0];
             }
 
-            foreach (var mi in menuStrip.MenuItems.OfType<MenuItem>())
+            foreach (var mi in menuStrip.MenuItems.OfType<System.Windows.Forms.MenuItem>())
             {
                 var tagName = (MenuItemTag)mi.Tag;
                 if (tagName.Text == components[0])
@@ -143,14 +137,14 @@ namespace ProtogameUIStylingTest
                 }
             }
 
-            var mii = new MenuItem();
+            var mii = new System.Windows.Forms.MenuItem();
             mii.Tag = new MenuItemTag { Text = components[0], Order = null };
             mii.Text = components[0];
 
             if (components.Length == 1 && lastOrder.HasValue)
             {
                 var targetIndex = -1;
-                var orderedMenuItems = menuStrip.MenuItems.OfType<MenuItem>().OrderBy(x => ((MenuItemTag)x.Tag).Order ?? 100000).ToArray();
+                var orderedMenuItems = menuStrip.MenuItems.OfType<System.Windows.Forms.MenuItem>().OrderBy(x => ((MenuItemTag)x.Tag).Order ?? 100000).ToArray();
                 for (var i = 0; i < orderedMenuItems.Length; i++)
                 {
                     var tag = (MenuItemTag)orderedMenuItems[i].Tag;
@@ -171,14 +165,14 @@ namespace ProtogameUIStylingTest
             return BuildMenuItemPath(mii, components.Skip(1).ToArray(), lastOrder);
         }
 
-        private MenuItem BuildMenuItemPath(MenuItem menuItemParent, string[] components, int? lastOrder)
+        private System.Windows.Forms.MenuItem BuildMenuItemPath(System.Windows.Forms.MenuItem menuItemParent, string[] components, int? lastOrder)
         {
             if (components.Length == 0)
             {
                 return menuItemParent;
             }
 
-            foreach (var mi in menuItemParent.MenuItems.OfType<MenuItem>())
+            foreach (var mi in menuItemParent.MenuItems.OfType<System.Windows.Forms.MenuItem>())
             {
                 var tagName = (MenuItemTag)mi.Tag;
                 if (tagName.Text == components[0])
@@ -187,14 +181,14 @@ namespace ProtogameUIStylingTest
                 }
             }
 
-            var mii = new MenuItem();
+            var mii = new System.Windows.Forms.MenuItem();
             mii.Tag = new MenuItemTag { Text = components[0], Order = null };
             mii.Text = components[0];
 
             if (components.Length == 1 && lastOrder.HasValue)
             {
                 var targetIndex = -1;
-                var orderedMenuItems = menuItemParent.MenuItems.OfType<MenuItem>().OrderBy(x => ((MenuItemTag)x.Tag).Order ?? 100000).ToArray();
+                var orderedMenuItems = menuItemParent.MenuItems.OfType<System.Windows.Forms.MenuItem>().OrderBy(x => ((MenuItemTag)x.Tag).Order ?? 100000).ToArray();
                 for (var i = 0; i < orderedMenuItems.Length; i++)
                 {
                     var tag = (MenuItemTag)orderedMenuItems[i].Tag;
@@ -215,7 +209,7 @@ namespace ProtogameUIStylingTest
             return BuildMenuItemPath(mii, components.Skip(1).ToArray(), lastOrder);
         }
 
-        private void AddMenuItems(Dictionary<string, MenuItem> menuItems, string parentPath, MenuItem node)
+        private void AddMenuItems(Dictionary<string, System.Windows.Forms.MenuItem> menuItems, string parentPath, System.Windows.Forms.MenuItem node)
         {
             var tag = node.Tag as MenuItemTag;
             if (node.Tag == null)
@@ -225,22 +219,22 @@ namespace ProtogameUIStylingTest
             }
 
             menuItems.Add((parentPath + "/" + tag.Text).TrimStart('/'), node);
-            foreach (var child in node.MenuItems.OfType<MenuItem>())
+            foreach (var child in node.MenuItems.OfType<System.Windows.Forms.MenuItem>())
             {
                 AddMenuItems(menuItems, (parentPath + "/" + tag.Text).TrimStart('/'), child);
             }
         }
 
-        private MainMenu CreateMainMenuControlIfNecessary(IGameContext gameContext)
+        private System.Windows.Forms.MainMenu CreateMainMenuControlIfNecessary(IGameContext gameContext)
         {
-            var form = (Form)Form.FromHandle(gameContext.Window.PlatformWindow.Handle);
+            var form = (System.Windows.Forms.Form)System.Windows.Forms.Form.FromHandle(gameContext.Window.PlatformWindow.Handle);
             
             if (form.Menu != null)
             {
                 return form.Menu;
             }
 
-            var menuStrip = new MainMenu();
+            var menuStrip = new System.Windows.Forms.MainMenu();
             form.Menu = menuStrip;
             return menuStrip;
         }
