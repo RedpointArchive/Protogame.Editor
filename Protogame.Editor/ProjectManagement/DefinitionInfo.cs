@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Xml;
 
 namespace Protogame.Editor.ProjectManagement
@@ -12,5 +14,7 @@ namespace Protogame.Editor.ProjectManagement
         public string Path { get; set; }
 
         public XmlDocument LoadedDocument { get; set; }
+
+        public List<FileInfo> ScannedContent { get; set; }
     }
 }

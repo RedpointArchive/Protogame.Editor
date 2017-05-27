@@ -45,8 +45,6 @@ namespace Protogame.Editor.Nui
             var layoutFullWidth = layout.Width - _skinLayout.VerticalScrollBarWidth;
             var layoutFullHeight = layout.Height - _skinLayout.HorizontalScrollBarHeight;
 
-            var childContent = scrollableContainer.ChildContent;
-
             if (scrollableContainer.NeedsVerticalScrollbar)
             {
                 var xPosition = layout.X + layout.Width - _skinLayout.VerticalScrollBarWidth / 2 - 3;
@@ -84,8 +82,8 @@ namespace Protogame.Editor.Nui
                     _scrollbarVerticalBackgroundBottomTexture,
                     new Vector2(6, 3));
 
-                var scrollbarOffset = (int)(yPosition + scrollableContainer.ScrollY * (layoutFullHeight - layoutFullHeight / (float)childContent.Height * layoutFullHeight));
-                var scrollbarLastOffset = scrollbarOffset + (int)(layoutFullHeight / (float)childContent.Height * layoutFullHeight);
+                var scrollbarOffset = (int)(yPosition + scrollableContainer.ScrollY * (layoutFullHeight - layoutFullHeight / (float)scrollableContainer.ChildHeight * layoutFullHeight));
+                var scrollbarLastOffset = scrollbarOffset + (int)(layoutFullHeight / (float)scrollableContainer.ChildHeight * layoutFullHeight);
 
                 _renderUtilities.RenderTexture(
                     renderContext,
@@ -107,13 +105,8 @@ namespace Protogame.Editor.Nui
             _renderUtilities.RenderTexture(
                 renderContext,
                 new Vector2(layout.X, layout.Y),
-                childContent,
-                new Vector2(layoutWidth, layoutHeight),
-                sourceArea: new Rectangle(
-                    (int)(scrollableContainer.ScrollX * (System.Math.Max(childContent.Width, layoutWidth) - layoutWidth)),
-                    (int)(scrollableContainer.ScrollY * (System.Math.Max(childContent.Height, layoutHeight) - layoutHeight)),
-                    layoutWidth,
-                    layoutHeight));
+                scrollableContainer.ChildContent,
+                new Vector2(layoutWidth, layoutHeight));
         }
 
         public Vector2 MeasureText(IRenderContext renderContext, string text, ScrollableContainer container)

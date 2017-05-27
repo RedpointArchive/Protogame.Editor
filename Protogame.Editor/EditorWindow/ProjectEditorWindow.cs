@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Protogame.Editor.Layout;
 using Protogame.Editor.ProjectManagement;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Protogame.Editor.EditorWindow
@@ -67,6 +69,45 @@ namespace Protogame.Editor.EditorWindow
                     }
                 }
             }
+
+            var selectedDefinition = _projectListView.SelectedItem as DefinitionListItem;
+            
+            if (selectedDefinition != null)
+            {
+                List<FileInfo> items = null;
+
+                if (selectedDefinition.DefinitionInfo.Type == "Content")
+                {
+                    items = selectedDefinition.DefinitionInfo.ScannedContent;
+                }
+                else
+                {
+
+                }
+
+                if (items == null)
+                {
+                    items = new List<FileInfo>();
+                }
+
+                foreach (var child in _projectContentView.Children.OfType<FileInfoListItem>().ToArray())
+                {
+                    if (!items.Contains(child.FileInfo))
+                    {
+                        _projectContentView.RemoveChild(child);
+                    }
+                }
+
+                var currentItems = _projectContentView.Children.OfType<FileInfoListItem>().ToArray();
+
+                foreach (var item in items)
+                {
+                    if (!currentItems.Any(x => x.FileInfo != item))
+                    {
+                        _projectContentView.AddChild(new FileInfoListItem(_assetManager, item));
+                    }
+                }
+            }
         }
 
         private class DefinitionListItem : ListItem
@@ -106,6 +147,40 @@ namespace Protogame.Editor.EditorWindow
                 get
                 {
                     return _icon;
+                }
+                set
+                {
+                }
+            }
+        }
+
+        private class FileInfoListItem : ListItem
+        {
+            private IAssetReference<TextureAsset> _icon;
+
+            public FileInfoListItem(IAssetManager assetManager, FileInfo fileInfo)
+            {
+                FileInfo = fileInfo;
+            }
+
+            public FileInfo FileInfo { get; }
+
+            public override string Text
+            {
+                get
+                {
+                    return FileInfo.Name;
+                }
+                set
+                {
+                }
+            }
+
+            public override IAssetReference<TextureAsset> Icon
+            {
+                get
+                {
+                    return null;
                 }
                 set
                 {
