@@ -14,6 +14,7 @@ namespace ProtogameUIStylingTest
     public class WindowsMainMenuController : IMainMenuController
     {
         private readonly IMenuProvider[] _menuProviders;
+        private IGameContext _gameContext;
 
         public WindowsMainMenuController(IMenuProvider[] menuProviders)
         {
@@ -25,10 +26,14 @@ namespace ProtogameUIStylingTest
             public string Text { get; set; }
 
             public int? Order { get; set; }
+
+            public bool RegisteredClick { get; set; }
         }
 
         public void Update(IGameContext gameContext, IUpdateContext updateContext)
         {
+            _gameContext = gameContext;
+
             var menuEntries = _menuProviders.SelectMany(x => x.GetMenuItems());
 
             var menuStrip = CreateMainMenuControlIfNecessary(gameContext);
@@ -55,13 +60,23 @@ namespace ProtogameUIStylingTest
                     menuItem = BuildMenuItemPath(menuStrip, components, menuEntry.Order);
                 }
 
-                menuItem.Tag = new MenuItemTag
+                if (menuItem.Tag == null)
                 {
-                    Text = menuEntry.Path.Split('/').Last(),
-                    Order = menuEntry.Order
-                };
+                    menuItem.Tag = new MenuItemTag();
+                }
+                var menuItemTag = (MenuItemTag)menuItem.Tag;
+                menuItemTag.Text = menuEntry.Path.Split('/').Last();
+                menuItemTag.Order = menuEntry.Order;
                 menuItem.Text = menuEntry.DynamicTextHandler != null ? menuEntry.DynamicTextHandler(menuEntry) : menuEntry.Path.Split('/').Last();
                 menuItem.Enabled = menuEntry.DynamicEnabledHandler != null ? menuEntry.DynamicEnabledHandler(menuEntry) : menuEntry.Enabled;
+                if (!menuItemTag.RegisteredClick)
+                {
+                    menuItem.Click += (sender, e) =>
+                    {
+                        menuEntry.Handler(_gameContext, menuEntry);
+                    };
+                    menuItemTag.RegisteredClick = true;
+                }
             }
 
             // Add menu seperators.

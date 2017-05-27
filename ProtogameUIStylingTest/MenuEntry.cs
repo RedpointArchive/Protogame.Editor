@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Protogame;
+using System;
 
 namespace ProtogameUIStylingTest
 {
     public class MenuEntry
     {
-        public MenuEntry(string path, bool enabled, int order, Action<MenuEntry> handler, object userdata)
+        public MenuEntry(string path, bool enabled, int order, MenuClickHandler handler, object userdata)
         {
             Path = path;
             Enabled = enabled;
@@ -19,12 +20,18 @@ namespace ProtogameUIStylingTest
 
         public int Order { get; set; }
 
-        public Action<MenuEntry> Handler { get; set; }
+        public MenuClickHandler Handler { get; set; }
 
         public object Userdata { get; set; }
 
-        public Func<MenuEntry, bool> DynamicEnabledHandler { get; set; }
+        public MenuDynamicEnabledHandler DynamicEnabledHandler { get; set; }
 
-        public Func<MenuEntry, string> DynamicTextHandler { get; set; }
+        public MenuDynamicTextHandler DynamicTextHandler { get; set; }
     }
+
+    public delegate void MenuClickHandler(IGameContext gameContext, MenuEntry menuEntry);
+
+    public delegate bool MenuDynamicEnabledHandler(MenuEntry menuEntry);
+
+    public delegate string MenuDynamicTextHandler(MenuEntry menuEntry);
 }

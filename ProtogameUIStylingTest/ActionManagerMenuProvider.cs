@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Protogame;
+using System;
 using System.Collections.Generic;
 
 namespace ProtogameUIStylingTest
 {
-    public class ActionManager : IMenuProvider
+    public class ActionManagerMenuProvider : IMenuProvider
     {
         public IEnumerable<MenuEntry> GetMenuItems()
         {
@@ -11,7 +12,7 @@ namespace ProtogameUIStylingTest
             yield return new MenuEntry("Edit/Redo", true, 1, OnRedoAction, null) { DynamicTextHandler = OnRedoTextHandler, DynamicEnabledHandler = OnRedoEnabledHandler };
         }
 
-        private void OnUndoAction(MenuEntry obj)
+        private void OnUndoAction(IGameContext gameContext, MenuEntry obj)
         {
         }
 
@@ -25,7 +26,7 @@ namespace ProtogameUIStylingTest
             return false;
         }
 
-        private void OnRedoAction(MenuEntry obj)
+        private void OnRedoAction(IGameContext gameContext, MenuEntry obj)
         {
         }
 

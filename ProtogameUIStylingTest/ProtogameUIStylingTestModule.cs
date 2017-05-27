@@ -22,8 +22,10 @@ namespace ProtogameUIStylingTest
             kernel.Bind<IMainMenuController>().To<WindowsMainMenuController>().InSingletonScope();
 #endif
 
-            kernel.Bind<IMenuProvider>().To<ProjectManager>().InSingletonScope();
-            kernel.Bind<IMenuProvider>().To<ActionManager>().InSingletonScope();
+            kernel.Bind<IMenuProvider>().To<ProjectManagerMenuProvider>().InSingletonScope();
+            kernel.Bind<IMenuProvider>().To<ActionManagerMenuProvider>().InSingletonScope();
+
+            kernel.Bind<IProjectManager>().To<ProjectManager>().InSingletonScope();
         }
     }
 }

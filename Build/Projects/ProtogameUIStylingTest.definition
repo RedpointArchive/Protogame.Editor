@@ -15,13 +15,14 @@
     <Reference Include="ProtogameUIStylingTest.Content" />
   </References>
   <Files>
-    <Compile Include="ActionManager.cs" />
+    <Compile Include="ActionManagerMenuProvider.cs" />
     <Compile Include="DockableLayoutContainer.cs" />
     <Compile Include="ExampleEntity.cs" />
     <Compile Include="IDockableContainer.cs" />
     <Compile Include="IEntityFactory.cs" />
     <Compile Include="IMainMenuController.cs" />
     <Compile Include="IMenuProvider.cs" />
+    <Compile Include="IProjectManager.cs" />
     <Compile Include="ITabbableContainer.cs" />
     <Compile Include="MenuEntry.cs" />
     <Compile Include="NuiButtonSkinRenderer.cs" />
@@ -32,6 +33,7 @@
     <Compile Include="NuiRenderer.cs" />
     <Compile Include="NuiSingleContainerSkinRenderer.cs" />
     <Compile Include="ProjectManager.cs" />
+    <Compile Include="ProjectManagerMenuProvider.cs" />
     <Compile Include="ProtogameUIStylingTestGame.cs" />
     <Compile Include="ProtogameUIStylingTestGameConfiguration.cs" />
     <Compile Include="ProtogameUIStylingTestModule.cs" />
