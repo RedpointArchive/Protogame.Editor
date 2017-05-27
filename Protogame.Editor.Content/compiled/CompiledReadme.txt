@@ -1,1 +1,0 @@
-This is the location where cross-compiled assets are stored.  Run the compile.bat script in the parent directory to compile assets.
