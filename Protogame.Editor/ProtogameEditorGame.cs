@@ -16,7 +16,7 @@ namespace Protogame.Editor
         {
             IsMouseVisible = true;
             window.AllowUserResizing = true;
-            window.Title = "Protogame 7.0.0 (Build c510ef6)";
+            window.Title = "Please wait, Protogame is loading...";
             window.Maximize();
         }
 

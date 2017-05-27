@@ -39,6 +39,16 @@ namespace Protogame.Editor.Nui
                 new Rectangle(rectangle.X, rectangle.Y, rectangle.Width - 1, rectangle.Height - 1));
         }
 
+        public void RenderToolbar(IRenderContext renderContext, Rectangle rectangle)
+        {
+            RenderRoundedRectangle(renderContext,
+                new Rectangle(rectangle.X, rectangle.Y, rectangle.Width - 1, rectangle.Height - 1),
+                0,
+                GetBackgroundColorAt,
+                false,
+                false);
+        }
+
         private void RenderButtonInternal(IRenderContext renderContext, Rectangle rectangle)
         {
             RenderRoundedRectangle(renderContext, rectangle, 3, GetBackgroundColorAt, false, false);

@@ -15,10 +15,22 @@
     <Reference Include="Protogame.Editor.Content" />
   </References>
   <Files>
+    <Compile Include="Console\EditorConsole.cs" />
+    <Compile Include="EditorWindow\ConsoleEditorWindow.cs" />
+    <Compile Include="EditorWindow\EditorWindow.cs" />
+    <Compile Include="EditorWindow\GameEditorWindow.cs" />
+    <Compile Include="EditorWindow\HierarchyEditorWindow.cs" />
+    <Compile Include="EditorWindow\IEditorWindowFactory.cs" />
+    <Compile Include="EditorWindow\InspectorEditorWindow.cs" />
+    <Compile Include="EditorWindow\ProjectEditorWindow.cs" />
+    <Compile Include="EditorWindow\WorldEditorWindow.cs" />
+    <Compile Include="Layout\ConsoleContainer.cs" />
     <Compile Include="Layout\DockableLayoutContainer.cs" />
     <Compile Include="Layout\IDockableContainer.cs" />
     <Compile Include="Layout\ITabbableContainer.cs" />
     <Compile Include="Layout\SingleTabbedContainer.cs" />
+    <Compile Include="Layout\ToolbarButton.cs" />
+    <Compile Include="Layout\ToolbarContainer.cs" />
     <Compile Include="Menu\ActionManagerMenuProvider.cs" />
     <Compile Include="Menu\IMainMenuController.cs" />
     <Compile Include="Menu\IMenuProvider.cs" />
@@ -28,11 +40,24 @@
     <Compile Include="Nui\NuiButtonSkinRenderer.cs" />
     <Compile Include="Nui\NuiCanvasSkinRenderer.cs" />
     <Compile Include="Nui\NuiCheckBoxSkinRenderer.cs" />
+    <Compile Include="Nui\NuiConsoleContainerSkinRenderer.cs" />
     <Compile Include="Nui\NuiDockableLayoutContainerSkinRenderer.cs" />
+    <Compile Include="Nui\NuiHorizontalContainerSkinRenderer.cs" />
     <Compile Include="Nui\NuiLabelSkinRenderer.cs" />
+    <Compile Include="Nui\NuiListItemSkinRenderer.cs" />
+    <Compile Include="Nui\NuiListViewSkinRenderer.cs" />
     <Compile Include="Nui\NuiRenderer.cs" />
+    <Compile Include="Nui\NuiScrollableContainerSkinRenderer.cs" />
     <Compile Include="Nui\NuiSingleContainerSkinRenderer.cs" />
+    <Compile Include="Nui\NuiSkinLayout.cs" />
+    <Compile Include="Nui\NuiToolbarContainerSkinRenderer.cs" />
+    <Compile Include="Nui\NuiTreeViewSkinRenderer.cs" />
+    <Compile Include="ProjectManagement\DefinitionInfo.cs" />
+    <Compile Include="ProjectManagement\IDefinitionInfo.cs" />
+    <Compile Include="ProjectManagement\IPackageInfo.cs" />
+    <Compile Include="ProjectManagement\IProject.cs" />
     <Compile Include="ProjectManagement\IProjectManager.cs" />
+    <Compile Include="ProjectManagement\PackageInfo.cs" />
     <Compile Include="ProjectManagement\Project.cs" />
     <Compile Include="ProjectManagement\ProjectManager.cs" />
     <Compile Include="ProtogameEditorGame.cs" />

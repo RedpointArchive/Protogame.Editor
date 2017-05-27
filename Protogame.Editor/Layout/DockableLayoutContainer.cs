@@ -368,6 +368,9 @@ namespace Protogame.Editor.Layout
                     if (tab.Layout.Contains(mousePressEvent.MouseState.Position))
                     {
                         ActiveTabIndex = tab.Index;
+
+                        // Also make the tab content the focus.
+                        _innerRegions[ActiveTabIndex]?.Focus();
                     }
                 }
             }

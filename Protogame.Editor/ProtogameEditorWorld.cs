@@ -8,6 +8,8 @@ using Protogame;
 using Protogame.Editor.Nui;
 using Protogame.Editor.Menu;
 using Protogame.Editor.Layout;
+using Protogame.Editor.EditorWindow;
+using Protogame.Editor.ProjectManagement;
 
 namespace Protogame.Editor
 {
@@ -20,6 +22,8 @@ namespace Protogame.Editor
         private IAssetManager _assetManager;
         private List<Button> _toolButtons = new List<Button>();
         private readonly IMainMenuController _mainMenuController;
+        private readonly IEditorWindowFactory _editorWindowFactory;
+        private readonly IProjectManager _projectManager;
 
         public ProtogameEditorWorld(
             INode worldNode,
@@ -27,12 +31,16 @@ namespace Protogame.Editor
             ISkinLayout skinLayout,
             ISkinDelegator skinDelegator,
             IAssetManager assetManager,
-            IMainMenuController mainMenuController)
+            IMainMenuController mainMenuController,
+            IEditorWindowFactory editorWindowFactory,
+            IProjectManager projectManager)
         {
             _skinLayout = skinLayout;
             _skinDelegator = skinDelegator;
             _assetManager = assetManager;
             _mainMenuController = mainMenuController;
+            _editorWindowFactory = editorWindowFactory;
+            _projectManager = projectManager;
 
             SetupCanvas();
 
@@ -50,21 +58,12 @@ namespace Protogame.Editor
             dockableLayoutContainer.BottomHeight = 250;
 
             var rightDockableLayoutContainer = new DockableLayoutContainer();
-            var rightTabbableContainer = new SingleTabbedContainer { Title = "Inspector", Icon = _assetManager.Get<TextureAsset>("texture.IconInspector") };
-            var rightContainer = new SingleContainer();
-            rightTabbableContainer.SetChild(rightContainer);
-            rightDockableLayoutContainer.AddInnerRegion(rightTabbableContainer);
+            rightDockableLayoutContainer.AddInnerRegion(_editorWindowFactory.CreateInspectorEditorWindow());
             dockableLayoutContainer.SetRightRegion(rightDockableLayoutContainer);
 
             var bottomDockableLayoutContainer = new DockableLayoutContainer();
-            var projectTabbableContainer = new SingleTabbedContainer { Title = "Project", Icon = _assetManager.Get<TextureAsset>("texture.IconFolder") };
-            var projectContainer = new SingleContainer();
-            projectTabbableContainer.SetChild(projectContainer);
-            bottomDockableLayoutContainer.AddInnerRegion(projectTabbableContainer);
-            var consoleTabbableContainer = new SingleTabbedContainer { Title = "Console", Icon = _assetManager.Get<TextureAsset>("texture.IconTerminal") };
-            var consoleContainer = new SingleContainer();
-            consoleTabbableContainer.SetChild(consoleContainer);
-            bottomDockableLayoutContainer.AddInnerRegion(consoleTabbableContainer);
+            bottomDockableLayoutContainer.AddInnerRegion(_editorWindowFactory.CreateProjectEditorWindow());
+            bottomDockableLayoutContainer.AddInnerRegion(_editorWindowFactory.CreateConsoleEditorWindow());
             dockableLayoutContainer.SetBottomRegion(bottomDockableLayoutContainer);
 
             var workspaceDockableLayoutContainer = new DockableLayoutContainer();
@@ -73,24 +72,11 @@ namespace Protogame.Editor
             dockableLayoutContainer.AddInnerRegion(workspaceDockableLayoutContainer);
 
             var leftDockableLayoutContainer = new DockableLayoutContainer();
-            var leftTabbableContainer = new SingleTabbedContainer { Title = "Hierarchy", Icon = _assetManager.Get<TextureAsset>("texture.IconHierarchy") };
-            var leftContainer = new SingleContainer();
-            leftTabbableContainer.SetChild(leftContainer);
-            leftDockableLayoutContainer.AddInnerRegion(leftTabbableContainer);
+            leftDockableLayoutContainer.AddInnerRegion(_editorWindowFactory.CreateHierarchyEditorWindow());
             workspaceContainer.SetLeftRegion(leftDockableLayoutContainer);
             
-            var worldTabbableContainer = new SingleTabbedContainer { Title = "World", Icon = _assetManager.Get<TextureAsset>("texture.IconGrid") };
-            var worldContainer = new RelativeContainer();
-            worldContainer.AddChild(new Button { Text = "World Button" }, new Rectangle(20, 20, 120, 18));
-            worldTabbableContainer.SetChild(worldContainer);
-            
-            var gameTabbableContainer = new SingleTabbedContainer { Title = "Game", Icon = _assetManager.Get<TextureAsset>("texture.IconDirectionalPad") };
-            var gameContainer = new RelativeContainer();
-            gameContainer.AddChild(new Button { Text = "Game Button" }, new Rectangle(20, 20, 120, 18));
-            gameTabbableContainer.SetChild(gameContainer);
-
-            workspaceContainer.AddInnerRegion(worldTabbableContainer);
-            workspaceContainer.AddInnerRegion(gameTabbableContainer);
+            workspaceContainer.AddInnerRegion(_editorWindowFactory.CreateWorldEditorWindow());
+            workspaceContainer.AddInnerRegion(_editorWindowFactory.CreateGameEditorWindow());
 
             var panButton = CreateToolButton("texture.IconToolPan", "pan");
             panButton.Toggled = true;
@@ -147,6 +133,8 @@ namespace Protogame.Editor
         public void Update(IGameContext gameContext, IUpdateContext updateContext)
         {
             _mainMenuController.Update(gameContext, updateContext);
+
+            gameContext.Window.Title = "Protogame 7.0.0 (" + _projectManager?.Project?.Name + "; Build c510ef6)";
         }
 
         public IEnumerable<KeyValuePair<Canvas, Rectangle>> Canvases { get; }
