@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<ContentProject Name="ProtogameUIStylingTest.Content">
-  <Source Include="ProtogameUIStylingTest.Content/assets" Match="*" Primary="true" />
-  <Source Include="ProtogameUIStylingTest.Content/compiled" Match="*" />
-</ContentProject>

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Name="ProtogameUIStylingTest" Path="ProtogameUIStylingTest" Type="App">
+<Project Name="Protogame.Editor" Path="Protogame.Editor" Type="App">
   <References>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
@@ -12,7 +12,7 @@
     <Reference Include="Protogame" />
     <Reference Include="Protogame.ThirdParty" />
     <Reference Include="Protogame.EntryPoint" />
-    <Reference Include="ProtogameUIStylingTest.Content" />
+    <Reference Include="Protogame.Editor.Content" />
   </References>
   <Files>
     <Compile Include="ActionManagerMenuProvider.cs" />
