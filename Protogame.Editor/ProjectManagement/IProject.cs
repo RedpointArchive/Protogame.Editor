@@ -14,5 +14,9 @@ namespace Protogame.Editor.ProjectManagement
         ReadOnlyCollection<IPackageInfo> Packages { get; }
 
         ReadOnlyCollection<IDefinitionInfo> Definitions { get; }
+
+        IDefinitionInfo DefaultGame { get; }
+
+        FileInfo DefaultGameBinPath { get; }
     }
 }

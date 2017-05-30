@@ -10,6 +10,8 @@ namespace Protogame.Editor.ProjectManagement
 
         string Type { get; }
 
+        string Role { get; }
+
         XmlDocument LoadedDocument { get; }
 
         List<FileInfo> ScannedContent { get; }

@@ -24,18 +24,6 @@ namespace Protogame.Editor.Nui
 
         public void Render(IRenderContext renderContext, Rectangle layout, HorizontalContainer horizontalContainer)
         {
-            var children = horizontalContainer.ChildrenWithLayouts(layout).ToArray();
-            for (var i = 0; i < children.Length; i++)
-            {
-                if (i < children.Length - 1)
-                {
-                    _renderUtilities.RenderLine(
-                        renderContext,
-                        new Vector2(children[i].Value.Right, children[i].Value.Y),
-                        new Vector2(children[i].Value.Right, children[i].Value.Bottom),
-                        new Color(0, 0, 0, 72));
-                }
-            }
         }
 
         public Vector2 MeasureText(IRenderContext renderContext, string text, HorizontalContainer horizontalContainer)

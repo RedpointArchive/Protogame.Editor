@@ -6,6 +6,7 @@ using Protogame.Editor.Layout;
 using Protogame.Editor.Menu;
 using Protogame.Editor.ProjectManagement;
 using Protogame.Editor.EditorWindow;
+using Protogame.Editor.LoadedGame;
 
 namespace Protogame.Editor
 {
@@ -25,6 +26,7 @@ namespace Protogame.Editor
             kernel.Rebind<ISkinRenderer<ListItem>>().To<NuiListItemSkinRenderer>().InSingletonScope();
             kernel.Rebind<ISkinRenderer<ScrollableContainer>>().To<NuiScrollableContainerSkinRenderer>().InSingletonScope();
             kernel.Rebind<ISkinRenderer<HorizontalContainer>>().To<NuiHorizontalContainerSkinRenderer>().InSingletonScope();
+            kernel.Rebind<ISkinRenderer<HorizontalSpacedContainer>>().To<NuiHorizontalSpacedContainerSkinRenderer>().InSingletonScope();
             kernel.Rebind<ISkinRenderer<ToolbarContainer>>().To<NuiToolbarContainerSkinRenderer>().InSingletonScope();
             kernel.Rebind<ISkinRenderer<TreeView>>().To<NuiTreeViewSkinRenderer>().InSingletonScope();
             kernel.Rebind<ISkinRenderer<ConsoleContainer>>().To<NuiConsoleContainerSkinRenderer>().InSingletonScope();
@@ -43,6 +45,8 @@ namespace Protogame.Editor
             kernel.Bind<ProjectEditorWindow>().To<ProjectEditorWindow>().DiscardNodeOnResolve();
 
             kernel.Rebind<IConsole>().To<EditorConsole>().InSingletonScope();
+
+            kernel.Bind<ILoadedGame>().To<DefaultLoadedGame>().InSingletonScope();
         }
     }
 }

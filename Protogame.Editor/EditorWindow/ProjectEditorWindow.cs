@@ -33,7 +33,7 @@ namespace Protogame.Editor.EditorWindow
             scrollableProjectContainer.SetChild(_projectListView);
             scrollableContentContainer.SetChild(_projectContentView);
 
-            var horizontalContainer = new HorizontalContainer();
+            var horizontalContainer = new HorizontalSpacedContainer();
             horizontalContainer.AddChild(scrollableProjectContainer, "350");
             horizontalContainer.AddChild(scrollableContentContainer, "*");
 
@@ -118,14 +118,21 @@ namespace Protogame.Editor.EditorWindow
             {
                 DefinitionInfo = definitionInfo;
 
-                switch (definitionInfo.LoadedDocument.DocumentElement.Name)
+                if (definitionInfo.Type == "Content")
                 {
-                    case "ContentProject":
-                        _icon = assetManager.Get<TextureAsset>("texture.IconImage");
-                        break;
-                    default:
-                        _icon = assetManager.Get<TextureAsset>("texture.IconCode");
-                        break;
+                    _icon = assetManager.Get<TextureAsset>("texture.IconImage");
+                }
+                else if (definitionInfo.Role == "Server")
+                {
+                    _icon = assetManager.Get<TextureAsset>("texture.IconServer");
+                }
+                else if (definitionInfo.Role == "Game")
+                {
+                    _icon = assetManager.Get<TextureAsset>("texture.IconGame");
+                }
+                else
+                {
+                    _icon = assetManager.Get<TextureAsset>("texture.IconCode");
                 }
             }
 

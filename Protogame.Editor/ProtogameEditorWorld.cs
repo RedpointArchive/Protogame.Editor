@@ -10,6 +10,8 @@ using Protogame.Editor.Menu;
 using Protogame.Editor.Layout;
 using Protogame.Editor.EditorWindow;
 using Protogame.Editor.ProjectManagement;
+using Protogame.Editor.LoadedGame;
+using System;
 
 namespace Protogame.Editor
 {
@@ -24,6 +26,13 @@ namespace Protogame.Editor
         private readonly IMainMenuController _mainMenuController;
         private readonly IEditorWindowFactory _editorWindowFactory;
         private readonly IProjectManager _projectManager;
+        private readonly ILoadedGame _loadedGame;
+        private Button _playButton;
+        private Button _pauseButton;
+        private Button _stopButton;
+        private DockableLayoutContainer _workspaceContainer;
+        private WorldEditorWindow _worldEditorWindow;
+        private GameEditorWindow _gameEditorWindow;
 
         public ProtogameEditorWorld(
             INode worldNode,
@@ -33,7 +42,8 @@ namespace Protogame.Editor
             IAssetManager assetManager,
             IMainMenuController mainMenuController,
             IEditorWindowFactory editorWindowFactory,
-            IProjectManager projectManager)
+            IProjectManager projectManager,
+            ILoadedGame loadedGame)
         {
             _skinLayout = skinLayout;
             _skinDelegator = skinDelegator;
@@ -41,6 +51,7 @@ namespace Protogame.Editor
             _mainMenuController = mainMenuController;
             _editorWindowFactory = editorWindowFactory;
             _projectManager = projectManager;
+            _loadedGame = loadedGame;
 
             SetupCanvas();
 
@@ -67,32 +78,104 @@ namespace Protogame.Editor
             dockableLayoutContainer.SetBottomRegion(bottomDockableLayoutContainer);
 
             var workspaceDockableLayoutContainer = new DockableLayoutContainer();
-            var workspaceContainer = new DockableLayoutContainer();
-            workspaceDockableLayoutContainer.AddInnerRegion(workspaceContainer);
+            _workspaceContainer = new DockableLayoutContainer();
+            workspaceDockableLayoutContainer.AddInnerRegion(_workspaceContainer);
             dockableLayoutContainer.AddInnerRegion(workspaceDockableLayoutContainer);
 
             var leftDockableLayoutContainer = new DockableLayoutContainer();
             leftDockableLayoutContainer.AddInnerRegion(_editorWindowFactory.CreateHierarchyEditorWindow());
-            workspaceContainer.SetLeftRegion(leftDockableLayoutContainer);
-            
-            workspaceContainer.AddInnerRegion(_editorWindowFactory.CreateWorldEditorWindow());
-            workspaceContainer.AddInnerRegion(_editorWindowFactory.CreateGameEditorWindow());
+            _workspaceContainer.SetLeftRegion(leftDockableLayoutContainer);
+
+            _workspaceContainer.AddInnerRegion(_worldEditorWindow = _editorWindowFactory.CreateWorldEditorWindow());
+            _workspaceContainer.AddInnerRegion(_gameEditorWindow = _editorWindowFactory.CreateGameEditorWindow());
 
             var panButton = CreateToolButton("texture.IconToolPan", "pan");
             panButton.Toggled = true;
 
-            var relativeContainer = new RelativeContainer();
-            relativeContainer.AddChild(panButton, new Rectangle(16, 8, 28, 28));
-            relativeContainer.AddChild(CreateToolButton("texture.IconToolMove", "move"), new Rectangle(16 + 30 * 1, 8, 28, 28));
-            relativeContainer.AddChild(CreateToolButton("texture.IconToolRotate", "rotate"), new Rectangle(16 + 30 * 2, 8, 28, 28));
-            relativeContainer.AddChild(CreateToolButton("texture.IconToolResize", "resize"), new Rectangle(16 + 30 * 3, 8, 28, 28));
-            relativeContainer.AddChild(CreateToolButton("texture.IconToolSelect", "select"), new Rectangle(16 + 30 * 4, 8, 28, 28));
+            var toolContainer = new RelativeContainer();
+            toolContainer.AddChild(panButton, new Rectangle(16, 8, 28, 28));
+            toolContainer.AddChild(CreateToolButton("texture.IconToolMove", "move"), new Rectangle(16 + 30 * 1, 8, 28, 28));
+            toolContainer.AddChild(CreateToolButton("texture.IconToolRotate", "rotate"), new Rectangle(16 + 30 * 2, 8, 28, 28));
+            toolContainer.AddChild(CreateToolButton("texture.IconToolResize", "resize"), new Rectangle(16 + 30 * 3, 8, 28, 28));
+            toolContainer.AddChild(CreateToolButton("texture.IconToolSelect", "select"), new Rectangle(16 + 30 * 4, 8, 28, 28));
+
+            var gameControlContainer = new RelativeContainer();
+            gameControlContainer.AddChild(_playButton = CreatePlayButton("texture.IconPlay"), new Rectangle(30 * 0, 8, 28, 28));
+            gameControlContainer.AddChild(_pauseButton = CreatePauseButton("texture.IconPause"), new Rectangle(30 * 1, 8, 28, 28));
+            gameControlContainer.AddChild(_stopButton = CreateStopButton("texture.IconStop"), new Rectangle(30 * 2, 8, 28, 28));
+
+            var unusedContainer = new RelativeContainer();
+
+            var horizontalContainer = new HorizontalContainer();
+            horizontalContainer.AddChild(toolContainer, "*");
+            horizontalContainer.AddChild(gameControlContainer, "88");
+            horizontalContainer.AddChild(unusedContainer, "*");
 
             var verticalContainer = new VerticalContainer();
-            verticalContainer.AddChild(relativeContainer, "40");
+            verticalContainer.AddChild(horizontalContainer, "40");
             verticalContainer.AddChild(dockableLayoutContainer, "*");
 
             _canvas.SetChild(verticalContainer);
+        }
+
+        private Button CreatePlayButton(string texture)
+        {
+            var button = new Button
+            {
+                Icon = _assetManager.Get<TextureAsset>(texture)
+            };
+            button.Click += (sender, e) =>
+            {
+                _loadedGame.Playing = true;
+                button.Toggled = true;
+                // TODO: Set to the correct index or open tab.
+                _workspaceContainer.ActiveTabIndex = 1;
+            };
+            _toolButtons.Add(button);
+            return button;
+        }
+
+        private Button CreatePauseButton(string texture)
+        {
+            var button = new Button
+            {
+                Icon = _assetManager.Get<TextureAsset>(texture)
+            };
+            button.Click += (sender, e) =>
+            {
+                if (_loadedGame.State == LoadedGameState.Playing)
+                {
+                    _loadedGame.Playing = false;
+                    button.Toggled = true;
+                }
+                else if (_loadedGame.State == LoadedGameState.Paused)
+                {
+                    _loadedGame.Playing = true;
+                    button.Toggled = false;
+                }
+            };
+            _toolButtons.Add(button);
+            return button;
+        }
+
+        private Button CreateStopButton(string texture)
+        {
+            var button = new Button
+            {
+                Icon = _assetManager.Get<TextureAsset>(texture)
+            };
+            button.Click += (sender, e) =>
+            {
+                if (_loadedGame.State == LoadedGameState.Playing ||
+                    _loadedGame.State == LoadedGameState.Paused)
+                {
+                    _loadedGame.Restart();
+                    // TODO: Set to the correct index or restore previous tab.
+                    _workspaceContainer.ActiveTabIndex = 0;
+                }
+            };
+            _toolButtons.Add(button);
+            return button;
         }
 
         private Button CreateToolButton(string texture, string tool)
@@ -133,6 +216,10 @@ namespace Protogame.Editor
         public void Update(IGameContext gameContext, IUpdateContext updateContext)
         {
             _mainMenuController.Update(gameContext, updateContext);
+            _loadedGame.Update(gameContext, updateContext);
+
+            _playButton.Toggled = _loadedGame.State == LoadedGameState.Playing || _loadedGame.State == LoadedGameState.Paused;
+            _pauseButton.Toggled = _loadedGame.State == LoadedGameState.Paused;
 
             gameContext.Window.Title = "Protogame 7.0.0 (" + _projectManager?.Project?.Name + "; Build c510ef6)";
         }

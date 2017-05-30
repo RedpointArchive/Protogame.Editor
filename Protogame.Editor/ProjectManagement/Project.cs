@@ -20,5 +20,9 @@ namespace Protogame.Editor.ProjectManagement
         public List<DefinitionInfo> Definitions { get; set; }
 
         ReadOnlyCollection<IDefinitionInfo> IProject.Definitions => Definitions == null ? null : Definitions.OfType<IDefinitionInfo>().ToList().AsReadOnly();
+
+        public IDefinitionInfo DefaultGame { get; set; }
+
+        public FileInfo DefaultGameBinPath { get; set; }
     }
 }

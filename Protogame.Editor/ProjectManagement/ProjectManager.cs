@@ -103,12 +103,31 @@ namespace Protogame.Editor.ProjectManagement
                         break;
                 }
 
+                var role = "Default";
+                if (type != "Content" && type != "Include" && type != "External")
+                {
+                    var referenceNodes = definitionXmlDocument.SelectNodes("//Reference").OfType<XmlElement>().ToList();
+
+                    if (referenceNodes.Any(x => x.GetAttribute("Include") == "Protogame.EntryPoint"))
+                    {
+                        if (type == "Console")
+                        {
+                            role = "Server";
+                        }
+                        else
+                        {
+                            role = "Game";
+                        }
+                    }
+                }
+
                 var definitionInfo = new DefinitionInfo
                 {
                     Name = definitionXmlDocument.DocumentElement.GetAttribute("Name"),
                     Path = definitionXmlDocument.DocumentElement.GetAttribute("Path"),
                     Type = type,
-                    LoadedDocument = definitionXmlDocument
+                    Role = role,
+                    LoadedDocument = definitionXmlDocument,
                 };
                 definitionsList.Add(definitionInfo);
 
@@ -121,6 +140,14 @@ namespace Protogame.Editor.ProjectManagement
                     definitionInfo.ScannedContent = await ScanContentProject(project, definitionInfo);
 
                     project.LoadingStatus = "Loading definitions...";
+                }
+                else if (definitionInfo.Role == "Game")
+                {
+                    if (project.DefaultGame == null)
+                    {
+                        project.DefaultGame = definitionInfo;
+                        project.DefaultGameBinPath = new FileInfo(Path.Combine(project.ProjectPath.FullName, definitionInfo.Path, "bin", "Windows", "AnyCPU", "Debug", definitionInfo.Name + ".exe"));
+                    }
                 }
             }
 
@@ -142,6 +169,7 @@ namespace Protogame.Editor.ProjectManagement
 
             return file;
         }
+
         private List<FileInfo> GetListOfFilesInDirectory(string folder, string match)
         {
             var result = new List<FileInfo>();
