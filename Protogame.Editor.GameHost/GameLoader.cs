@@ -1,30 +1,28 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Protoinject;
+﻿using Protoinject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 
 namespace Protogame.Editor.GameHost
 {
-    public class GameLoader : MarshalByRefObject, IDisposable
+    public class GameLoader : MarshalByRefObject//, IDisposable
     {
         private ICoreGame _game;
-        private DomainGate _domainGate;
-        private Dictionary<string, object> _crossDomainData;
-        private GraphicsDevice _graphicsDevice;
-
-        internal void AssignCrossDomainDataStorage(Dictionary<string, object> crossDomainDictionary)
-        {
-            _crossDomainData = crossDomainDictionary;
-        }
+        private IntPtr _sharedResourceHandle;
+        private EditorHostGame _editorHostGame;
 
         public void LoadFromPath(
             IConsoleHandle consoleHandle,
+            IBaseDirectory baseDirectory,
+            IBackBufferDimensions backBufferDimensions,
             string gameAssembly)
         {
+            // Wrap the backbuffer dimensions service in a proxy, since GraphicsDevice can not
+            // cross the AppDomain boundary.
+            backBufferDimensions = new BackBufferDimensionsProxy(backBufferDimensions);
+
             // Load the target assembly.
             consoleHandle.LogDebug("Loading game assembly from " + gameAssembly + "...");
             var assembly = Assembly.LoadFrom(gameAssembly);
@@ -87,8 +85,8 @@ namespace Protogame.Editor.GameHost
                 configuration.ConfigureKernel(kernel);
 
                 // Rebind services so the game renders correctly inside the editor.
-                kernel.Rebind<IBaseDirectory>().ToMethod(x => (IBaseDirectory)_crossDomainData["BaseDirectory"]).InSingletonScope();
-                kernel.Rebind<IBackBufferDimensions>().ToMethod(x => (IBackBufferDimensions)_crossDomainData["BackBufferDimensions"]).InSingletonScope();
+                kernel.Rebind<IBaseDirectory>().ToMethod(x => baseDirectory).InSingletonScope();
+                kernel.Rebind<IBackBufferDimensions>().ToMethod(x => backBufferDimensions).InSingletonScope();
 
                 if (game == null)
                 {
@@ -106,67 +104,31 @@ namespace Protogame.Editor.GameHost
             consoleHandle.LogDebug("LoadFromPath complete");
         }
 
-        public DomainGate CreateDomainGate()
+        public void CreateHost()
         {
-            return _domainGate = new DomainGate(this);
+            _editorHostGame = new EditorHostGame(_game);
         }
-
-        public void CreateHostProxyFromCrossDomainDictionary()
+        
+        public void SetRenderTargetPointer(IntPtr sharedResourceHandle)
         {
-            _graphicsDevice = (GraphicsDevice)_crossDomainData["GraphicsDevice"];
-
-            _game?.AssignHost(new HostGameProxy(
-                _graphicsDevice,
-                (GraphicsDeviceManager)_crossDomainData["GraphicsDeviceManager"],
-                (IGameWindow)_crossDomainData["ProtogameWindow"],
-                (GameWindow)_crossDomainData["Window"],
-                (GameServiceContainer)_crossDomainData["Services"],
-                (ContentManager)_crossDomainData["ContentManager"]));
-
-            _game?.LoadContent();
-            _game?.EnableImmediateStartFromHost();
-        }
-
-        public void Dispose()
-        {
-            _crossDomainData = null;
+            _editorHostGame?.SetSharedResourceHandle(sharedResourceHandle);
         }
 
         public void Render(TimeSpan elapsedGameTime, TimeSpan totalGameTime)
         {
-            if (_game == null || _game.RenderContext == null || _graphicsDevice == null)
-            {
-                return;
-            }
-
-            // We have to tell the game's RenderContext about the render targets
-            // that it will be rendering to.  That way, the stack won't get uncorrectly
-            // set to the backbuffer when all targets are popped.
-            var didPush = false;
-            if (_game.RenderContext.GraphicsDevice != null)
-            {
-                _game.RenderContext.PushRenderTarget(_graphicsDevice.GetRenderTargets());
-                didPush = true;
-            }
-
-            _game.Draw(new GameTime(totalGameTime, elapsedGameTime));
-
-            if (didPush)
-            {
-                _game.RenderContext.PopRenderTarget();
-            }
+            _editorHostGame?.Render(totalGameTime, elapsedGameTime);
         }
 
         public void Update(TimeSpan elapsedGameTime, TimeSpan totalGameTime)
         {
-            _game?.Update(new GameTime(totalGameTime, elapsedGameTime));
+            _editorHostGame?.Update(totalGameTime, elapsedGameTime);
         }
 
         public void UpdateForLoadContentOnly(TimeSpan elapsedGameTime, TimeSpan totalGameTime)
         {
             if (!(_game?.HasLoadedContent ?? true))
             {
-                _game?.Update(new GameTime(totalGameTime, elapsedGameTime));
+                _editorHostGame?.Update(totalGameTime, elapsedGameTime);
             }
         }
     }

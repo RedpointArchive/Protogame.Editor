@@ -14,18 +14,16 @@ namespace Protogame.Editor.Override
             _loadedGame = loadedGame;
         }
 
-        public Point GetSize(GraphicsDevice graphicsDevice)
+        public BackBufferSize GetSize(GraphicsDevice graphicsDevice)
         {
             var size = _loadedGame.GetRenderTargetSize();
 
             if (size == null)
             {
-                return new Point(
-                    graphicsDevice.PresentationParameters.BackBufferWidth,
-                    graphicsDevice.PresentationParameters.BackBufferHeight);
+                return new BackBufferSize(100, 100);
             }
 
-            return size.Value;
+            return new BackBufferSize(size.Value.X, size.Value.Y);
         }
     }
 }

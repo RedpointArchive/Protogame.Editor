@@ -8,6 +8,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="protobuf-net" />
     <Reference Include="Protoinject" />
+    <Reference Include="Mono.Cecil" />
     <Reference Include="MonoGame.Framework" />
     <Reference Include="Protogame" />
     <Reference Include="Protogame.ThirdParty" />
@@ -15,6 +16,14 @@
     <Reference Include="Protogame.Editor.Content" />
     <Reference Include="Protogame.Editor.GameHost" />
   </References>
+  <Dependencies>
+    <Uses Name="Prestart" />
+  </Dependencies>
+  <Services>
+    <Service Name="Prestart">
+      <AddDefine>REQUIRE_PRESTART</AddDefine>
+    </Service>
+  </Services>
   <Files>
     <Compile Include="Console\EditorConsole.cs" />
     <Compile Include="EditorWindow\ConsoleEditorWindow.cs" />
@@ -58,9 +67,9 @@
     <Compile Include="Nui\NuiSkinLayout.cs" />
     <Compile Include="Nui\NuiToolbarContainerSkinRenderer.cs" />
     <Compile Include="Nui\NuiTreeViewSkinRenderer.cs" />
-    <Compile Include="Override\EditorGameWindow.cs" />
     <Compile Include="Override\GameBackBufferDimensions.cs" />
     <Compile Include="Override\GameBaseDirectory.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="ProjectManagement\DefinitionInfo.cs" />
     <Compile Include="ProjectManagement\IDefinitionInfo.cs" />
     <Compile Include="ProjectManagement\IPackageInfo.cs" />

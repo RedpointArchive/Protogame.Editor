@@ -1,4 +1,6 @@
-﻿using System;
+﻿#if FALSE
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -110,3 +112,5 @@ namespace Protogame.Editor.GameHost
         }
     }
 }
+
+#endif

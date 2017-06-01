@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Content;
 
 namespace Protogame.Editor.GameHost
 {
+#if FALSE
     public class HostGameProxy : MarshalByRefObject, IHostGame
     {
         private readonly GraphicsDevice _graphicsDevice;
@@ -64,4 +65,5 @@ namespace Protogame.Editor.GameHost
         {
         }
     }
+#endif
 }

@@ -2,6 +2,7 @@
 
 using System.Linq;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 namespace Protogame.Editor.Menu
 {
@@ -227,7 +228,7 @@ namespace Protogame.Editor.Menu
 
         private System.Windows.Forms.MainMenu CreateMainMenuControlIfNecessary(IGameContext gameContext)
         {
-            var form = (System.Windows.Forms.Form)System.Windows.Forms.Form.FromHandle(gameContext.Window.PlatformWindow.Handle);
+            var form = (System.Windows.Forms.Form)System.Windows.Forms.Form.FromHandle(((Game)gameContext.Game.HostGame).Window.Handle);
             
             if (form.Menu != null)
             {

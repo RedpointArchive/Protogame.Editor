@@ -209,7 +209,7 @@ namespace Protogame.Editor
         {
             if (renderContext.IsFirstRenderPass())
             {
-                gameContext.Graphics.GraphicsDevice.Clear(new Color(162, 162, 162, 255));
+                renderContext.GraphicsDevice.Clear(new Color(162, 162, 162, 255));
             }
         }
 

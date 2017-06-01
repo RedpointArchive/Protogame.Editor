@@ -25,7 +25,6 @@ namespace Protogame.Editor.LoadedGame
         private Point? _renderTargetSize;
         private GameLoader _gameLoader;
         private bool _hasRunGameUpdate;
-        private Dictionary<string, object> _crossDomainData;
         private bool _hasAssignedGame;
         private bool _isReadyForMainThread;
         private bool _mustRestart;
@@ -145,13 +144,7 @@ namespace Protogame.Editor.LoadedGame
             {
                 if (!_hasAssignedGame)
                 {
-                    _crossDomainData.Add("GraphicsDevice", gameContext.Game.GraphicsDevice);
-                    _crossDomainData.Add("GraphicsDeviceManager", gameContext.Game.GraphicsDeviceManager);
-                    _crossDomainData.Add("ProtogameWindow", new EditorGameWindow(this, gameContext.Game.HostGame.Window));
-                    _crossDomainData.Add("Window", gameContext.Game.HostGame.Window);
-                    _crossDomainData.Add("Services", gameContext.Game.HostGame.Services);
-                    _crossDomainData.Add("ContentManager", gameContext.Game.HostGame.Content);
-                    _gameLoader.CreateHostProxyFromCrossDomainDictionary();
+                    _gameLoader.CreateHost();
                     _hasAssignedGame = true;
                 }
 
@@ -168,7 +161,8 @@ namespace Protogame.Editor.LoadedGame
             }
             catch (Exception ex)
             {
-                _consoleHandle.LogError(ex.Message + ex.StackTrace);
+                _consoleHandle.LogError(ex.Message);
+                Playing = false;
             }
         }
         
@@ -188,22 +182,23 @@ namespace Protogame.Editor.LoadedGame
             {
                 _renderTarget2D = _renderTargetBackBufferUtilities.UpdateCustomSizedRenderTarget(
                     _renderTarget2D,
-                    gameContext,
+                    renderContext,
                     _renderTargetSize.Value.ToVector2(),
                     null,
                     null,
-                    null);
+                    0, // We must NOT have MSAA on this render target for sharing to work properly!
+                    true);
 
-                var oldRenderTargets = renderContext.GraphicsDevice.GetRenderTargets();
-                renderContext.GraphicsDevice.SetRenderTarget(_renderTarget2D);
+                _gameLoader.SetRenderTargetPointer(_renderTarget2D.GetSharedHandle());
 
+                _renderTarget2D.ReleaseLock(1234);
                 _gameLoader.Render(gameContext.GameTime.ElapsedGameTime, gameContext.GameTime.TotalGameTime);
-            
-                renderContext.GraphicsDevice.SetRenderTargets(oldRenderTargets);
+                _renderTarget2D.AcquireLock(1234, 1000000);
             }
             catch (Exception ex)
             {
-                _consoleHandle.LogError(ex.Message + ex.StackTrace);
+                _consoleHandle.LogError(ex.Message);
+                Playing = false;
             }
         }
 
@@ -219,8 +214,7 @@ namespace Protogame.Editor.LoadedGame
             {
                 _consoleHandle.LogDebug("Unloading existing appdomain first");
                 _gameLoader = null;
-                // TODO: Restore this when we're using marshalled objects for MonoGame instead of cross-domain hacks.
-                //AppDomain.Unload(_appDomain);
+                AppDomain.Unload(_appDomain);
                 _appDomain = null;
             }
 
@@ -241,17 +235,12 @@ namespace Protogame.Editor.LoadedGame
             // Create the game loader.
             _gameLoader = (GameLoader)_appDomain.CreateInstanceFromAndUnwrap(typeof(GameLoader).Assembly.Location, typeof(GameLoader).FullName);
 
-            // Setup our cross-domain data store.
-            var domainGate = _gameLoader.CreateDomainGate();
-            _crossDomainData = new Dictionary<string, object>();
-            DomainGate.Send(domainGate, _crossDomainData);
-
             // Load the game assemblies.
             _lastModified = _projectManager.Project.DefaultGameBinPath.LastWriteTimeUtc;
-            _crossDomainData["BaseDirectory"] = new GameBaseDirectory(_projectManager);
-            _crossDomainData["BackBufferDimensions"] = new GameBackBufferDimensions(this);
             _gameLoader.LoadFromPath(
                 new MarshallableConsoleHandle(_consoleHandle),
+                new GameBaseDirectory(_projectManager),
+                new GameBackBufferDimensions(this),
                 _projectManager.Project.DefaultGameBinPath.FullName);
 
             _hasRunGameUpdate = false;

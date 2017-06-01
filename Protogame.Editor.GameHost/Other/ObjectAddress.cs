@@ -1,4 +1,6 @@
-﻿using System;
+﻿#if FALSE
+
+using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
@@ -42,3 +44,5 @@ namespace Protogame.Editor.GameHost
         }
     }
 }
+
+#endif

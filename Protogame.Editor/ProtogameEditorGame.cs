@@ -33,12 +33,12 @@ namespace Protogame.Editor
 
         public override void Draw(GameTime gameTime)
         {
+            base.Draw(gameTime);
+
             if (_loadedGame != null)
             {
                 _loadedGame.RenderGame(GameContext, RenderContext);
             }
-
-            base.Draw(gameTime);
         }
 
         public override void Update(GameTime gameTime)
