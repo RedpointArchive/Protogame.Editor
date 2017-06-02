@@ -26,6 +26,8 @@
   </Services>
   <Files>
     <Compile Include="Console\EditorConsole.cs" />
+    <Compile Include="EditorHotKeyBinder.cs" />
+    <Compile Include="EditorHotKeyListener.cs" />
     <Compile Include="EditorWindow\ConsoleEditorWindow.cs" />
     <Compile Include="EditorWindow\EditorWindow.cs" />
     <Compile Include="EditorWindow\GameEditorWindow.cs" />
@@ -43,6 +45,7 @@
     <Compile Include="Layout\ToolbarButton.cs" />
     <Compile Include="Layout\ToolbarContainer.cs" />
     <Compile Include="LoadedGame\DefaultLoadedGame.cs" />
+    <Compile Include="LoadedGame\GameRenderTargetLockableCanvasRenderPass.cs" />
     <Compile Include="LoadedGame\ILoadedGame.cs" />
     <Compile Include="LoadedGame\LoadedGameState.cs" />
     <Compile Include="Menu\ActionManagerMenuProvider.cs" />

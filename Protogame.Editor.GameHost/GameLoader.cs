@@ -13,6 +13,8 @@ namespace Protogame.Editor.GameHost
         private IntPtr _sharedResourceHandle;
         private EditorHostGame _editorHostGame;
         private EditorEventEngineHook _editorEventEngineHook;
+        private ILogShipping _logShipping;
+        private IConsoleHandle _consoleHandle;
 
         public void LoadFromPath(
             IConsoleHandle consoleHandle,
@@ -121,6 +123,8 @@ namespace Protogame.Editor.GameHost
             }
 
             _game = game;
+            _logShipping = kernel.Get<ILogShipping>();
+            _consoleHandle = consoleHandle;
 
             consoleHandle.LogDebug("LoadFromPath complete");
         }
@@ -130,19 +134,66 @@ namespace Protogame.Editor.GameHost
             _editorHostGame = new EditorHostGame(_game);
         }
         
-        public void SetRenderTargetPointer(IntPtr sharedResourceHandle)
+        public void SetRenderTargetPointers(IntPtr[] sharedResourceHandles, int currentWriteIndex)
         {
-            _editorHostGame?.SetSharedResourceHandle(sharedResourceHandle);
+            _editorHostGame?.SetSharedResourceHandles(sharedResourceHandles, currentWriteIndex);
+        }
+
+        public bool GetMousePositionToSet(ref int x, ref int y)
+        {
+            if (_editorHostGame == null)
+            {
+                return false;
+            }
+
+            return _editorHostGame.GetMousePositionToSet(ref x, ref y);
         }
 
         public void Render(TimeSpan elapsedGameTime, TimeSpan totalGameTime)
         {
-            _editorHostGame?.Render(totalGameTime, elapsedGameTime);
+            try
+            {
+                _editorHostGame?.Render(totalGameTime, elapsedGameTime);
+            }
+            finally
+            {
+                FlushLogs();
+            }
         }
 
         public void Update(TimeSpan elapsedGameTime, TimeSpan totalGameTime)
         {
-            _editorHostGame?.Update(totalGameTime, elapsedGameTime);
+            try
+            {
+                _editorHostGame?.Update(totalGameTime, elapsedGameTime);
+            }
+            finally
+            {
+                FlushLogs();
+            }
+        }
+
+        private void FlushLogs()
+        {
+            var logs = _logShipping.GetAndFlushLogs();
+            foreach (var l in logs)
+            {
+                switch (l.LogLevel)
+                {
+                    case ConsoleLogLevel.Debug:
+                        _consoleHandle.LogDebug(l.Message);
+                        break;
+                    case ConsoleLogLevel.Info:
+                        _consoleHandle.LogInfo(l.Message);
+                        break;
+                    case ConsoleLogLevel.Warning:
+                        _consoleHandle.LogWarning(l.Message);
+                        break;
+                    case ConsoleLogLevel.Error:
+                        _consoleHandle.LogError(l.Message);
+                        break;
+                }
+            }
         }
 
         public void UpdateForLoadContentOnly(TimeSpan elapsedGameTime, TimeSpan totalGameTime)

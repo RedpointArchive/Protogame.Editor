@@ -5,65 +5,73 @@ namespace Protogame.Editor.GameHost
 {
     public class EditorGraphicsDeviceService : IGraphicsDeviceService
     {
-        private IntPtr _sharedResourceHandle;
+        private IntPtr[] _sharedResourceHandles;
+        private RenderTarget2D[] _renderTargets;
+        private int _currentWriteIndex;
 
         public EditorGraphicsDeviceService()
         {
-            _sharedResourceHandle = IntPtr.Zero;
+            _sharedResourceHandles = new IntPtr[3];
+            _renderTargets = new RenderTarget2D[3];
+            _currentWriteIndex = 0;
         }
 
-        public void UpdateHandle(IntPtr sharedResourceHandle)
+        public void UpdateHandles(IntPtr[] sharedResourceHandles, int currentWriteIndex)
         {
-            if (_sharedResourceHandle != sharedResourceHandle)
-            {
-                if (RenderTarget != null)
-                {
-                    RenderTarget.Dispose();
-                    RenderTarget = null;
-                }
+            _currentWriteIndex = currentWriteIndex;
 
-                if (sharedResourceHandle == IntPtr.Zero)
+            if (GraphicsDevice == null && sharedResourceHandles[_currentWriteIndex] != IntPtr.Zero)
+            {
+                // We have been requested to create a graphics device.
+                var parameters = new PresentationParameters();
+
+                parameters.BackBufferWidth = 1;
+                parameters.BackBufferHeight = 1;
+                parameters.BackBufferFormat = SurfaceFormat.Color;
+                parameters.DepthStencilFormat = DepthFormat.Depth24;
+                parameters.DeviceWindowHandle = IntPtr.Zero;
+                parameters.PresentationInterval = PresentInterval.Immediate;
+                parameters.IsFullScreen = false;
+
+                GraphicsDevice = new GraphicsDevice(
+                    GraphicsAdapter.DefaultAdapter,
+                    GraphicsProfile.HiDef,
+                    parameters);
+
+                DeviceCreated?.Invoke(this, EventArgs.Empty);
+            }
+
+            if (GraphicsDevice != null && sharedResourceHandles[_currentWriteIndex] == IntPtr.Zero)
+            {
+                DeviceDisposing?.Invoke(this, EventArgs.Empty);
+
+                GraphicsDevice.Dispose();
+                GraphicsDevice = null;
+            }
+
+            if (_sharedResourceHandles[_currentWriteIndex] != sharedResourceHandles[_currentWriteIndex])
+            {
+                for (var i = 0; i < 3; i++)
                 {
-                    // We have been requested to dispose our graphics device.
+                    _renderTargets[i]?.Dispose();
+                    _renderTargets[i] = null;
+                }
+                
+                for (var i = 0; i < 3; i++)
+                {
                     if (GraphicsDevice != null)
                     {
-                        DeviceDisposing?.Invoke(this, EventArgs.Empty);
-
-                        GraphicsDevice.Dispose();
-                        GraphicsDevice = null;
+                        _renderTargets[i] = RenderTarget2D.FromSharedResourceHandle(
+                            GraphicsDevice,
+                            sharedResourceHandles[i]);
                     }
                 }
 
-                if (sharedResourceHandle != IntPtr.Zero && _sharedResourceHandle == IntPtr.Zero)
-                {
-                    // We have been requested to create a graphics device.
-                    var parameters = new PresentationParameters();
-
-                    parameters.BackBufferWidth = 1;
-                    parameters.BackBufferHeight = 1;
-                    parameters.BackBufferFormat = SurfaceFormat.Color;
-                    parameters.DepthStencilFormat = DepthFormat.Depth24;
-                    parameters.DeviceWindowHandle = IntPtr.Zero;
-                    parameters.PresentationInterval = PresentInterval.Immediate;
-                    parameters.IsFullScreen = false;
-
-                    GraphicsDevice = new GraphicsDevice(
-                        GraphicsAdapter.DefaultAdapter,
-                        GraphicsProfile.HiDef,
-                        parameters);
-
-                    DeviceCreated?.Invoke(this, EventArgs.Empty);
-                }
-
-                RenderTarget = RenderTarget2D.FromSharedResourceHandle(
-                    GraphicsDevice,
-                    sharedResourceHandle);
-
-                _sharedResourceHandle = sharedResourceHandle;
+                _sharedResourceHandles = sharedResourceHandles;
             }
         }
 
-        public RenderTarget2D RenderTarget { get; private set; }
+        public RenderTarget2D RenderTarget => _renderTargets[_currentWriteIndex];
 
         public GraphicsDevice GraphicsDevice { get; private set; }
 

@@ -216,7 +216,6 @@ namespace Protogame.Editor
         public void Update(IGameContext gameContext, IUpdateContext updateContext)
         {
             _mainMenuController.Update(gameContext, updateContext);
-            _loadedGame.Update(gameContext, updateContext);
 
             _playButton.Toggled = _loadedGame.State == LoadedGameState.Playing || _loadedGame.State == LoadedGameState.Paused;
             _pauseButton.Toggled = _loadedGame.State == LoadedGameState.Paused;

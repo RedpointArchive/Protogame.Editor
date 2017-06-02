@@ -47,6 +47,10 @@ namespace Protogame.Editor
             kernel.Rebind<IConsole>().To<EditorConsole>().InSingletonScope();
 
             kernel.Bind<ILoadedGame>().To<DefaultLoadedGame>().InSingletonScope();
+
+            kernel.Rebind<ICanvasRenderPass>().To<GameRenderTargetLockableCanvasRenderPass>().DiscardNodeOnResolve();
+
+            kernel.Bind<IEventBinder<IGameContext>>().To<EditorHotKeyBinder>();
         }
     }
 }

@@ -1,15 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
 
 namespace Protogame.Editor.GameHost
 {
     public class EditorEventEngineHook : IEngineHook
     {
-        private readonly List<Event> _queuedEvents;
+        private readonly ConcurrentQueue<Event> _queuedEvents;
         private readonly IEventEngine<IGameContext> _eventEngine;
 
         public EditorEventEngineHook(IEventEngine<IGameContext> eventEngine)
         {
-            _queuedEvents = new List<Event>();
+            _queuedEvents = new ConcurrentQueue<Event>();
             _eventEngine = eventEngine;
         }
         
@@ -19,12 +20,11 @@ namespace Protogame.Editor.GameHost
 
         public void Update(IGameContext gameContext, IUpdateContext updateContext)
         {
-            foreach (var e in _queuedEvents)
+            Event e;
+            while (_queuedEvents.TryDequeue(out e))
             {
                 _eventEngine.Fire(gameContext, e);
             }
-
-            _queuedEvents.Clear();
         }
 
         public void Update(IServerContext serverContext, IUpdateContext updateContext)
@@ -33,7 +33,7 @@ namespace Protogame.Editor.GameHost
 
         public void QueueEvent(Event @event)
         {
-            _queuedEvents.Add(@event);
+            _queuedEvents.Enqueue(@event);
         }
     }
 }

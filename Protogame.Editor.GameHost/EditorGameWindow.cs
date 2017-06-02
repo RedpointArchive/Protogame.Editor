@@ -48,5 +48,10 @@ namespace Protogame.Editor.GameHost
         public void SetFullscreen(bool fullscreen)
         {
         }
+
+        public void SetCursorPosition(int x, int y)
+        {
+            _hostGame.SetMousePositionToSet(x, y);
+        }
     }
 }

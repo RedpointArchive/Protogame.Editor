@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Protogame.Editor.GameHost
 {
@@ -14,6 +15,9 @@ namespace Protogame.Editor.GameHost
         private readonly EditorGameWindow _editorGameWindow;
         private ContentManager _contentManager;
         private bool _hasLoadedContent = false;
+        private int _mouseX;
+        private int _mouseY;
+        private bool _wantsMouseSet;
 
         public EditorHostGame(ICoreGame coreGame)
         {
@@ -26,9 +30,29 @@ namespace Protogame.Editor.GameHost
             _contentManager = new ContentManager(_serviceContainer, "Content");
         }
 
-        public void SetSharedResourceHandle(IntPtr sharedResourceHandle)
+        internal void SetMousePositionToSet(int x, int y)
         {
-            _graphicsDeviceService.UpdateHandle(sharedResourceHandle);
+            _mouseX = x;
+            _mouseY = y;
+            _wantsMouseSet = true;
+        }
+
+        public bool GetMousePositionToSet(ref int x, ref int y)
+        {
+            if (_wantsMouseSet)
+            {
+                x = _mouseX;
+                y = _mouseY;
+                _wantsMouseSet = false;
+                return true;
+            }
+
+            return false;
+        }
+
+        public void SetSharedResourceHandles(IntPtr[] sharedResourceHandles, int currentWriteIndex)
+        {
+            _graphicsDeviceService.UpdateHandles(sharedResourceHandles, currentWriteIndex);
 
             if (_graphicsDeviceService.RenderTarget != null)
             {
@@ -54,6 +78,7 @@ namespace Protogame.Editor.GameHost
             if (_coreGame.RenderContext != null && _coreGame.RenderContext.GraphicsDevice != null)
             {
                 _graphicsDeviceService.RenderTarget.AcquireLock(1234, 1000000);
+
                 _coreGame.RenderContext.PushRenderTarget(_graphicsDeviceService.RenderTarget);
                 didPush = true;
             }

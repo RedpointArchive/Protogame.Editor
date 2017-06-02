@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using System.Linq;
 
 namespace Protogame.Editor.Layout
 {
@@ -23,7 +24,7 @@ namespace Protogame.Editor.Layout
                 return null;
             }
 
-            return Console.Entries.Length * 16;
+            return Console.Entries.Sum(x => x.Message.Split(new[] { Environment.NewLine }, StringSplitOptions.None).Length) * 16;
         }
 
         public int? GetDesiredWidth(ISkinLayout skin)

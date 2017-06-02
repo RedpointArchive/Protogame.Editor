@@ -9,6 +9,9 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Collections;
 using Protogame.Editor.Override;
+using System.Threading;
+using System.Diagnostics;
+using Microsoft.Xna.Framework.Input;
 
 namespace Protogame.Editor.LoadedGame
 {
@@ -20,14 +23,19 @@ namespace Protogame.Editor.LoadedGame
         private readonly IRenderTargetBackBufferUtilities _renderTargetBackBufferUtilities;
         private DateTime? _lastModified;
         private AppDomain _appDomain;
-        private Task _appDomainLoadingCoroutine;
-        private RenderTarget2D _renderTarget2D;
+        private RenderTarget2D[] _renderTargets;
+        private IntPtr[] _renderTargetSharedHandles;
+        private int _currentWriteTargetIndex;
+        private int _currentReadTargetIndex;
         private Point? _renderTargetSize;
         private GameLoader _gameLoader;
         private bool _hasRunGameUpdate;
         private bool _hasAssignedGame;
         private bool _isReadyForMainThread;
         private bool _mustRestart;
+        private Thread _gameThread;
+        private List<Action> _mainThreadTasks;
+        private Point _offset;
 
         public DefaultLoadedGame(
             IProjectManager projectManager,
@@ -42,6 +50,11 @@ namespace Protogame.Editor.LoadedGame
             _renderTargetSize = new Point(640, 480);
             _hasRunGameUpdate = false;
             _isReadyForMainThread = false;
+            _mainThreadTasks = new List<Action>();
+            _renderTargets = new RenderTarget2D[3];
+            _renderTargetSharedHandles = new IntPtr[3];
+            _currentWriteTargetIndex = 1;
+            _currentReadTargetIndex = 0;
 
             State = LoadedGameState.Loading;
             Playing = false;
@@ -66,9 +79,27 @@ namespace Protogame.Editor.LoadedGame
             State = LoadedGameState.Loading;
         }
 
-        public Texture2D GetGameRenderTarget()
+        public RenderTarget2D GetCurrentGameRenderTarget()
         {
-            return _renderTarget2D;
+            return _renderTargets[_currentReadTargetIndex];
+        }
+
+        public void IncrementReadRenderTargetIfPossible()
+        {
+            var nextIndex = _currentReadTargetIndex + 1;
+            if (nextIndex == 3) { nextIndex = 0; }
+
+            if (nextIndex != _currentWriteTargetIndex)
+            {
+                // Only move the write index if the one we want is not the one
+                // we're currently reading from.
+                _currentReadTargetIndex = nextIndex;
+            }
+        }
+
+        public void SetPositionOffset(Point offset)
+        {
+            _offset = offset;
         }
 
         public void SetRenderTargetSize(Point size)
@@ -98,6 +129,23 @@ namespace Protogame.Editor.LoadedGame
                     State = LoadedGameState.Paused;
                 }
             }
+            
+            foreach (var act in _mainThreadTasks)
+            {
+                act();
+            }
+
+            _mainThreadTasks.Clear();
+
+            if (_gameLoader != null)
+            {
+                int x = 0;
+                int y = 0;
+                if (_gameLoader.GetMousePositionToSet(ref x, ref y))
+                {
+                    Mouse.SetPosition(x + _offset.X, y + _offset.Y);
+                }
+            }
 
             if (_projectManager.Project != null && _projectManager.Project.DefaultGameBinPath != null)
             {
@@ -116,103 +164,63 @@ namespace Protogame.Editor.LoadedGame
                     return;
                 }
 
-                // If the app domain loading coroutine is running, skip.
-                if (_appDomainLoadingCoroutine != null && !_appDomainLoadingCoroutine.IsCompleted)
+                // If the game thread already exists and is running, skip.
+                if (_gameThread != null && _gameThread.ThreadState != System.Threading.ThreadState.Stopped)
                 {
                     return;
                 }
-                if (_appDomainLoadingCoroutine != null && _appDomainLoadingCoroutine.IsFaulted)
+
+                // Abort the game thread if we plan on reloading.
+                if (_gameThread != null)
                 {
-                    throw new AggregateException(_appDomainLoadingCoroutine.Exception);
+                    _gameThread.Abort();
+                    _gameThread = null;
                 }
 
                 // We need to reload the app domain.  Kick off a coroutine to handle it.
                 _isReadyForMainThread = false;
                 _mustRestart = false;
-                _appDomainLoadingCoroutine = Task.Run(LoadAppDomain);
+                _gameThread = new Thread(GameThreadRun);
+                _gameThread.Name = "Game Hosting Thread";
+                _gameThread.IsBackground = true;
+                _gameThread.Start();
             }
         }
 
-        public void UpdateGame(IGameContext gameContext, IUpdateContext updateContext)
+        public void Render(IGameContext gameContext, IRenderContext renderContext)
         {
-            if (!_isReadyForMainThread || _gameLoader == null)
+            for (var i = 0; i < 3; i++)
             {
-                return;
-            }
-
-            try
-            {
-                if (!_hasAssignedGame)
-                {
-                    _gameLoader.CreateHost();
-                    _hasAssignedGame = true;
-                }
-
-                if (State == LoadedGameState.Playing)
-                {
-                    _gameLoader.Update(gameContext.GameTime.ElapsedGameTime, gameContext.GameTime.TotalGameTime);
-                }
-                else
-                {
-                    _gameLoader.UpdateForLoadContentOnly(gameContext.GameTime.ElapsedGameTime, gameContext.GameTime.TotalGameTime);
-                }
-
-                _hasRunGameUpdate = true;
-            }
-            catch (Exception ex)
-            {
-                _consoleHandle.LogError(ex.Message);
-                Playing = false;
-            }
-        }
-        
-        public void RenderGame(IGameContext gameContext, IRenderContext renderContext)
-        {
-            if (_gameLoader == null || _renderTargetSize == null || !_hasRunGameUpdate)
-            {
-                return;
-            }
-
-            if (State != LoadedGameState.Playing)
-            {
-                return;
-            }
-
-            try
-            {
-                _renderTarget2D = _renderTargetBackBufferUtilities.UpdateCustomSizedRenderTarget(
-                    _renderTarget2D,
+                var oldRenderTarget = _renderTargets[i];
+                _renderTargets[i] = _renderTargetBackBufferUtilities.UpdateCustomSizedRenderTarget(
+                    _renderTargets[i],
                     renderContext,
                     _renderTargetSize.Value.ToVector2(),
                     null,
                     null,
                     0, // We must NOT have MSAA on this render target for sharing to work properly!
                     true);
-
-                _gameLoader.SetRenderTargetPointer(_renderTarget2D.GetSharedHandle());
-
-                _renderTarget2D.ReleaseLock(1234);
-                _gameLoader.Render(gameContext.GameTime.ElapsedGameTime, gameContext.GameTime.TotalGameTime);
-                _renderTarget2D.AcquireLock(1234, 1000000);
-            }
-            catch (Exception ex)
-            {
-                _consoleHandle.LogError(ex.Message);
-                Playing = false;
+                _renderTargetSharedHandles[i] = _renderTargets[i]?.GetSharedHandle() ?? IntPtr.Zero;
+                if (_renderTargets[i] != null && _renderTargets[i] != oldRenderTarget)
+                {
+                    // Release the lock we will have.
+                    _renderTargets[i].ReleaseLock(1234);
+                }
             }
         }
 
-        private async Task LoadAppDomain()
+        private void QueueAction(Action act)
         {
-            _consoleHandle.LogDebug("Waiting for things to settle before loading game appdomain");
+            _mainThreadTasks.Add(act);
+        }
 
-            await Task.Delay(1000);
-
-            _consoleHandle.LogDebug("Starting load of game appdomain");
+        private void GameThreadRun()
+        {
+            QueueAction(() => _consoleHandle.LogDebug("Starting load of game appdomain"));
 
             if (_appDomain != null)
             {
-                _consoleHandle.LogDebug("Unloading existing appdomain first");
+                QueueAction(() => _consoleHandle.LogDebug("Unloading existing appdomain first"));
                 _gameLoader = null;
                 AppDomain.Unload(_appDomain);
                 _appDomain = null;
@@ -221,7 +229,7 @@ namespace Protogame.Editor.LoadedGame
             var domaininfo = new AppDomainSetup();
             domaininfo.ApplicationBase = _projectManager.Project.DefaultGameBinPath.DirectoryName;
             domaininfo.DisallowApplicationBaseProbing = false;
-            _consoleHandle.LogDebug("Game appdomain will have base of {0}", domaininfo.ApplicationBase);
+            QueueAction(() => _consoleHandle.LogDebug("Game appdomain will have base of {0}", domaininfo.ApplicationBase));
             _appDomain = AppDomain.CreateDomain("LoadedGame", null, new AppDomainSetup
             {
                 LoaderOptimization = LoaderOptimization.MultiDomain
@@ -247,11 +255,211 @@ namespace Protogame.Editor.LoadedGame
             _hasAssignedGame = false;
             _isReadyForMainThread = true;
 
-            _consoleHandle.LogDebug("GameLoader LoadFromPath has completed (now outside appdomain)");
+            QueueAction(() => _consoleHandle.LogDebug("GameLoader LoadFromPath has completed (now outside appdomain)"));
 
             State = LoadedGameState.Loaded;
+
+            // Now run the main game loop.
+            try
+            {
+                _gameTimer = Stopwatch.StartNew();
+
+                while (true)
+                {
+                    try
+                    {
+                        Tick();
+                    }
+                    catch (Exception ex)
+                    {
+                        _consoleHandle.LogError(ex.Message + Environment.NewLine + ex.StackTrace.TrimEnd());
+                        Playing = false;
+                    }
+                }
+            }
+            catch (ThreadAbortException ex)
+            {
+                QueueAction(() => _consoleHandle.LogDebug("Game has been requested to close..."));
+            }
+            finally
+            {
+
+            }
         }
 
+        private TimeSpan _accumulatedElapsedTime;
+        private readonly GameTime _gameTime = new GameTime();
+        private Stopwatch _gameTimer;
+        private long _previousTicks = 0;
+        private int _updateFrameLag;
+        private TimeSpan _maxElapsedTime = TimeSpan.FromMilliseconds(500);
+        private TimeSpan _targetElapsedTime = TimeSpan.FromTicks(166667);
+        private bool IsFixedTimeStep = true;
+        private bool _shouldExit = false;
+        private bool _suppressDraw = false;
+
+        public void Tick()
+        {
+            // NOTE: This code is very sensitive and can break very badly
+            // with even what looks like a safe change.  Be sure to test 
+            // any change fully in both the fixed and variable timestep 
+            // modes across multiple devices and platforms.
+
+            RetryTick:
+
+            // Advance the accumulated elapsed time.
+            var currentTicks = _gameTimer.Elapsed.Ticks;
+            _accumulatedElapsedTime += TimeSpan.FromTicks(currentTicks - _previousTicks);
+            _previousTicks = currentTicks;
+
+            // If we're in the fixed timestep mode and not enough time has elapsed
+            // to perform an update we sleep off the the remaining time to save battery
+            // life and/or release CPU time to other threads and processes.
+            if (IsFixedTimeStep && _accumulatedElapsedTime < _targetElapsedTime)
+            {
+                var sleepTime = (int)(_targetElapsedTime - _accumulatedElapsedTime).TotalMilliseconds;
+
+                // NOTE: While sleep can be inaccurate in general it is 
+                // accurate enough for frame limiting purposes if some
+                // fluctuation is an acceptable result.
+                if (false/* && graphicsDeviceManager.SynchronizeWithVerticalRetrace*/)
+                {
+                    // NOTE: While sleep can be inaccurate in general it is 
+                    // accurate enough for frame limiting purposes if some
+                    // fluctuation is an acceptable result.
+#if WINRT
+                    Task.Delay(sleepTime).Wait();
+#else
+                    System.Threading.Thread.Sleep(sleepTime);
+#endif
+                    goto RetryTick;
+                }
+                else
+                {
+                    // Draw until we have used up our time.
+                    DoDraw(_gameTime);
+
+                    goto RetryTick;
+                }
+            }
+
+            // Do not allow any update to take longer than our maximum.
+            if (_accumulatedElapsedTime > _maxElapsedTime)
+                _accumulatedElapsedTime = _maxElapsedTime;
+
+            if (IsFixedTimeStep)
+            {
+                _gameTime.ElapsedGameTime = _targetElapsedTime;
+                var stepCount = 0;
+
+                // Perform as many full fixed length time steps as we can.
+                while (_accumulatedElapsedTime >= _targetElapsedTime && !_shouldExit)
+                {
+                    _gameTime.TotalGameTime += _targetElapsedTime;
+                    _accumulatedElapsedTime -= _targetElapsedTime;
+                    ++stepCount;
+
+                    DoUpdate(_gameTime);
+                }
+
+                //Every update after the first accumulates lag
+                _updateFrameLag += Math.Max(0, stepCount - 1);
+
+                //If we think we are running slowly, wait until the lag clears before resetting it
+                if (_gameTime.IsRunningSlowly)
+                {
+                    if (_updateFrameLag == 0)
+                        _gameTime.IsRunningSlowly = false;
+                }
+                else if (_updateFrameLag >= 5)
+                {
+                    //If we lag more than 5 frames, start thinking we are running slowly
+                    _gameTime.IsRunningSlowly = true;
+                }
+
+                //Every time we just do one update and one draw, then we are not running slowly, so decrease the lag
+                if (stepCount == 1 && _updateFrameLag > 0)
+                    _updateFrameLag--;
+
+                // Draw needs to know the total elapsed time
+                // that occured for the fixed length updates.
+                _gameTime.ElapsedGameTime = TimeSpan.FromTicks(_targetElapsedTime.Ticks * stepCount);
+            }
+            else
+            {
+                // Perform a single variable length update.
+                _gameTime.ElapsedGameTime = _accumulatedElapsedTime;
+                _gameTime.TotalGameTime += _accumulatedElapsedTime;
+                _accumulatedElapsedTime = TimeSpan.Zero;
+
+                DoUpdate(_gameTime);
+            }
+
+            // Draw unless the update suppressed it.
+            if (_suppressDraw)
+                _suppressDraw = false;
+            else
+            {
+                DoDraw(_gameTime);
+            }
+
+            //if (_shouldExit)
+            //    Platform.Exit();
+        }
+
+        private void DoUpdate(GameTime gameTime)
+        {
+            if (!_isReadyForMainThread || _gameLoader == null)
+            {
+                return;
+            }
+            
+            if (!_hasAssignedGame)
+            {
+                _gameLoader.CreateHost();
+                _hasAssignedGame = true;
+            }
+
+            if (State == LoadedGameState.Playing)
+            {
+                _gameLoader.Update(gameTime.ElapsedGameTime, gameTime.TotalGameTime);
+            }
+            else
+            {
+                _gameLoader.UpdateForLoadContentOnly(gameTime.ElapsedGameTime, gameTime.TotalGameTime);
+                Thread.Sleep(0);
+            }
+
+            _hasRunGameUpdate = true;
+        }
+
+        private void DoDraw(GameTime gameTime)
+        {
+            if (_gameLoader == null || _renderTargetSize == null || !_hasRunGameUpdate)
+            {
+                return;
+            }
+
+            if (State != LoadedGameState.Playing)
+            {
+                return;
+            }
+            
+            _gameLoader.SetRenderTargetPointers(_renderTargetSharedHandles, _currentWriteTargetIndex);
+
+            _gameLoader.Render(gameTime.ElapsedGameTime, gameTime.TotalGameTime);
+
+            var nextIndex = _currentWriteTargetIndex + 1;
+            if (nextIndex == 3) { nextIndex = 0; }
+
+            if (nextIndex != _currentReadTargetIndex)
+            {
+                // Only move the write index if the one we want is not the one
+                // we're currently reading from.
+                _currentWriteTargetIndex = nextIndex;
+            }
+        }
+        
         public void QueueEvent(Event @event)
         {
             if (State == LoadedGameState.Playing)

@@ -13,15 +13,17 @@ namespace Protogame.Editor.LoadedGame
 
         void Update(IGameContext gameContext, IUpdateContext updateContext);
 
-        void UpdateGame(IGameContext gameContext, IUpdateContext updateContext);
+        void Render(IGameContext gameContext, IRenderContext renderContext);
 
-        void RenderGame(IGameContext gameContext, IRenderContext renderContext);
+        void SetPositionOffset(Point offset);
 
         void SetRenderTargetSize(Point size);
 
         Point? GetRenderTargetSize();
 
-        Texture2D GetGameRenderTarget();
+        void IncrementReadRenderTargetIfPossible();
+
+        RenderTarget2D GetCurrentGameRenderTarget();
 
         void QueueEvent(Event @event);
     }

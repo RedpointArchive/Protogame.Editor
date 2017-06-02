@@ -37,7 +37,7 @@ namespace Protogame.Editor
 
             if (_loadedGame != null)
             {
-                _loadedGame.RenderGame(GameContext, RenderContext);
+                _loadedGame.Render(GameContext, RenderContext);
             }
         }
 
@@ -45,7 +45,7 @@ namespace Protogame.Editor
         {
             if (_loadedGame != null)
             {
-                _loadedGame.UpdateGame(GameContext, UpdateContext);
+                _loadedGame.Update(GameContext, UpdateContext);
             }
 
             base.Update(gameTime);

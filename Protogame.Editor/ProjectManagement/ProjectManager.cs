@@ -146,7 +146,7 @@ namespace Protogame.Editor.ProjectManagement
                     if (project.DefaultGame == null)
                     {
                         project.DefaultGame = definitionInfo;
-                        project.DefaultGameBinPath = new FileInfo(Path.Combine(project.ProjectPath.FullName, definitionInfo.Path, "bin", "Windows", "AnyCPU", "Debug", definitionInfo.Name + ".exe"));
+                        project.DefaultGameBinPath = new FileInfo(Path.Combine(project.ProjectPath.FullName, definitionInfo.Path, "bin", "Windows", "AnyCPU", "Release", definitionInfo.Name + ".exe"));
                     }
                 }
             }

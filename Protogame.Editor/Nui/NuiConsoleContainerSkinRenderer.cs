@@ -31,6 +31,7 @@ namespace Protogame.Editor.Nui
 
             var entries = container.Console.Entries;
 
+            var a = 0;
             for (var i = 0; i < entries.Length; i++)
             {
                 var color = Color.White;
@@ -55,11 +56,12 @@ namespace Protogame.Editor.Nui
 
                 _renderUtilities.RenderText(
                     renderContext,
-                    new Vector2(layout.X + 2, layout.Y + i * 16),
+                    new Vector2(layout.X + 2, layout.Y + a * 16),
                     message,
                     _fontAsset,
                     textColor: color,
                     renderShadow: false);
+                a += message.Split(new[] { Environment.NewLine }, StringSplitOptions.None).Length;
             }
         }
 

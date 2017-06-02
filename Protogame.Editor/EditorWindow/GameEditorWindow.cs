@@ -30,16 +30,24 @@ namespace Protogame.Editor.EditorWindow
             base.Update(skinLayout, layout, gameTime, ref stealFocus);
 
             // Because of padding the size should be slightly smaller.
+            _loadedGame.SetPositionOffset(new Point(layout.X + 1, layout.Y + 1));
             _loadedGame.SetRenderTargetSize(new Point(layout.Size.X - 2, layout.Size.Y - 2));
-            _rawTextureContainer.Texture = _loadedGame.GetGameRenderTarget();
+            _rawTextureContainer.Texture = _loadedGame.GetCurrentGameRenderTarget();
         }
 
         public override bool HandleEvent(ISkinLayout skinLayout, Rectangle layout, IGameContext context, Event @event)
         {
             var mouseEvent = @event as MouseEvent;
+            var keyboardEvent = @event as KeyboardEvent;
 
-            if (layout.Contains(mouseEvent.Position))
+            if (mouseEvent != null && layout.Contains(mouseEvent.Position))
             {
+                if (mouseEvent is MousePressEvent)
+                {
+                    // Focus on the game to allow keyboard capture to occur.
+                    this.Focus();
+                }
+
                 // Pass a copy of the mouse event to the game.
                 var copyMouseEvent = mouseEvent.Clone();
                 copyMouseEvent.X -= layout.X;
@@ -54,6 +62,21 @@ namespace Protogame.Editor.EditorWindow
                 _loadedGame.QueueEvent(copyMouseEvent);
 
                 return true;
+            }
+
+            if (keyboardEvent != null && Focused)
+            {
+                var keyPressEvent = keyboardEvent as KeyPressEvent;
+                if (keyPressEvent != null && keyPressEvent.Key == Microsoft.Xna.Framework.Input.Keys.OemTilde)
+                {
+                    // The ~ key allows you to stop keyboard and mouse capture.
+                    return false;
+                }
+                else
+                {
+                    _loadedGame.QueueEvent(keyboardEvent);
+                    return true;
+                }
             }
 
             return false;
