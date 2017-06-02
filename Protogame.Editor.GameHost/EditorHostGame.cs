@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 
 namespace Protogame.Editor.GameHost
 {
@@ -72,7 +73,7 @@ namespace Protogame.Editor.GameHost
         }
 
         #region IHostGame implementation
-        
+
         public event EventHandler<EventArgs> Exiting;
 
         public bool IsMouseVisible { get; set; }

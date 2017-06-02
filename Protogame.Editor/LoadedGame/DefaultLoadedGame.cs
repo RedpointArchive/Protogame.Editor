@@ -252,6 +252,14 @@ namespace Protogame.Editor.LoadedGame
             State = LoadedGameState.Loaded;
         }
 
+        public void QueueEvent(Event @event)
+        {
+            if (State == LoadedGameState.Playing)
+            {
+                _gameLoader.QueueEvent(@event);
+            }
+        }
+
         private class MarshallableConsoleHandle : MarshalByRefObject, IConsoleHandle
         {
             private readonly IConsoleHandle _realImpl;

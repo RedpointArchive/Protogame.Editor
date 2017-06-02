@@ -12,6 +12,7 @@
   </References>
   <Files>
     <Compile Include="BackBufferDimensionsProxy.cs" />
+    <Compile Include="EditorEventEngineHook.cs" />
     <Compile Include="EditorGameWindow.cs" />
     <Compile Include="EditorGraphicsDeviceService.cs" />
     <Compile Include="EditorHostGame.cs" />

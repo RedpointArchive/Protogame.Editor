@@ -33,5 +33,30 @@ namespace Protogame.Editor.EditorWindow
             _loadedGame.SetRenderTargetSize(new Point(layout.Size.X - 2, layout.Size.Y - 2));
             _rawTextureContainer.Texture = _loadedGame.GetGameRenderTarget();
         }
+
+        public override bool HandleEvent(ISkinLayout skinLayout, Rectangle layout, IGameContext context, Event @event)
+        {
+            var mouseEvent = @event as MouseEvent;
+
+            if (layout.Contains(mouseEvent.Position))
+            {
+                // Pass a copy of the mouse event to the game.
+                var copyMouseEvent = mouseEvent.Clone();
+                copyMouseEvent.X -= layout.X;
+                copyMouseEvent.Y -= layout.Y;
+                var copyMouseMoveEvent = copyMouseEvent as MouseMoveEvent;
+                if (copyMouseMoveEvent != null)
+                {
+                    copyMouseMoveEvent.LastX -= layout.X;
+                    copyMouseMoveEvent.LastY -= layout.Y;
+                }
+
+                _loadedGame.QueueEvent(copyMouseEvent);
+
+                return true;
+            }
+
+            return false;
+        }
     }
 }

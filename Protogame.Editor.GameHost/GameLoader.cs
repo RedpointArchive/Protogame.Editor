@@ -7,11 +7,12 @@ using System.Threading;
 
 namespace Protogame.Editor.GameHost
 {
-    public class GameLoader : MarshalByRefObject//, IDisposable
+    public class GameLoader : MarshalByRefObject
     {
         private ICoreGame _game;
         private IntPtr _sharedResourceHandle;
         private EditorHostGame _editorHostGame;
+        private EditorEventEngineHook _editorEventEngineHook;
 
         public void LoadFromPath(
             IConsoleHandle consoleHandle,
@@ -76,6 +77,7 @@ namespace Protogame.Editor.GameHost
             }
 
             ICoreGame game = null;
+            var hasBoundNewEventEngine = false;
 
             consoleHandle.LogDebug("Configuring kernel and constructing game instance ({0} configurations)...", gameConfigurations.Count);
             foreach (var configuration in gameConfigurations)
@@ -87,6 +89,25 @@ namespace Protogame.Editor.GameHost
                 // Rebind services so the game renders correctly inside the editor.
                 kernel.Rebind<IBaseDirectory>().ToMethod(x => baseDirectory).InSingletonScope();
                 kernel.Rebind<IBackBufferDimensions>().ToMethod(x => backBufferDimensions).InSingletonScope();
+                var bindings = kernel.GetCopyOfBindings();
+                var mustBindNewEventEngine = false;
+                if (bindings.ContainsKey(typeof(IEngineHook)))
+                {
+                    if (bindings[typeof(IEngineHook)].Any(x => x.Target == typeof(EventEngineHook)))
+                    {
+                        mustBindNewEventEngine = !hasBoundNewEventEngine;
+                        kernel.UnbindSpecific<IEngineHook>(x => x.Target == typeof(EventEngineHook));
+                    }
+
+                    if (mustBindNewEventEngine)
+                    {
+                        kernel.Bind<IEngineHook>().ToMethod(ctx =>
+                        {
+                            _editorEventEngineHook = ctx.Kernel.Get<EditorEventEngineHook>(ctx.Parent);
+                            return _editorEventEngineHook;
+                        }).InSingletonScope();
+                    }
+                }
 
                 if (game == null)
                 {
@@ -130,6 +151,11 @@ namespace Protogame.Editor.GameHost
             {
                 _editorHostGame?.Update(totalGameTime, elapsedGameTime);
             }
+        }
+
+        public void QueueEvent(Event @event)
+        {
+            _editorEventEngineHook?.QueueEvent(@event);
         }
     }
 }

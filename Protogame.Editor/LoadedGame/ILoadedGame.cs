@@ -22,5 +22,7 @@ namespace Protogame.Editor.LoadedGame
         Point? GetRenderTargetSize();
 
         Texture2D GetGameRenderTarget();
+
+        void QueueEvent(Event @event);
     }
 }
