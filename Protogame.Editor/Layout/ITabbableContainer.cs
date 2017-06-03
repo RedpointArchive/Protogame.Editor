@@ -7,5 +7,9 @@ namespace Protogame.Editor.Layout
         string Title { get; set; }
 
         IAssetReference<TextureAsset> Icon { get; set; }
+
+        bool Visible { get; set; }
+
+        bool Enabled { get; set; }
     }
 }

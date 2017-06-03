@@ -1,4 +1,5 @@
 ﻿using Protogame.Editor.Layout;
+using Protogame.Editor.ProjectManagement;
 
 namespace Protogame.Editor.EditorWindow
 {
@@ -6,11 +7,14 @@ namespace Protogame.Editor.EditorWindow
     {
         private readonly IAssetManager _assetManager;
         private readonly TreeView _hierarchyTreeView;
+        private readonly IProjectManager _projectManager;
 
         public HierarchyEditorWindow(
-            IAssetManager assetManager)
+            IAssetManager assetManager,
+            IProjectManager projectManager)
         {
             _assetManager = assetManager;
+            _projectManager = projectManager;
 
             Title = "Hierarchy";
             Icon = _assetManager.Get<TextureAsset>("texture.IconHierarchy");
@@ -25,6 +29,15 @@ namespace Protogame.Editor.EditorWindow
             toolbarContainer.SetChild(scrollableHierarchyContainer);
 
             SetChild(toolbarContainer);
+        }
+
+        public override bool Visible
+        {
+            get
+            {
+                return _projectManager.Project != null;
+            }
+            set { }
         }
     }
 }

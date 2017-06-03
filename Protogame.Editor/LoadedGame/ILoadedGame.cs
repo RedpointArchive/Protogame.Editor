@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace Protogame.Editor.LoadedGame
 {
@@ -8,6 +9,8 @@ namespace Protogame.Editor.LoadedGame
         LoadedGameState State { get; }
 
         bool Playing { get; set; }
+
+        TimeSpan PlayingFor { get; }
 
         void Restart();
 
@@ -26,5 +29,7 @@ namespace Protogame.Editor.LoadedGame
         RenderTarget2D GetCurrentGameRenderTarget();
 
         void QueueEvent(Event @event);
+
+        Tuple<bool, bool> GetStallState();
     }
 }

@@ -25,10 +25,46 @@ namespace Protogame.Editor.Layout
             TopHeight = 200;
             BottomHeight = 200;
             _innerRegions = new List<ITabbableContainer>();
+            Visible = true;
+            Enabled = true;
         }
 
         public string Title { get; set; }
         public IAssetReference<TextureAsset> Icon { get; set; }
+
+        public virtual bool Visible
+        {
+            get
+            {
+                if (LeftRegion != null && LeftRegion.Visible)
+                {
+                    return true;
+                }
+                if (RightRegion != null && RightRegion.Visible)
+                {
+                    return true;
+                }
+                if (TopRegion != null && TopRegion.Visible)
+                {
+                    return true;
+                }
+                if (BottomRegion != null && BottomRegion.Visible)
+                {
+                    return true;
+                }
+                foreach (var reg in InnerRegions)
+                {
+                    if (reg.Visible)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            set { }
+        }
+
+        public virtual bool Enabled { get; set; }
 
         public IDockableContainer LeftRegion { get; private set; }
         public IDockableContainer RightRegion { get; private set; }
@@ -82,7 +118,7 @@ namespace Protogame.Editor.Layout
         {
             var regionSize = layout;
 
-            if (LeftRegion != null)
+            if (LeftRegion != null && LeftRegion.Visible)
             {
                 var leftRegionWidth = Math.Min(regionSize.Width, LeftWidth);
 
@@ -100,7 +136,7 @@ namespace Protogame.Editor.Layout
                     regionSize.Height);
             }
             
-            if (RightRegion != null)
+            if (RightRegion != null && RightRegion.Visible)
             {
                 var rightRegionWidth = Math.Min(regionSize.Width, RightWidth);
 
@@ -118,7 +154,7 @@ namespace Protogame.Editor.Layout
                     regionSize.Height);
             }
 
-            if (TopRegion != null)
+            if (TopRegion != null && TopRegion.Visible)
             {
                 var topRegionHeight = Math.Min(regionSize.Height, TopHeight);
 
@@ -136,7 +172,7 @@ namespace Protogame.Editor.Layout
                     regionSize.Height - topRegionHeight - _regionSpacing);
             }
 
-            if (BottomRegion != null)
+            if (BottomRegion != null && BottomRegion.Visible)
             {
                 var bottomRegionHeight = Math.Min(regionSize.Height, BottomHeight);
 
@@ -159,7 +195,7 @@ namespace Protogame.Editor.Layout
                 var activeTabContainer = _innerRegions[ActiveTabIndex];
                 var activeTabDockableLayoutContainer = activeTabContainer as DockableLayoutContainer;
 
-                if (activeTabDockableLayoutContainer != null && _innerRegions.Count == 1)
+                if (activeTabDockableLayoutContainer != null && (_innerRegions.Count == 1 || _innerRegions.Count(x => x.Visible) == 1))
                 {
                     // Only one child and it is a dockable region itself, so do not render tabs.
                     yield return new KeyValuePair<IContainer, Rectangle>(
@@ -184,6 +220,18 @@ namespace Protogame.Editor.Layout
             }
         }
 
+        public void ActivateWhere(Func<object, bool> filter)
+        {
+            for (var i = 0; i < _innerRegions.Count; i++)
+            {
+                if (_innerRegions[i].Visible && filter(_innerRegions[i]))
+                {
+                    ActiveTabIndex = i;
+                    return;
+                }
+            }
+        }
+
         public class TabForRendering
         {
             public int Index { get; set; }
@@ -201,7 +249,7 @@ namespace Protogame.Editor.Layout
         {
             var regionSize = layout;
 
-            if (LeftRegion != null)
+            if (LeftRegion != null && LeftRegion.Visible)
             {
                 var leftRegionWidth = Math.Min(regionSize.Width, LeftWidth);
                 
@@ -212,7 +260,7 @@ namespace Protogame.Editor.Layout
                     regionSize.Height);
             }
 
-            if (RightRegion != null)
+            if (RightRegion != null && RightRegion.Visible)
             {
                 var rightRegionWidth = Math.Min(regionSize.Width, RightWidth);
                 
@@ -223,7 +271,7 @@ namespace Protogame.Editor.Layout
                     regionSize.Height);
             }
 
-            if (TopRegion != null)
+            if (TopRegion != null && TopRegion.Visible)
             {
                 var topRegionHeight = Math.Min(regionSize.Height, TopHeight);
                 
@@ -234,7 +282,7 @@ namespace Protogame.Editor.Layout
                     regionSize.Height - topRegionHeight - _regionSpacing);
             }
 
-            if (BottomRegion != null)
+            if (BottomRegion != null && BottomRegion.Visible)
             {
                 var bottomRegionHeight = Math.Min(regionSize.Height, BottomHeight);
                 
@@ -250,29 +298,33 @@ namespace Protogame.Editor.Layout
                 var activeTabContainer = _innerRegions[ActiveTabIndex];
                 var activeTabDockableLayoutContainer = activeTabContainer as DockableLayoutContainer;
 
-                if (activeTabDockableLayoutContainer != null && _innerRegions.Count == 1)
+                if (activeTabDockableLayoutContainer != null && (_innerRegions.Count == 1 || _innerRegions.Count(x => x.Visible) == 1))
                 {
                     // No tabs rendered for this.
                 }
                 else
                 {
                     // Yield all of the tabs.
+                    var a = 0;
                     for (var i = 0; i < _innerRegions.Count; i++)
                     {
                         // TODO: Measure width of tabs.
-
-                        yield return new TabForRendering
+                        if (_innerRegions[i].Visible)
                         {
-                            Index = i,
-                            Title = _innerRegions[i].Title,
-                            Icon = _innerRegions[i].Icon,
-                            Layout = new Rectangle(
-                                regionSize.X + (i * 100),
-                                regionSize.Y + 4,
-                                100,
-                                _tabHeight - 3),
-                            IsActive = ActiveTabIndex == i
-                        };
+                            yield return new TabForRendering
+                            {
+                                Index = i,
+                                Title = _innerRegions[i].Title,
+                                Icon = _innerRegions[i].Icon,
+                                Layout = new Rectangle(
+                                    regionSize.X + (a * 100),
+                                    regionSize.Y + 4,
+                                    100,
+                                    _tabHeight - 3),
+                                IsActive = ActiveTabIndex == i
+                            };
+                            a++;
+                        }
                     }
                 }
             }
@@ -397,6 +449,35 @@ namespace Protogame.Editor.Layout
 
         public void Update(ISkinLayout skinLayout, Rectangle layout, GameTime gameTime, ref bool stealFocus)
         {
+            if (ActiveTabIndex != -1 && !_innerRegions[ActiveTabIndex].Visible)
+            {
+                // Switch to a visible tab.
+                var didFindVisible = false;
+                for (var i = ActiveTabIndex; i >= 0; i--)
+                {
+                    if (_innerRegions[i].Visible)
+                    {
+                        ActiveTabIndex = i;
+                        didFindVisible = true;
+                    }
+                }
+                if (!didFindVisible)
+                {
+                    for (var i = ActiveTabIndex; i < _innerRegions.Count; i++)
+                    {
+                        if (_innerRegions[i].Visible)
+                        {
+                            ActiveTabIndex = i;
+                            didFindVisible = true;
+                        }
+                    }
+                }
+                if (!didFindVisible)
+                {
+                    ActiveTabIndex = -1;
+                }
+            }
+
             foreach (var kv in ChildrenWithLayouts(layout))
             {
                 kv.Key.Update(skinLayout, kv.Value, gameTime, ref stealFocus);

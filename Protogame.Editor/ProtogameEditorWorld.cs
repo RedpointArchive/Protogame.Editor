@@ -33,6 +33,8 @@ namespace Protogame.Editor
         private DockableLayoutContainer _workspaceContainer;
         private WorldEditorWindow _worldEditorWindow;
         private GameEditorWindow _gameEditorWindow;
+        private readonly IRecentProjects _recentProjects;
+        private readonly IThumbnailSampler _thumbnailSampler;
 
         public ProtogameEditorWorld(
             INode worldNode,
@@ -43,7 +45,9 @@ namespace Protogame.Editor
             IMainMenuController mainMenuController,
             IEditorWindowFactory editorWindowFactory,
             IProjectManager projectManager,
-            ILoadedGame loadedGame)
+            ILoadedGame loadedGame,
+            IRecentProjects recentProjects,
+            IThumbnailSampler thumbnailSampler)
         {
             _skinLayout = skinLayout;
             _skinDelegator = skinDelegator;
@@ -52,6 +56,8 @@ namespace Protogame.Editor
             _editorWindowFactory = editorWindowFactory;
             _projectManager = projectManager;
             _loadedGame = loadedGame;
+            _recentProjects = recentProjects;
+            _thumbnailSampler = thumbnailSampler;
 
             SetupCanvas();
 
@@ -68,7 +74,11 @@ namespace Protogame.Editor
             dockableLayoutContainer.RightWidth = 250;
             dockableLayoutContainer.BottomHeight = 250;
 
+            var profilerDockableLayoutContainer = new DockableLayoutContainer();
+            profilerDockableLayoutContainer.AddInnerRegion(_editorWindowFactory.CreateProfilerEditorWindow());
+            
             var rightDockableLayoutContainer = new DockableLayoutContainer();
+            rightDockableLayoutContainer.SetTopRegion(profilerDockableLayoutContainer);
             rightDockableLayoutContainer.AddInnerRegion(_editorWindowFactory.CreateInspectorEditorWindow());
             dockableLayoutContainer.SetRightRegion(rightDockableLayoutContainer);
 
@@ -86,6 +96,7 @@ namespace Protogame.Editor
             leftDockableLayoutContainer.AddInnerRegion(_editorWindowFactory.CreateHierarchyEditorWindow());
             _workspaceContainer.SetLeftRegion(leftDockableLayoutContainer);
 
+            _workspaceContainer.AddInnerRegion(_editorWindowFactory.CreateStartEditorWindow());
             _workspaceContainer.AddInnerRegion(_worldEditorWindow = _editorWindowFactory.CreateWorldEditorWindow());
             _workspaceContainer.AddInnerRegion(_gameEditorWindow = _editorWindowFactory.CreateGameEditorWindow());
 
@@ -128,10 +139,8 @@ namespace Protogame.Editor
             {
                 _loadedGame.Playing = true;
                 button.Toggled = true;
-                // TODO: Set to the correct index or open tab.
-                _workspaceContainer.ActiveTabIndex = 1;
+                _workspaceContainer.ActivateWhere(x => x is GameEditorWindow);
             };
-            _toolButtons.Add(button);
             return button;
         }
 
@@ -154,7 +163,6 @@ namespace Protogame.Editor
                     button.Toggled = false;
                 }
             };
-            _toolButtons.Add(button);
             return button;
         }
 
@@ -170,11 +178,9 @@ namespace Protogame.Editor
                     _loadedGame.State == LoadedGameState.Paused)
                 {
                     _loadedGame.Restart();
-                    // TODO: Set to the correct index or restore previous tab.
-                    _workspaceContainer.ActiveTabIndex = 0;
+                    _workspaceContainer.ActivateWhere(x => x is WorldEditorWindow);
                 }
             };
-            _toolButtons.Add(button);
             return button;
         }
 
@@ -220,7 +226,21 @@ namespace Protogame.Editor
             _playButton.Toggled = _loadedGame.State == LoadedGameState.Playing || _loadedGame.State == LoadedGameState.Paused;
             _pauseButton.Toggled = _loadedGame.State == LoadedGameState.Paused;
 
-            gameContext.Window.Title = "Protogame 7.0.0 (" + _projectManager?.Project?.Name + "; Build c510ef6)";
+            _playButton.Enabled = _projectManager.Project != null && _loadedGame.State != LoadedGameState.Loading;
+            _pauseButton.Enabled = _loadedGame.State == LoadedGameState.Playing || _loadedGame.State == LoadedGameState.Paused;
+            _stopButton.Enabled = _loadedGame.State == LoadedGameState.Playing || _loadedGame.State == LoadedGameState.Paused;
+
+            foreach (var t in _toolButtons)
+            {
+                t.Enabled = _projectManager.Project != null;
+            }
+
+            if (_projectManager.Project != null)
+            {
+                _recentProjects.DisposeAllLoadedTextures();
+            }
+
+            gameContext.Window.Title = "Protogame 7.0.0 (" + (_projectManager?.Project?.Name ?? "<No Project>") + "; Build c510ef6)";
         }
 
         public IEnumerable<KeyValuePair<Canvas, Rectangle>> Canvases { get; }

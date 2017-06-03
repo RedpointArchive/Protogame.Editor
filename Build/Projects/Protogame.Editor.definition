@@ -15,6 +15,7 @@
     <Reference Include="Protogame.EntryPoint" />
     <Reference Include="Protogame.Editor.Content" />
     <Reference Include="Protogame.Editor.GameHost" />
+    <Reference Include="Protogame.Editor.ThirdParty" />
   </References>
   <Dependencies>
     <Uses Name="Prestart" />
@@ -28,14 +29,18 @@
     <Compile Include="Console\EditorConsole.cs" />
     <Compile Include="EditorHotKeyBinder.cs" />
     <Compile Include="EditorHotKeyListener.cs" />
+    <Compile Include="EditorUserDataPathProvider.cs" />
     <Compile Include="EditorWindow\ConsoleEditorWindow.cs" />
     <Compile Include="EditorWindow\EditorWindow.cs" />
     <Compile Include="EditorWindow\GameEditorWindow.cs" />
     <Compile Include="EditorWindow\HierarchyEditorWindow.cs" />
     <Compile Include="EditorWindow\IEditorWindowFactory.cs" />
     <Compile Include="EditorWindow\InspectorEditorWindow.cs" />
+    <Compile Include="EditorWindow\ProfilerEditorWindow.cs" />
     <Compile Include="EditorWindow\ProjectEditorWindow.cs" />
+    <Compile Include="EditorWindow\StartEditorWindow.cs" />
     <Compile Include="EditorWindow\WorldEditorWindow.cs" />
+    <Compile Include="Layout\ClickableHorizontalContainer.cs" />
     <Compile Include="Layout\ConsoleContainer.cs" />
     <Compile Include="Layout\DockableLayoutContainer.cs" />
     <Compile Include="Layout\HorizontalSpacedContainer.cs" />
@@ -45,7 +50,7 @@
     <Compile Include="Layout\ToolbarButton.cs" />
     <Compile Include="Layout\ToolbarContainer.cs" />
     <Compile Include="LoadedGame\DefaultLoadedGame.cs" />
-    <Compile Include="LoadedGame\GameRenderTargetLockableCanvasRenderPass.cs" />
+    <Compile Include="LoadedGame\EditorCanvasRenderPass.cs" />
     <Compile Include="LoadedGame\ILoadedGame.cs" />
     <Compile Include="LoadedGame\LoadedGameState.cs" />
     <Compile Include="Menu\ActionManagerMenuProvider.cs" />
@@ -78,9 +83,13 @@
     <Compile Include="ProjectManagement\IPackageInfo.cs" />
     <Compile Include="ProjectManagement\IProject.cs" />
     <Compile Include="ProjectManagement\IProjectManager.cs" />
+    <Compile Include="ProjectManagement\IProjectManagerUi.cs" />
     <Compile Include="ProjectManagement\PackageInfo.cs" />
     <Compile Include="ProjectManagement\Project.cs" />
     <Compile Include="ProjectManagement\ProjectManager.cs" />
+    <Compile Include="ProjectManagement\ProjectManagerUi.cs" />
+    <Compile Include="ProjectManagement\RecentProjects.cs" />
+    <Compile Include="ProjectManagement\ThumbnailSampler.cs" />
     <Compile Include="ProtogameEditorGame.cs" />
     <Compile Include="ProtogameEditorGameConfiguration.cs" />
     <Compile Include="ProtogameEditorModule.cs" />

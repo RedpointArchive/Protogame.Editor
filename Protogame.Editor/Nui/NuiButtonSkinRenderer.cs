@@ -19,7 +19,11 @@ namespace Protogame.Editor.Nui
 
         public void Render(IRenderContext renderContext, Rectangle layout, Button button)
         {
-            if (button.Toggled)
+            if (!button.Enabled)
+            {
+                _nuiRenderer.RenderDisabledButton(renderContext, layout);
+            }
+            else if (button.Toggled)
             {
                 _nuiRenderer.RenderToggledButton(renderContext, layout);
             }
@@ -48,13 +52,18 @@ namespace Protogame.Editor.Nui
             if (button.Icon != null)
             {
                 var size = layout.Width - 10;
+                var col = (button.Enabled && (button.State == ButtonUIState.Clicked || button.Toggled)) ? Color.White : Color.Black;
+                if (!button.Enabled)
+                {
+                    col *= 0.5f;
+                }
 
                 _renderUtilities.RenderTexture(
                     renderContext,
                     new Vector2(layout.Center.X - size / 2, layout.Center.Y - size / 2),
                     button.Icon,
                     new Vector2(size, size),
-                    (button.State == ButtonUIState.Clicked || button.Toggled) ? Color.White : Color.Black);
+                    col);
             }
         }
 

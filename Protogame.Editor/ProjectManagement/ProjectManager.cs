@@ -13,28 +13,29 @@ namespace Protogame.Editor.ProjectManagement
         private readonly IConsoleHandle _consoleHandle;
         private Task _loadingTask;
         private Project _project;
+        private readonly IRecentProjects _recentProjects;
 
         public ProjectManager(
             IRawLaunchArguments launchArguments,
             IConsoleHandle consoleHandle,
-            ICoroutine coroutine)
+            ICoroutine coroutine,
+            IRecentProjects recentProjects)
         {
             _coroutine = coroutine;
             _consoleHandle = consoleHandle;
+            _recentProjects = recentProjects;
 
             var arguments = launchArguments.Arguments;
             var directoryIndex = Array.IndexOf(arguments, "--project");
-            if (directoryIndex == -1 || directoryIndex == arguments.Length - 1)
+            if (!(directoryIndex == -1 || directoryIndex == arguments.Length - 1))
             {
-                throw new InvalidOperationException("No project defined for startup!  You must launch the Protogame Editor from the workbench, or pass --project <dir> on the command-line.");
+                LoadProject(arguments[directoryIndex + 1]);
             }
-
-            LoadProject(arguments[directoryIndex + 1]);
         }
 
         public IProject Project => _project;
 
-        private void LoadProject(string directoryPath)
+        public void LoadProject(string directoryPath)
         {
             _project = new Project
             {
@@ -154,6 +155,8 @@ namespace Protogame.Editor.ProjectManagement
             project.Definitions = definitionsList;
 
             project.LoadingStatus = null;
+
+            await _recentProjects.AddProjectToRecentProjects(project.ProjectPath.FullName);
 
             _consoleHandle.LogDebug("Project loading has completed.");
         }

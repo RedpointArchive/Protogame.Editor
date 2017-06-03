@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Protogame.Editor.Layout
 {
-    public class ConsoleContainer : IContainer, IHasDesiredSize
+    public class ConsoleContainer : IContainer, IHasDesiredSize, IScrollableAwareChild
     {
         private long _lastEntryCount = 0;
 
@@ -38,11 +38,8 @@ namespace Protogame.Editor.Layout
 
             if (mousePressEvent != null)
             {
-                if (layout.Contains(mousePressEvent.MouseState.Position))
-                {
-                    this.Parent.Focus();
-                    return true;
-                }
+                this.Parent.Focus();
+                return true;
             }
 
             return false;
@@ -51,6 +48,11 @@ namespace Protogame.Editor.Layout
         public void Render(IRenderContext context, ISkinLayout skinLayout, ISkinDelegator skinDelegator, Rectangle layout)
         {
             skinDelegator.Render(context, layout, this);
+        }
+
+        public void Render(IRenderContext context, ISkinLayout skinLayout, ISkinDelegator skinDelegator, Rectangle layout, Rectangle renderedLayout)
+        {
+            skinDelegator.Render(context, layout, renderedLayout, this);
         }
 
         public void Update(ISkinLayout skinLayout, Rectangle layout, GameTime gameTime, ref bool stealFocus)

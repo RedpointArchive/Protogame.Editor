@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ExternalProject Name="Protogame.Editor.ThirdParty">
+  <Platform Type="Windows">
+    <Binary Name="Ookii.Dialogs" Path="Ookii.Dialogs\Ookii.Dialogs.dll" />
+  </Platform>
+</ExternalProject>

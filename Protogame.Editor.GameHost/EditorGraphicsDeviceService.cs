@@ -11,8 +11,8 @@ namespace Protogame.Editor.GameHost
 
         public EditorGraphicsDeviceService()
         {
-            _sharedResourceHandles = new IntPtr[3];
-            _renderTargets = new RenderTarget2D[3];
+            _sharedResourceHandles = new IntPtr[RenderTargetBufferConfiguration.RTBufferSize];
+            _renderTargets = new RenderTarget2D[RenderTargetBufferConfiguration.RTBufferSize];
             _currentWriteIndex = 0;
         }
 
@@ -51,13 +51,13 @@ namespace Protogame.Editor.GameHost
 
             if (_sharedResourceHandles[_currentWriteIndex] != sharedResourceHandles[_currentWriteIndex])
             {
-                for (var i = 0; i < 3; i++)
+                for (var i = 0; i < RenderTargetBufferConfiguration.RTBufferSize; i++)
                 {
                     _renderTargets[i]?.Dispose();
                     _renderTargets[i] = null;
                 }
                 
-                for (var i = 0; i < 3; i++)
+                for (var i = 0; i < RenderTargetBufferConfiguration.RTBufferSize; i++)
                 {
                     if (GraphicsDevice != null)
                     {

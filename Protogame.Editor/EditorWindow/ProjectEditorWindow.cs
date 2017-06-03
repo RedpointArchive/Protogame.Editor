@@ -43,13 +43,21 @@ namespace Protogame.Editor.EditorWindow
             SetChild(toolbarContainer);
         }
 
+        public override bool Visible
+        {
+            get
+            {
+                return _projectManager.Project != null;
+            }
+            set { }
+        }
+
         public override void Update(ISkinLayout skinLayout, Rectangle layout, GameTime gameTime, ref bool stealFocus)
         {
             base.Update(skinLayout, layout, gameTime, ref stealFocus);
 
-            if (_projectManager.Project.Definitions != null)
             {
-                var definitions = _projectManager.Project.Definitions.ToList();
+                var definitions = _projectManager?.Project?.Definitions?.ToList() ?? new List<IDefinitionInfo>();
 
                 foreach (var child in _projectListView.Children.OfType<DefinitionListItem>().ToArray())
                 {

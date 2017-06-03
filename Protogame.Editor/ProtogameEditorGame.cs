@@ -18,6 +18,13 @@ namespace Protogame.Editor
             _kernel = kernel;
         }
 
+        public override void PrepareGraphicsDeviceManager(GraphicsDeviceManager graphicsDeviceManager)
+        {
+            // We can't have no vsync on because for some reason it causes issues with rendering
+            // the shared render targets.
+            //graphicsDeviceManager.SynchronizeWithVerticalRetrace = false;
+        }
+
         public override void PrepareGameWindow(IGameWindow window)
         {
             IsMouseVisible = true;

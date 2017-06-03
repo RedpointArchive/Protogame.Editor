@@ -22,6 +22,7 @@ namespace Protogame.Editor.LoadedGame
         private readonly IConsoleHandle _consoleHandle;
         private readonly IRenderTargetBackBufferUtilities _renderTargetBackBufferUtilities;
         private DateTime? _lastModified;
+        private string _lastPath;
         private AppDomain _appDomain;
         private RenderTarget2D[] _renderTargets;
         private IntPtr[] _renderTargetSharedHandles;
@@ -33,9 +34,15 @@ namespace Protogame.Editor.LoadedGame
         private bool _hasAssignedGame;
         private bool _isReadyForMainThread;
         private bool _mustRestart;
+        private bool _mustDestroyRenderTargets;
         private Thread _gameThread;
         private List<Action> _mainThreadTasks;
         private Point _offset;
+        private bool _didReadStall;
+        private bool _didWriteStall;
+        private static object _incrementLock = new object();
+        private TimeSpan _playingFor = TimeSpan.Zero;
+        private DateTime? _playingStartTime = null;
 
         public DefaultLoadedGame(
             IProjectManager projectManager,
@@ -51,9 +58,9 @@ namespace Protogame.Editor.LoadedGame
             _hasRunGameUpdate = false;
             _isReadyForMainThread = false;
             _mainThreadTasks = new List<Action>();
-            _renderTargets = new RenderTarget2D[3];
-            _renderTargetSharedHandles = new IntPtr[3];
-            _currentWriteTargetIndex = 1;
+            _renderTargets = new RenderTarget2D[RenderTargetBufferConfiguration.RTBufferSize];
+            _renderTargetSharedHandles = new IntPtr[RenderTargetBufferConfiguration.RTBufferSize];
+            _currentWriteTargetIndex = RenderTargetBufferConfiguration.RTBufferSize >= 2 ? 1 : 0;
             _currentReadTargetIndex = 0;
 
             State = LoadedGameState.Loading;
@@ -66,6 +73,8 @@ namespace Protogame.Editor.LoadedGame
             private set;
         }
 
+        public TimeSpan PlayingFor => _playingFor;
+
         public bool Playing
         {
             get;
@@ -75,8 +84,14 @@ namespace Protogame.Editor.LoadedGame
         public void Restart()
         {
             _mustRestart = true;
+            _mustDestroyRenderTargets = true;
             Playing = false;
             State = LoadedGameState.Loading;
+        }
+
+        public Tuple<bool, bool> GetStallState()
+        {
+            return new Tuple<bool, bool>(_didReadStall, _didWriteStall);
         }
 
         public RenderTarget2D GetCurrentGameRenderTarget()
@@ -86,14 +101,22 @@ namespace Protogame.Editor.LoadedGame
 
         public void IncrementReadRenderTargetIfPossible()
         {
-            var nextIndex = _currentReadTargetIndex + 1;
-            if (nextIndex == 3) { nextIndex = 0; }
-
-            if (nextIndex != _currentWriteTargetIndex)
+            lock (_incrementLock)
             {
-                // Only move the write index if the one we want is not the one
-                // we're currently reading from.
-                _currentReadTargetIndex = nextIndex;
+                var nextIndex = _currentReadTargetIndex + 1;
+                if (nextIndex == RenderTargetBufferConfiguration.RTBufferSize) { nextIndex = 0; }
+
+                if (nextIndex != _currentWriteTargetIndex)
+                {
+                    // Only move the write index if the one we want is not the one
+                    // we're currently reading from.
+                    _currentReadTargetIndex = nextIndex;
+                    _didReadStall = false;
+                }
+                else
+                {
+                    _didReadStall = true;
+                }
             }
         }
 
@@ -159,13 +182,12 @@ namespace Protogame.Editor.LoadedGame
 
                 // If we have already loaded the app domain, and the last modified date of
                 // the DLL is the same, then no need to reload.
-                if (_appDomain != null && _lastModified == _projectManager.Project.DefaultGameBinPath.LastWriteTimeUtc && !_mustRestart)
-                {
-                    return;
-                }
-
-                // If the game thread already exists and is running, skip.
-                if (_gameThread != null && _gameThread.ThreadState != System.Threading.ThreadState.Stopped)
+                if (_appDomain != null && 
+                    _lastModified == _projectManager.Project.DefaultGameBinPath.LastWriteTimeUtc && 
+                    _lastPath == _projectManager.Project.DefaultGameBinPath.FullName &&
+                    _gameThread != null &&
+                     _gameThread.ThreadState != System.Threading.ThreadState.Stopped &&
+                    !_mustRestart)
                 {
                     return;
                 }
@@ -175,9 +197,17 @@ namespace Protogame.Editor.LoadedGame
                 {
                     _gameThread.Abort();
                     _gameThread = null;
+
+                    if (_mustRestart)
+                    {
+                        _playingFor = TimeSpan.Zero;
+                        _playingStartTime = null;
+                    }
                 }
 
                 // We need to reload the app domain.  Kick off a coroutine to handle it.
+                _lastModified = _projectManager.Project.DefaultGameBinPath.LastWriteTimeUtc;
+                _lastPath = _projectManager.Project.DefaultGameBinPath.FullName;
                 _isReadyForMainThread = false;
                 _mustRestart = false;
                 _gameThread = new Thread(GameThreadRun);
@@ -189,7 +219,21 @@ namespace Protogame.Editor.LoadedGame
 
         public void Render(IGameContext gameContext, IRenderContext renderContext)
         {
-            for (var i = 0; i < 3; i++)
+            if (_mustDestroyRenderTargets)
+            {
+                for (var i = 0; i < RenderTargetBufferConfiguration.RTBufferSize; i++)
+                {
+                    if (_renderTargets[i] != null)
+                    {
+                        _renderTargets[i].Dispose();
+                        _renderTargets[i] = null;
+                    }
+                }
+
+                _mustDestroyRenderTargets = false;
+            }
+
+            for (var i = 0; i < RenderTargetBufferConfiguration.RTBufferSize; i++)
             {
                 var oldRenderTarget = _renderTargets[i];
                 _renderTargets[i] = _renderTargetBackBufferUtilities.UpdateCustomSizedRenderTarget(
@@ -245,6 +289,7 @@ namespace Protogame.Editor.LoadedGame
 
             // Load the game assemblies.
             _lastModified = _projectManager.Project.DefaultGameBinPath.LastWriteTimeUtc;
+            _lastPath = _projectManager.Project.DefaultGameBinPath.FullName;
             _gameLoader.LoadFromPath(
                 new MarshallableConsoleHandle(_consoleHandle),
                 new GameBaseDirectory(_projectManager),
@@ -272,7 +317,7 @@ namespace Protogame.Editor.LoadedGame
                     }
                     catch (Exception ex)
                     {
-                        _consoleHandle.LogError(ex.Message + Environment.NewLine + ex.StackTrace.TrimEnd());
+                        _consoleHandle.LogError(ex);
                         Playing = false;
                     }
                 }
@@ -416,7 +461,9 @@ namespace Protogame.Editor.LoadedGame
             
             if (!_hasAssignedGame)
             {
+                QueueAction(() => _consoleHandle.LogDebug("Assigning host instance to game"));
                 _gameLoader.CreateHost();
+                QueueAction(() => _consoleHandle.LogDebug("Assigned host instance to game"));
                 _hasAssignedGame = true;
             }
 
@@ -449,15 +496,30 @@ namespace Protogame.Editor.LoadedGame
 
             _gameLoader.Render(gameTime.ElapsedGameTime, gameTime.TotalGameTime);
 
-            var nextIndex = _currentWriteTargetIndex + 1;
-            if (nextIndex == 3) { nextIndex = 0; }
-
-            if (nextIndex != _currentReadTargetIndex)
+            lock (_incrementLock)
             {
-                // Only move the write index if the one we want is not the one
-                // we're currently reading from.
-                _currentWriteTargetIndex = nextIndex;
+                var nextIndex = _currentWriteTargetIndex + 1;
+                if (nextIndex == RenderTargetBufferConfiguration.RTBufferSize) { nextIndex = 0; }
+
+                if (nextIndex != _currentReadTargetIndex)
+                {
+                    // Only move the write index if the one we want is not the one
+                    // we're currently reading from.
+                    _currentWriteTargetIndex = nextIndex;
+                    _didWriteStall = false;
+                }
+                else
+                {
+                    _didWriteStall = true;
+                }
             }
+
+            if (_playingStartTime == null)
+            {
+                _playingStartTime = DateTime.Now;
+            }
+
+            _playingFor = DateTime.Now - _playingStartTime.Value;
         }
         
         public void QueueEvent(Event @event)
@@ -505,6 +567,11 @@ namespace Protogame.Editor.LoadedGame
             public void LogError(string messageFormat, params object[] objects)
             {
                 _realImpl.LogError(messageFormat, objects);
+            }
+
+            public void LogError(Exception exception)
+            {
+                _realImpl.LogError(exception);
             }
 
             public void LogInfo(string messageFormat)

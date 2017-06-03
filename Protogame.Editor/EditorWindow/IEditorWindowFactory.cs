@@ -12,8 +12,12 @@ namespace Protogame.Editor.EditorWindow
 
         InspectorEditorWindow CreateInspectorEditorWindow();
 
+        ProfilerEditorWindow CreateProfilerEditorWindow();
+
         WorldEditorWindow CreateWorldEditorWindow();
 
         GameEditorWindow CreateGameEditorWindow();
+
+        StartEditorWindow CreateStartEditorWindow();
     }
 }

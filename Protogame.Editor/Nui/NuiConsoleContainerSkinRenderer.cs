@@ -5,7 +5,7 @@ using Protogame.Editor.Layout;
 
 namespace Protogame.Editor.Nui
 {
-    public class NuiConsoleContainerSkinRenderer : ISkinRenderer<ConsoleContainer>
+    public class NuiConsoleContainerSkinRenderer : IScrollableAwareSkinRenderer<ConsoleContainer>
     {
         private readonly I2DRenderUtilities _renderUtilities;
         private readonly IAssetManager _assetManager;
@@ -22,7 +22,16 @@ namespace Protogame.Editor.Nui
 
         public void Render(IRenderContext renderContext, Rectangle layout, ConsoleContainer container)
         {
-            _renderUtilities.RenderRectangle(renderContext, layout, new Color(0, 0, 0, 255), true);
+        }
+
+        public Vector2 MeasureText(IRenderContext renderContext, string text, ConsoleContainer container)
+        {
+            throw new NotSupportedException();
+        }
+
+        public void Render(IRenderContext renderContext, Rectangle layout, Rectangle renderedLayout, ConsoleContainer container)
+        {
+            _renderUtilities.RenderRectangle(renderContext, renderedLayout, new Color(0, 0, 0, 255), true);
 
             if (container.Console == null)
             {
@@ -54,20 +63,23 @@ namespace Protogame.Editor.Nui
                 var x = entries[i];
                 var message = x.Name == string.Empty ? x.Message : $"<{x.Name,-20}> ({x.Count,5}) {x.Message}";
 
-                _renderUtilities.RenderText(
-                    renderContext,
-                    new Vector2(layout.X + 2, layout.Y + a * 16),
-                    message,
-                    _fontAsset,
-                    textColor: color,
-                    renderShadow: false);
-                a += message.Split(new[] { Environment.NewLine }, StringSplitOptions.None).Length;
-            }
-        }
+                var lines = message.Split(new[] { Environment.NewLine }, StringSplitOptions.None).Length;
 
-        public Vector2 MeasureText(IRenderContext renderContext, string text, ConsoleContainer container)
-        {
-            throw new NotSupportedException();
+                var pointA = new Point(layout.X + 2, layout.Y + a * 16);
+                var pointB = new Point(layout.X + 2, layout.Y + (a + lines) * 16);
+                if (renderedLayout.Contains(pointA) || renderedLayout.Contains(pointB))
+                {
+                    _renderUtilities.RenderText(
+                        renderContext,
+                        pointA.ToVector2(),
+                        message,
+                        _fontAsset,
+                        textColor: color,
+                        renderShadow: false);
+                }
+
+                a += lines;
+            }
         }
     }
 }

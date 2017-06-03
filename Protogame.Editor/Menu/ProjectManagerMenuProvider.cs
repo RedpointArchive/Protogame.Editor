@@ -6,10 +6,17 @@ namespace Protogame.Editor.Menu
     public class ProjectManagerMenuProvider : IMenuProvider
     {
         private readonly IProjectManager _projectManager;
+        private readonly IProjectManagerUi _projectManagerUi;
+        private readonly ICoroutine _coroutine;
 
-        public ProjectManagerMenuProvider(IProjectManager projectManager)
+        public ProjectManagerMenuProvider(
+            IProjectManager projectManager,
+            IProjectManagerUi projectManagerUi,
+            ICoroutine coroutine)
         {
             _projectManager = projectManager;
+            _projectManagerUi = projectManagerUi;
+            _coroutine = coroutine;
         }
 
         public IEnumerable<MenuEntry> GetMenuItems()
@@ -22,7 +29,6 @@ namespace Protogame.Editor.Menu
 
         private void OnNewProject(IGameContext gameContext, MenuEntry obj)
         {
-            
         }
 
         private void OnSaveProject(IGameContext gameContext, MenuEntry obj)
@@ -31,6 +37,7 @@ namespace Protogame.Editor.Menu
 
         private void OnOpenProject(IGameContext gameContext, MenuEntry obj)
         {
+            _coroutine.Run(() => _projectManagerUi.LoadProject(gameContext));
         }
 
         private void OnExitApplication(IGameContext gameContext, MenuEntry obj)

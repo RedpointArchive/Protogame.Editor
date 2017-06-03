@@ -103,6 +103,8 @@ namespace Protogame.Editor.GameHost
 
         public bool IsMouseVisible { get; set; }
 
+        public bool IsActive => true;
+
         public GraphicsDevice GraphicsDevice => _graphicsDeviceService.GraphicsDevice;
 
         public GraphicsDeviceManager GraphicsDeviceManager => null;

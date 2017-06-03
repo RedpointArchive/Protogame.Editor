@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Protogame.Editor.ProjectManagement;
 
 namespace Protogame.Editor.EditorWindow
 {
@@ -7,11 +8,14 @@ namespace Protogame.Editor.EditorWindow
         private readonly IAssetManager _assetManager;
         private readonly TreeView _hierarchyTreeView;
         private Label _label;
+        private readonly IProjectManager _projectManager;
 
         public InspectorEditorWindow(
-            IAssetManager assetManager)
+            IAssetManager assetManager,
+            IProjectManager projectManager)
         {
             _assetManager = assetManager;
+            _projectManager = projectManager;
 
             Title = "Inspector";
             Icon = _assetManager.Get<TextureAsset>("texture.IconInspector");
@@ -19,6 +23,15 @@ namespace Protogame.Editor.EditorWindow
             _label = new Label { Text = "Inspector Window" };
 
             SetChild(_label);
+        }
+
+        public override bool Visible
+        {
+            get
+            {
+                return _projectManager.Project != null;
+            }
+            set { }
         }
 
         public override void Update(ISkinLayout skinLayout, Rectangle layout, GameTime gameTime, ref bool stealFocus)

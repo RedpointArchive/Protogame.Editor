@@ -39,6 +39,7 @@ namespace Protogame.Editor
             kernel.Bind<IMenuProvider>().To<ActionManagerMenuProvider>().InSingletonScope();
 
             kernel.Bind<IProjectManager>().To<ProjectManager>().InSingletonScope();
+            kernel.Bind<IProjectManagerUi>().To<ProjectManagerUi>().InSingletonScope();
 
             kernel.Bind<IEditorWindowFactory>().ToFactory();
 
@@ -48,9 +49,15 @@ namespace Protogame.Editor
 
             kernel.Bind<ILoadedGame>().To<DefaultLoadedGame>().InSingletonScope();
 
-            kernel.Rebind<ICanvasRenderPass>().To<GameRenderTargetLockableCanvasRenderPass>().DiscardNodeOnResolve();
+            kernel.Rebind<ICanvasRenderPass>().To<EditorCanvasRenderPass>().DiscardNodeOnResolve();
 
             kernel.Bind<IEventBinder<IGameContext>>().To<EditorHotKeyBinder>();
+
+            kernel.Bind<NuiRenderer>().To<NuiRenderer>().InSingletonScope();
+
+            kernel.Bind<IEditorUserDataPathProvider>().To<EditorUserDataPathProvider>().InSingletonScope();
+            kernel.Bind<IRecentProjects>().To<RecentProjects>().InSingletonScope();
+            kernel.Bind<IThumbnailSampler>().To<ThumbnailSampler>().InSingletonScope();
         }
     }
 }

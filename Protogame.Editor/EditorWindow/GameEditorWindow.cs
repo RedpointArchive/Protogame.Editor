@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Protogame.Editor.LoadedGame;
+using Protogame.Editor.ProjectManagement;
 
 namespace Protogame.Editor.EditorWindow
 {
@@ -8,14 +9,17 @@ namespace Protogame.Editor.EditorWindow
         private readonly IAssetManager _assetManager;
         private readonly ILoadedGame _loadedGame;
         private readonly RawTextureContainer _rawTextureContainer;
+        private readonly IProjectManager _projectManager;
 
         public GameEditorWindow(
             IAssetManager assetManager,
             ILoadedGame loadedGame,
-            I2DRenderUtilities renderUtilities)
+            I2DRenderUtilities renderUtilities,
+            IProjectManager projectManager)
         {
             _assetManager = assetManager;
             _loadedGame = loadedGame;
+            _projectManager = projectManager;
 
             Title = "Game";
             Icon = _assetManager.Get<TextureAsset>("texture.IconDirectionalPad");
@@ -23,6 +27,15 @@ namespace Protogame.Editor.EditorWindow
             _rawTextureContainer = new RawTextureContainer(renderUtilities);
             _rawTextureContainer.TextureFit = "ratio";
             SetChild(_rawTextureContainer);
+        }
+        
+        public override bool Visible
+        {
+            get
+            {
+                return _projectManager.Project != null;
+            }
+            set { }
         }
 
         public override void Update(ISkinLayout skinLayout, Rectangle layout, GameTime gameTime, ref bool stealFocus)
