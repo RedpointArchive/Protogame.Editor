@@ -1,4 +1,6 @@
-﻿using Protogame.Editor.ProjectManagement;
+﻿using Protogame.Editor.Api.Version1.Menu;
+using Protogame.Editor.Api.Version1.ProjectManagement;
+using Protogame.Editor.ProjectManagement;
 using System.Collections.Generic;
 
 namespace Protogame.Editor.Menu
@@ -27,22 +29,22 @@ namespace Protogame.Editor.Menu
             yield return new MenuEntry("File/Exit", true, 400, OnExitApplication, null);
         }
 
-        private void OnNewProject(IGameContext gameContext, MenuEntry obj)
+        private void OnNewProject(MenuEntry obj)
         {
         }
 
-        private void OnSaveProject(IGameContext gameContext, MenuEntry obj)
+        private void OnSaveProject(MenuEntry obj)
         {
         }
 
-        private void OnOpenProject(IGameContext gameContext, MenuEntry obj)
+        private void OnOpenProject(MenuEntry obj)
         {
-            _coroutine.Run(() => _projectManagerUi.LoadProject(gameContext));
+            _coroutine.Run(() => _projectManagerUi.LoadProject());
         }
 
-        private void OnExitApplication(IGameContext gameContext, MenuEntry obj)
+        private void OnExitApplication(MenuEntry obj)
         {
-            gameContext.Game.Exit();
+            //gameContext.Game.Exit();
         }
     }
 }

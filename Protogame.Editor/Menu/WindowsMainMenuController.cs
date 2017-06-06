@@ -3,17 +3,19 @@
 using System.Linq;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Protogame.Editor.Extension;
+using Protogame.Editor.Api.Version1.Menu;
 
 namespace Protogame.Editor.Menu
 {
     public class WindowsMainMenuController : IMainMenuController
     {
-        private readonly IMenuProvider[] _menuProviders;
+        private readonly IDynamicServiceProvider _dynamicServiceProvider;
         private IGameContext _gameContext;
 
-        public WindowsMainMenuController(IMenuProvider[] menuProviders)
+        public WindowsMainMenuController(IDynamicServiceProvider dynamicServiceProvider)
         {
-            _menuProviders = menuProviders;
+            _dynamicServiceProvider = dynamicServiceProvider;
         }
 
         private class MenuItemTag
@@ -29,7 +31,7 @@ namespace Protogame.Editor.Menu
         {
             _gameContext = gameContext;
 
-            var menuEntries = _menuProviders.SelectMany(x => x.GetMenuItems());
+            var menuEntries = _dynamicServiceProvider.GetAll<IMenuProvider>().SelectMany(x => x.GetMenuItems());
 
             var menuStrip = CreateMainMenuControlIfNecessary(gameContext);
 
@@ -68,7 +70,7 @@ namespace Protogame.Editor.Menu
                 {
                     menuItem.Click += (sender, e) =>
                     {
-                        menuEntry.Handler(_gameContext, menuEntry);
+                        menuEntry.Handler(menuEntry);
                     };
                     menuItemTag.RegisteredClick = true;
                 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Protogame.Editor.Api.Version1.ProjectManagement;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,13 +8,14 @@ using System.Xml;
 
 namespace Protogame.Editor.ProjectManagement
 {
-    public class ProjectManager : IProjectManager
+    public class ProjectManager : MarshalByRefObject, IProjectManager
     {
         private readonly ICoroutine _coroutine;
         private readonly IConsoleHandle _consoleHandle;
         private Task _loadingTask;
         private Project _project;
         private readonly IRecentProjects _recentProjects;
+        private FileSystemWatcher _fileSystemWatcher;
 
         public ProjectManager(
             IRawLaunchArguments launchArguments,
@@ -42,7 +44,78 @@ namespace Protogame.Editor.ProjectManagement
                 ProjectPath = new DirectoryInfo(directoryPath)
             };
 
+            if (_fileSystemWatcher != null)
+            {
+                _fileSystemWatcher.Dispose();
+            }
+
+            _fileSystemWatcher = new FileSystemWatcher(directoryPath);
+            _fileSystemWatcher.NotifyFilter = 
+                NotifyFilters.Attributes |
+                NotifyFilters.CreationTime |
+                NotifyFilters.FileName |
+                NotifyFilters.LastAccess |
+                NotifyFilters.LastWrite |
+                NotifyFilters.Size |
+                NotifyFilters.Security;
+            _fileSystemWatcher.Filter = "*";
+            _fileSystemWatcher.Changed += _fileSystemWatcher_Changed;
+            _fileSystemWatcher.Created += _fileSystemWatcher_Created;
+            _fileSystemWatcher.Deleted += _fileSystemWatcher_Deleted;
+            _fileSystemWatcher.Renamed += _fileSystemWatcher_Renamed;
+            _fileSystemWatcher.IncludeSubdirectories = true;
+            _fileSystemWatcher.EnableRaisingEvents = true;
+
             _loadingTask = _coroutine.Run(async () => await LoadProjectDataAsync(_project));
+        }
+
+        private void _fileSystemWatcher_Renamed(object sender, RenamedEventArgs e)
+        {
+            if (e.OldFullPath != null)
+            {
+                _consoleHandle.LogDebug("Renamed from: " + e.OldFullPath);
+                FileChanged(e.OldFullPath);
+            }
+            if (e.FullPath != null)
+            {
+                _consoleHandle.LogDebug("Renamed to: " + e.FullPath);
+                FileChanged(e.FullPath);
+            }
+        }
+
+        private void _fileSystemWatcher_Deleted(object sender, FileSystemEventArgs e)
+        {
+            if (e.FullPath != null)
+            {
+                _consoleHandle.LogDebug("Deleted: " + e.FullPath);
+                FileChanged(e.FullPath);
+            }
+        }
+
+        private void _fileSystemWatcher_Created(object sender, FileSystemEventArgs e)
+        {
+            if (e.FullPath != null)
+            {
+                _consoleHandle.LogDebug("Created: " + e.FullPath);
+                FileChanged(e.FullPath);
+            }
+        }
+
+        private void _fileSystemWatcher_Changed(object sender, FileSystemEventArgs e)
+        {
+            if (e.FullPath != null)
+            {
+                _consoleHandle.LogDebug("Changed: " + e.FullPath);
+                FileChanged(e.FullPath);
+            }
+        }
+
+        private void FileChanged(string path)
+        {
+            if (string.Equals(_project.DefaultGameBinPath.FullName, path, StringComparison.InvariantCultureIgnoreCase))
+            {
+                _project.DefaultGameBinPath = new FileInfo(_project.DefaultGameBinPath.FullName);
+            }
         }
 
         private async Task LoadProjectDataAsync(Project project)
@@ -82,6 +155,8 @@ namespace Protogame.Editor.ProjectManagement
 
             project.LoadingStatus = "Loading definitions...";
             _consoleHandle.LogDebug("Loading definitions...");
+
+            project.SolutionFile = new FileInfo(Path.Combine(project.ProjectPath.FullName, project.Name + ".Windows.sln"));
 
             var definitionsList = new List<DefinitionInfo>();
             foreach (var definitionFile in projectsDefinitionsDirectory.GetFiles("*.definition"))
@@ -146,8 +221,36 @@ namespace Protogame.Editor.ProjectManagement
                 {
                     if (project.DefaultGame == null)
                     {
+                        var debugFile = new FileInfo(Path.Combine(project.ProjectPath.FullName, definitionInfo.Path, "bin", "Windows", "AnyCPU", "Debug", definitionInfo.Name + ".exe"));
+                        var releaseFile = new FileInfo(Path.Combine(project.ProjectPath.FullName, definitionInfo.Path, "bin", "Windows", "AnyCPU", "Release", definitionInfo.Name + ".exe"));
+
                         project.DefaultGame = definitionInfo;
-                        project.DefaultGameBinPath = new FileInfo(Path.Combine(project.ProjectPath.FullName, definitionInfo.Path, "bin", "Windows", "AnyCPU", "Release", definitionInfo.Name + ".exe"));
+                        if (debugFile.Exists)
+                        {
+                            if (releaseFile.Exists)
+                            {
+                                if (debugFile.LastWriteTimeUtc > releaseFile.LastWriteTimeUtc)
+                                {
+                                    project.DefaultGameBinPath = debugFile;
+                                }
+                                else
+                                {
+                                    project.DefaultGameBinPath = releaseFile;
+                                }
+                            }
+                            else
+                            {
+                                project.DefaultGameBinPath = debugFile;
+                            }
+                        }
+                        else if (releaseFile.Exists)
+                        {
+                            project.DefaultGameBinPath = releaseFile;
+                        }
+                        else
+                        {
+                            project.DefaultGameBinPath = debugFile;
+                        }
                     }
                 }
             }

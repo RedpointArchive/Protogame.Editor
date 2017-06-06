@@ -17,6 +17,8 @@ namespace Protogame.Editor.GameHost
         private bool _hasLoadedContent = false;
         private int _mouseX;
         private int _mouseY;
+        private int _currentMouseX;
+        private int _currentMouseY;
         private bool _wantsMouseSet;
 
         public EditorHostGame(ICoreGame coreGame)
@@ -30,11 +32,23 @@ namespace Protogame.Editor.GameHost
             _contentManager = new ContentManager(_serviceContainer, "Content");
         }
 
+        internal void GetMousePosition(out int x, out int y)
+        {
+            x = _currentMouseX;
+            y = _currentMouseY;
+        }
+
         internal void SetMousePositionToSet(int x, int y)
         {
             _mouseX = x;
             _mouseY = y;
             _wantsMouseSet = true;
+        }
+
+        public void SetMousePositionToGet(int x, int y)
+        {
+            _currentMouseX = x;
+            _currentMouseY = y;
         }
 
         public bool GetMousePositionToSet(ref int x, ref int y)

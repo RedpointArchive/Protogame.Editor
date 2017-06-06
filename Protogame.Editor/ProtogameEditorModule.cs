@@ -7,6 +7,11 @@ using Protogame.Editor.Menu;
 using Protogame.Editor.ProjectManagement;
 using Protogame.Editor.EditorWindow;
 using Protogame.Editor.LoadedGame;
+using Protogame.Editor.Api.Version1.ProjectManagement;
+using Protogame.Editor.Api.Version1;
+using Protogame.Editor.Ext.CodeManager;
+using Protogame.Editor.Extension;
+using Protogame.Editor.Api.Version1.Menu;
 
 namespace Protogame.Editor
 {
@@ -58,6 +63,14 @@ namespace Protogame.Editor
             kernel.Bind<IEditorUserDataPathProvider>().To<EditorUserDataPathProvider>().InSingletonScope();
             kernel.Bind<IRecentProjects>().To<RecentProjects>().InSingletonScope();
             kernel.Bind<IThumbnailSampler>().To<ThumbnailSampler>().InSingletonScope();
+
+            kernel.Bind<IServiceRegistration>().To<ExtensionServiceRegistration>().InSingletonScope();
+            kernel.Bind<IExtensionManager>().To<ExtensionManager>().InSingletonScope();
+            kernel.Bind<IDynamicServiceProvider>().To<ExtensionDynamicServiceProvider>().InSingletonScope();
+
+            kernel.Bind<IEditorExtension>().To<CodeManagerEditorExtension>().InSingletonScope();
+
+            kernel.Bind<Protogame.Editor.Api.Version1.Core.IConsoleHandle>().To<ExtensionConsoleHandle>().InSingletonScope();
         }
     }
 }

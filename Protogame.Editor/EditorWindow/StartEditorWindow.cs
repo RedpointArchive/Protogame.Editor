@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Protogame.Editor.Api.Version1.ProjectManagement;
 using Protogame.Editor.Layout;
 using Protogame.Editor.ProjectManagement;
 using System.Collections.Generic;
@@ -46,7 +47,7 @@ namespace Protogame.Editor.EditorWindow
 
             openProject.Click += (sender, e) =>
             {
-                _coroutine.Run(() => projectManagerUi.LoadProject(e.GameContext));
+                _coroutine.Run(() => projectManagerUi.LoadProject());
             };
 
             var buttonContainer = new HorizontalContainer();
@@ -132,6 +133,7 @@ namespace Protogame.Editor.EditorWindow
                     horizontalContainer.AddChild(button, "60");
 
                     _recentProjectsContainer.AddChild(horizontalContainer, "60");
+                    _recentProjectsContainer.AddChild(new EmptyContainer(), "10");
                 }
 
                 _hasAppliedRecentProjects = true;

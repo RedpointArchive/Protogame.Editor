@@ -1,11 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
+using Protogame.Editor.Api.Version1.ProjectManagement;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Protogame.Editor.ProjectManagement
 {
-    public class ProjectManagerUi : IProjectManagerUi
+    public class ProjectManagerUi : MarshalByRefObject, IProjectManagerUi
     {
         private readonly IProjectManager _projectManager;
 
@@ -14,7 +15,7 @@ namespace Protogame.Editor.ProjectManagement
             _projectManager = projectManager;
         }
 
-        public async Task LoadProject(IGameContext gameContext)
+        public async Task LoadProject()
         {
 #if PLATFORM_WINDOWS
             string project = null;

@@ -12,6 +12,7 @@ using Protogame.Editor.Override;
 using System.Threading;
 using System.Diagnostics;
 using Microsoft.Xna.Framework.Input;
+using Protogame.Editor.Api.Version1.ProjectManagement;
 
 namespace Protogame.Editor.LoadedGame
 {
@@ -167,6 +168,12 @@ namespace Protogame.Editor.LoadedGame
                 if (_gameLoader.GetMousePositionToSet(ref x, ref y))
                 {
                     Mouse.SetPosition(x + _offset.X, y + _offset.Y);
+                    _gameLoader.SetMousePositionToGet(x, y);
+                }
+                else
+                {
+                    var state = Mouse.GetState();
+                    _gameLoader.SetMousePositionToGet(state.X - _offset.X, state.Y - _offset.Y);
                 }
             }
 
@@ -191,7 +198,7 @@ namespace Protogame.Editor.LoadedGame
                 {
                     return;
                 }
-
+                
                 // Abort the game thread if we plan on reloading.
                 if (_gameThread != null)
                 {
@@ -276,7 +283,8 @@ namespace Protogame.Editor.LoadedGame
             QueueAction(() => _consoleHandle.LogDebug("Game appdomain will have base of {0}", domaininfo.ApplicationBase));
             _appDomain = AppDomain.CreateDomain("LoadedGame", null, new AppDomainSetup
             {
-                LoaderOptimization = LoaderOptimization.MultiDomain
+                LoaderOptimization = LoaderOptimization.MultiDomain,
+                ShadowCopyFiles = "true",
             });
             var monogameType = typeof(Microsoft.Xna.Framework.Curve);
             var protogameType = typeof(Protogame.ProtogameBaseModule);
@@ -314,6 +322,11 @@ namespace Protogame.Editor.LoadedGame
                     try
                     {
                         Tick();
+                    }
+                    catch (ThreadAbortException ex)
+                    {
+                        QueueAction(() => _consoleHandle.LogDebug("Game has been requested to close..."));
+                        break;
                     }
                     catch (Exception ex)
                     {

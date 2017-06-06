@@ -12,6 +12,8 @@ using Protogame.Editor.EditorWindow;
 using Protogame.Editor.ProjectManagement;
 using Protogame.Editor.LoadedGame;
 using System;
+using Protogame.Editor.Api.Version1.ProjectManagement;
+using Protogame.Editor.Extension;
 
 namespace Protogame.Editor
 {
@@ -35,6 +37,7 @@ namespace Protogame.Editor
         private GameEditorWindow _gameEditorWindow;
         private readonly IRecentProjects _recentProjects;
         private readonly IThumbnailSampler _thumbnailSampler;
+        private readonly IExtensionManager _extensionManager;
 
         public ProtogameEditorWorld(
             INode worldNode,
@@ -47,7 +50,8 @@ namespace Protogame.Editor
             IProjectManager projectManager,
             ILoadedGame loadedGame,
             IRecentProjects recentProjects,
-            IThumbnailSampler thumbnailSampler)
+            IThumbnailSampler thumbnailSampler,
+            IExtensionManager extensionManager)
         {
             _skinLayout = skinLayout;
             _skinDelegator = skinDelegator;
@@ -58,6 +62,7 @@ namespace Protogame.Editor
             _loadedGame = loadedGame;
             _recentProjects = recentProjects;
             _thumbnailSampler = thumbnailSampler;
+            _extensionManager = extensionManager;
 
             SetupCanvas();
 
@@ -241,6 +246,8 @@ namespace Protogame.Editor
             }
 
             gameContext.Window.Title = "Protogame 7.0.0 (" + (_projectManager?.Project?.Name ?? "<No Project>") + "; Build c510ef6)";
+
+            _extensionManager.Update();
         }
 
         public IEnumerable<KeyValuePair<Canvas, Rectangle>> Canvases { get; }

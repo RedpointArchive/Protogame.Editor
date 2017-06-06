@@ -1,7 +1,7 @@
 ﻿using Protogame;
 using System;
 
-namespace Protogame.Editor.Menu
+namespace Protogame.Editor.Api.Version1.Menu
 {
     public class MenuEntry
     {
@@ -29,7 +29,7 @@ namespace Protogame.Editor.Menu
         public MenuDynamicTextHandler DynamicTextHandler { get; set; }
     }
 
-    public delegate void MenuClickHandler(IGameContext gameContext, MenuEntry menuEntry);
+    public delegate void MenuClickHandler(MenuEntry menuEntry);
 
     public delegate bool MenuDynamicEnabledHandler(MenuEntry menuEntry);
 
