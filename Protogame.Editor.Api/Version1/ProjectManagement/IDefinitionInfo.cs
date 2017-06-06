@@ -2,7 +2,7 @@
 using System.IO;
 using System.Xml;
 
-namespace Protogame.Editor.ProjectManagement
+namespace Protogame.Editor.Api.Version1.ProjectManagement
 {
     public interface IDefinitionInfo
     {

@@ -1,4 +1,4 @@
-﻿namespace Protogame.Editor.ProjectManagement
+﻿namespace Protogame.Editor.Api.Version1.ProjectManagement
 {
     public interface IPackageInfo
     {

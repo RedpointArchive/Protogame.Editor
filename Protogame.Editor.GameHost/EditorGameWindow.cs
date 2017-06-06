@@ -53,5 +53,10 @@ namespace Protogame.Editor.GameHost
         {
             _hostGame.SetMousePositionToSet(x, y);
         }
+
+        public void GetCursorPosition(out int x, out int y)
+        {
+            _hostGame.GetMousePosition(out x, out y);
+        }
     }
 }

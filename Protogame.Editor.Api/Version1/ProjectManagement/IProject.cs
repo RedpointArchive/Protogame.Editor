@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.IO;
 
-namespace Protogame.Editor.ProjectManagement
+namespace Protogame.Editor.Api.Version1.ProjectManagement
 {
     public interface IProject
     {
@@ -16,6 +16,8 @@ namespace Protogame.Editor.ProjectManagement
         ReadOnlyCollection<IDefinitionInfo> Definitions { get; }
 
         IDefinitionInfo DefaultGame { get; }
+        
+        FileInfo SolutionFile { get; }
 
         FileInfo DefaultGameBinPath { get; }
     }

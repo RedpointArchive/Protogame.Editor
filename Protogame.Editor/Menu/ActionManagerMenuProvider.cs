@@ -1,4 +1,5 @@
 ﻿using Protogame;
+using Protogame.Editor.Api.Version1.Menu;
 using System;
 using System.Collections.Generic;
 
@@ -12,7 +13,7 @@ namespace Protogame.Editor.Menu
             yield return new MenuEntry("Edit/Redo", true, 1, OnRedoAction, null) { DynamicTextHandler = OnRedoTextHandler, DynamicEnabledHandler = OnRedoEnabledHandler };
         }
 
-        private void OnUndoAction(IGameContext gameContext, MenuEntry obj)
+        private void OnUndoAction(MenuEntry obj)
         {
         }
 
@@ -26,7 +27,7 @@ namespace Protogame.Editor.Menu
             return false;
         }
 
-        private void OnRedoAction(IGameContext gameContext, MenuEntry obj)
+        private void OnRedoAction(MenuEntry obj)
         {
         }
 

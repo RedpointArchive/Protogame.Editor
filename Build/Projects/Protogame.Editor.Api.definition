@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Name="Protogame.Editor.Api" Path="Protogame.Editor.Api" Type="Library">
+  <References>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="Microsoft.CSharp" />
+  </References>
+  <Files>
+    <Compile Include="Version1\Core\IConsoleHandle.cs" />
+    <Compile Include="Version1\Core\IWantsUpdateSignal.cs" />
+    <Compile Include="Version1\EditorWindow\EditorWindowDeclaration.cs" />
+    <Compile Include="Version1\EditorWindow\EditorWindowLevel.cs" />
+    <Compile Include="Version1\EditorWindow\IEditorWindow.cs" />
+    <Compile Include="Version1\EditorWindow\IEditorWindowApi.cs" />
+    <Compile Include="Version1\EditorWindow\IEditorWindowProvider.cs" />
+    <Compile Include="Version1\ExtensionAttribute.cs" />
+    <Compile Include="Version1\IEditorExtension.cs" />
+    <Compile Include="Version1\IServiceRegistration.cs" />
+    <Compile Include="Version1\Menu\IMenuProvider.cs" />
+    <Compile Include="Version1\Menu\MenuEntry.cs" />
+    <Compile Include="Version1\ProjectManagement\IDefinitionInfo.cs" />
+    <Compile Include="Version1\ProjectManagement\IPackageInfo.cs" />
+    <Compile Include="Version1\ProjectManagement\IProject.cs" />
+    <Compile Include="Version1\ProjectManagement\IProjectManager.cs" />
+    <Compile Include="Version1\ProjectManagement\IProjectManagerUi.cs" />
+  </Files>
+</Project>

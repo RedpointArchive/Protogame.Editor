@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Protogame.Editor.Api.Version1.ProjectManagement;
 using Protogame.Editor.LoadedGame;
 using System;
 using System.Collections.Generic;

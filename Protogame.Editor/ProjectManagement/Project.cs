@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using Protogame.Editor.Api.Version1.ProjectManagement;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 
 namespace Protogame.Editor.ProjectManagement
 {
-    public class Project : IProject
+    public class Project : MarshalByRefObject, IProject
     {
         public DirectoryInfo ProjectPath { get; set; }
 
@@ -22,6 +24,8 @@ namespace Protogame.Editor.ProjectManagement
         ReadOnlyCollection<IDefinitionInfo> IProject.Definitions => Definitions == null ? null : Definitions.OfType<IDefinitionInfo>().ToList().AsReadOnly();
 
         public IDefinitionInfo DefaultGame { get; set; }
+
+        public FileInfo SolutionFile { get; set; }
 
         public FileInfo DefaultGameBinPath { get; set; }
     }

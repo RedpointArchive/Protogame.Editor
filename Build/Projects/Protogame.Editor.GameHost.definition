@@ -9,6 +9,10 @@
     <Reference Include="MonoGame.Framework" />
     <Reference Include="Protoinject" />
     <Reference Include="Protogame" />
+    <Reference Include="Protogame.Editor.Api" />
+    <Reference Include="Protogame.Editor.Api.Game" />
+    <Reference Include="Protogame.Editor.Ext.Inspector" />
+    <Reference Include="Protogame.Editor.Ext.Inspector.Game" />
   </References>
   <Files>
     <Compile Include="BackBufferDimensionsProxy.cs" />
@@ -16,6 +20,7 @@
     <Compile Include="EditorGameWindow.cs" />
     <Compile Include="EditorGraphicsDeviceService.cs" />
     <Compile Include="EditorHostGame.cs" />
+    <Compile Include="ExtensionEngineHook.cs" />
     <Compile Include="GameLoader.cs" />
     <Compile Include="GameLoaderContext.cs" />
     <Compile Include="Other\DomainGate.cs" />

@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Name="Protogame.Editor.Api.Game" Path="Protogame.Editor.Api.Game" Type="Library">
+  <References>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Protogame.Editor.Api" />
+    <Reference Include="protobuf-net" />
+    <Reference Include="Protoinject" />
+    <Reference Include="Mono.Cecil" />
+    <Reference Include="MonoGame.Framework" />
+    <Reference Include="Protogame" />
+    <Reference Include="Protogame.ThirdParty" />
+  </References>
+  <Files>
+    <Compile Include="Version1\IGameHostExtension.cs" />
+  </Files>
+</Project>

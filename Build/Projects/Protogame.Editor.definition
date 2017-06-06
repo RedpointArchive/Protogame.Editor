@@ -16,6 +16,11 @@
     <Reference Include="Protogame.Editor.Content" />
     <Reference Include="Protogame.Editor.GameHost" />
     <Reference Include="Protogame.Editor.ThirdParty" />
+    <Reference Include="Protogame.Editor.Api" />
+    <Reference Include="Protogame.Editor.Api.Game" />
+    <Reference Include="Protogame.Editor.Ext.CodeManager" />
+    <Reference Include="Protogame.Editor.Ext.Inspector" />
+    <Reference Include="Protogame.Editor.Ext.Inspector.Game" />
   </References>
   <Dependencies>
     <Uses Name="Prestart" />
@@ -40,6 +45,12 @@
     <Compile Include="EditorWindow\ProjectEditorWindow.cs" />
     <Compile Include="EditorWindow\StartEditorWindow.cs" />
     <Compile Include="EditorWindow\WorldEditorWindow.cs" />
+    <Compile Include="Extension\ExtensionConsoleHandle.cs" />
+    <Compile Include="Extension\ExtensionDynamicServiceProvider.cs" />
+    <Compile Include="Extension\ExtensionManager.cs" />
+    <Compile Include="Extension\ExtensionServiceRegistration.cs" />
+    <Compile Include="Extension\IDynamicServiceProvider.cs" />
+    <Compile Include="Extension\IExtensionManager.cs" />
     <Compile Include="Layout\ClickableHorizontalContainer.cs" />
     <Compile Include="Layout\ConsoleContainer.cs" />
     <Compile Include="Layout\DockableLayoutContainer.cs" />
@@ -55,8 +66,6 @@
     <Compile Include="LoadedGame\LoadedGameState.cs" />
     <Compile Include="Menu\ActionManagerMenuProvider.cs" />
     <Compile Include="Menu\IMainMenuController.cs" />
-    <Compile Include="Menu\IMenuProvider.cs" />
-    <Compile Include="Menu\MenuEntry.cs" />
     <Compile Include="Menu\ProjectManagerMenuProvider.cs" />
     <Compile Include="Menu\WindowsMainMenuController.cs" />
     <Compile Include="Nui\NuiButtonSkinRenderer.cs" />
@@ -79,11 +88,6 @@
     <Compile Include="Override\GameBaseDirectory.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectManagement\DefinitionInfo.cs" />
-    <Compile Include="ProjectManagement\IDefinitionInfo.cs" />
-    <Compile Include="ProjectManagement\IPackageInfo.cs" />
-    <Compile Include="ProjectManagement\IProject.cs" />
-    <Compile Include="ProjectManagement\IProjectManager.cs" />
-    <Compile Include="ProjectManagement\IProjectManagerUi.cs" />
     <Compile Include="ProjectManagement\PackageInfo.cs" />
     <Compile Include="ProjectManagement\Project.cs" />
     <Compile Include="ProjectManagement\ProjectManager.cs" />

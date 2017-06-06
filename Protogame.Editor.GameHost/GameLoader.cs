@@ -36,6 +36,9 @@ namespace Protogame.Editor.GameHost
                 .ToMethod(x => new DefaultRawLaunchArguments(new string[0]))
                 .InSingletonScope();
 
+            // Bind our extension hook first so that it runs before everything else.
+            kernel.Bind<IEngineHook>().To<ExtensionEngineHook>().InSingletonScope();
+
             Func<System.Reflection.Assembly, Type[]> TryGetTypes = a =>
             {
                 try
@@ -91,6 +94,7 @@ namespace Protogame.Editor.GameHost
                 // Rebind services so the game renders correctly inside the editor.
                 kernel.Rebind<IBaseDirectory>().ToMethod(x => baseDirectory).InSingletonScope();
                 kernel.Rebind<IBackBufferDimensions>().ToMethod(x => backBufferDimensions).InSingletonScope();
+                kernel.Rebind<IDebugRenderer>().To<DefaultDebugRenderer>().InSingletonScope();
                 var bindings = kernel.GetCopyOfBindings();
                 var mustBindNewEventEngine = false;
                 if (bindings.ContainsKey(typeof(IEngineHook)))
@@ -137,6 +141,11 @@ namespace Protogame.Editor.GameHost
         public void SetRenderTargetPointers(IntPtr[] sharedResourceHandles, int currentWriteIndex)
         {
             _editorHostGame?.SetSharedResourceHandles(sharedResourceHandles, currentWriteIndex);
+        }
+
+        public void SetMousePositionToGet(int x, int y)
+        {
+            _editorHostGame?.SetMousePositionToGet(x, y);
         }
 
         public bool GetMousePositionToSet(ref int x, ref int y)

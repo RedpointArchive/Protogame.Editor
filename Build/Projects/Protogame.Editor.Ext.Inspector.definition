@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Name="Protogame.Editor.Ext.Inspector" Path="Protogame.Editor.Ext.Inspector" Type="Library">
+  <References>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Protogame.Editor.Api" />
+  </References>
+  <Files>
+    <Compile Include="InspectorEditorExtension.cs" />
+    <Compile Include="InspectorEditorWindow.cs" />
+    <Compile Include="InspectorEditorWindowProvider.cs" />
+  </Files>
+</Project>
