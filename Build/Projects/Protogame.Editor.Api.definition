@@ -6,6 +6,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Protoinject" />
   </References>
   <Files>
     <Compile Include="Version1\Core\IConsoleHandle.cs" />

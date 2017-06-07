@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Name="Protogame.Editor.ExtHost" Path="Protogame.Editor.ExtHost" Type="Console">
+  <References>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Protogame.Editor.Api" />
+    <Reference Include="Protoinject" />
+  </References>
+  <Files>
+  </Files>
+</Project>
