@@ -18,6 +18,7 @@
     <Reference Include="Protogame.Editor.ThirdParty" />
     <Reference Include="Protogame.Editor.Api" />
     <Reference Include="Protogame.Editor.Api.Game" />
+    <Reference Include="Protogame.Editor.ExtHost" />
     <Reference Include="Protogame.Editor.Ext.CodeManager" />
     <Reference Include="Protogame.Editor.Ext.Inspector" />
     <Reference Include="Protogame.Editor.Ext.Inspector.Game" />

@@ -5,8 +5,6 @@ namespace Protogame.Editor.Api.Version1
 {
     public interface IExtensionHostServer
     {
-        Task AcceptMarshalledKernel(IKernel kernel);
-
-        Task LoadAssembly(string assembly);
+        Task<RegisteredService[]> Start(string assembly);
     }
 }

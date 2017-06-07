@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Name="Protogame.Editor.ExtHost" Path="Protogame.Editor.ExtHost" Type="Console">
   <References>
     <Reference Include="System" />
@@ -11,5 +11,7 @@
     <Reference Include="Protoinject" />
   </References>
   <Files>
+    <Compile Include="ExtensionHostServer.cs" />
+    <Compile Include="Program.cs" />
   </Files>
 </Project>
