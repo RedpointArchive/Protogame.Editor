@@ -39,7 +39,7 @@ namespace Protogame
 
         public void Log(string message)
         {
-            foreach (var m in message.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries))
+            foreach (var m in (message ?? "").Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries))
             {
                 LogInternal(new ConsoleEntry { Count = 1, Message = m?.TrimEnd(), Name = string.Empty });
             }
@@ -54,7 +54,7 @@ namespace Protogame
                 name = name.Substring(0, 17) + "...";
             }
 
-            var message = args == null ? format : string.Format(format, args);
+            var message = (args == null ? format : string.Format(format, args)) ?? "";
             foreach (var m in message.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries))
             {
                 LogInternal(new ConsoleEntry { Count = 1, LogLevel = ConsoleLogLevel.Debug, Message = m?.TrimEnd(), Name = name });
@@ -70,7 +70,7 @@ namespace Protogame
                 name = name.Substring(0, 17) + "...";
             }
 
-            var message = args == null ? format : string.Format(format, args);
+            var message = (args == null ? format : string.Format(format, args)) ?? "";
             foreach (var m in message.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries))
             {
                 LogInternal(new ConsoleEntry { Count = 1, LogLevel = logLevel, Message = m?.TrimEnd(), Name = name });

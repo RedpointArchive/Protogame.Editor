@@ -27,6 +27,7 @@
     <Compile Include="Other\DomainGate.cs" />
     <Compile Include="Other\HostGameProxy.cs" />
     <Compile Include="Other\ObjectAddress.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="RenderTargetBufferConfiguration.cs" />
   </Files>
 </Project>

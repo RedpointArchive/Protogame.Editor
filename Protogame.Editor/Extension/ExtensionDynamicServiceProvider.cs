@@ -32,6 +32,21 @@ namespace Protogame.Editor.Extension
             }
         }
 
+        public void BindSingleton(Type @interface, Func<object> factory)
+        {
+            _kernel.Bind(@interface).ToMethod(x => factory()).InSingletonScope();
+
+            if (_objectCache.ContainsKey(@interface))
+            {
+                foreach (var o in ((Array)_objectCache[@interface]).OfType<IDisposable>())
+                {
+                    o.Dispose();
+                }
+
+                _objectCache.Remove(@interface);
+            }
+        }
+
         public void BindTransient<TInterface, TImplementation>() where TImplementation : TInterface
         {
             _kernel.Bind<TInterface>().To<TImplementation>();
@@ -44,6 +59,21 @@ namespace Protogame.Editor.Extension
                 }
 
                 _objectCache.Remove(typeof(TInterface));
+            }
+        }
+
+        public void BindTransient(Type @interface, Func<object> factory)
+        {
+            _kernel.Bind(@interface).ToMethod(x => factory());
+
+            if (_objectCache.ContainsKey(@interface))
+            {
+                foreach (var o in ((Array)_objectCache[@interface]).OfType<IDisposable>())
+                {
+                    o.Dispose();
+                }
+
+                _objectCache.Remove(@interface);
             }
         }
 

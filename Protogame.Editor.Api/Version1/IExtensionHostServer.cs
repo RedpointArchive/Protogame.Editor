@@ -5,6 +5,8 @@ namespace Protogame.Editor.Api.Version1
 {
     public interface IExtensionHostServer
     {
-        Task<RegisteredService[]> Start(string assembly);
+        RegisteredService[] Start(string assembly);
+
+        void RegisterRemoteResolve(IExtensionHostServerRemoteResolve remoteResolve);
     }
 }

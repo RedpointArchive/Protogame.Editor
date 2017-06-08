@@ -68,8 +68,6 @@ namespace Protogame.Editor
             kernel.Bind<IExtensionManager>().To<ExtensionManager>().InSingletonScope();
             kernel.Bind<IDynamicServiceProvider>().To<ExtensionDynamicServiceProvider>().InSingletonScope();
 
-            kernel.Bind<IEditorExtension>().To<CodeManagerEditorExtension>().InSingletonScope();
-
             kernel.Bind<Protogame.Editor.Api.Version1.Core.IConsoleHandle>().To<ExtensionConsoleHandle>().InSingletonScope();
         }
     }

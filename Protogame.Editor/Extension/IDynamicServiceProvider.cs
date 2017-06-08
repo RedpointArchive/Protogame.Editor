@@ -1,13 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Protogame.Editor.Api.Version1;
+using System.Collections.Generic;
 
 namespace Protogame.Editor.Extension
 {
-    public interface IDynamicServiceProvider
+    public interface IDynamicServiceProvider : IServiceRegistration
     {
-        void BindSingleton<TInterface, TImplementation>() where TImplementation : TInterface;
-
-        void BindTransient<TInterface, TImplementation>() where TImplementation : TInterface;
-
         T[] GetAll<T>();
     }
 }
