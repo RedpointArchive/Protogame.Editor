@@ -62,11 +62,9 @@ namespace Protogame.Editor.Nui
 
                 var x = entries[i];
                 var message = x.Name == string.Empty ? x.Message : $"<{x.Name,-20}> ({x.Count,5}) {x.Message}";
-
-                var lines = message.Split(new[] { Environment.NewLine }, StringSplitOptions.None).Length;
-
+                
                 var pointA = new Point(layout.X + 2, layout.Y + a * 16);
-                var pointB = new Point(layout.X + 2, layout.Y + (a + lines) * 16);
+                var pointB = new Point(layout.X + 2, layout.Y + (a + 1) * 16);
                 if (renderedLayout.Contains(pointA) || renderedLayout.Contains(pointB))
                 {
                     _renderUtilities.RenderText(
@@ -78,7 +76,7 @@ namespace Protogame.Editor.Nui
                         renderShadow: false);
                 }
 
-                a += lines;
+                a += 1;
             }
         }
     }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Module>
-  <Name>ProtogameUIStylingTest</Name>
+  <Name>Protogame.Editor</Name>
   <DefaultAction>resync</DefaultAction>
   <GenerateNuGetRepositories>true</GenerateNuGetRepositories>
   <Packages>

@@ -17,6 +17,7 @@
     <Compile Include="Version1\EditorWindow\IEditorWindowProvider.cs" />
     <Compile Include="Version1\ExtensionAttribute.cs" />
     <Compile Include="Version1\IEditorExtension.cs" />
+    <Compile Include="Version1\IExtensionHostServer.cs" />
     <Compile Include="Version1\IServiceRegistration.cs" />
     <Compile Include="Version1\Menu\IMenuProvider.cs" />
     <Compile Include="Version1\Menu\MenuEntry.cs" />
@@ -25,5 +26,6 @@
     <Compile Include="Version1\ProjectManagement\IProject.cs" />
     <Compile Include="Version1\ProjectManagement\IProjectManager.cs" />
     <Compile Include="Version1\ProjectManagement\IProjectManagerUi.cs" />
+    <Compile Include="Version1\RegisteredService.cs" />
   </Files>
 </Project>

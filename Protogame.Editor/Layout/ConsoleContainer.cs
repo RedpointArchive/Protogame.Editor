@@ -24,7 +24,7 @@ namespace Protogame.Editor.Layout
                 return null;
             }
 
-            return Console.Entries.Sum(x => (x.Message ?? "").Split(new[] { Environment.NewLine }, StringSplitOptions.None).Length) * 16;
+            return (int)Console.EntryCount * 16;
         }
 
         public int? GetDesiredWidth(ISkinLayout skin)

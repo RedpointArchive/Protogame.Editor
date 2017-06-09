@@ -5,6 +5,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Runtime.Remoting" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="protobuf-net" />
     <Reference Include="Protoinject" />
@@ -18,6 +19,7 @@
     <Reference Include="Protogame.Editor.ThirdParty" />
     <Reference Include="Protogame.Editor.Api" />
     <Reference Include="Protogame.Editor.Api.Game" />
+    <Reference Include="Protogame.Editor.ExtHost" />
     <Reference Include="Protogame.Editor.Ext.CodeManager" />
     <Reference Include="Protogame.Editor.Ext.Inspector" />
     <Reference Include="Protogame.Editor.Ext.Inspector.Game" />

@@ -2,6 +2,7 @@ using Protoinject;
 
 namespace Protogame
 {
+    using System;
     using System.Collections.Generic;
 
     public class EditorConsole : IConsole
@@ -38,7 +39,10 @@ namespace Protogame
 
         public void Log(string message)
         {
-            LogInternal(new ConsoleEntry { Count = 1, Message = message, Name = string.Empty });
+            foreach (var m in (message ?? "").Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                LogInternal(new ConsoleEntry { Count = 1, Message = m?.TrimEnd(), Name = string.Empty });
+            }
         }
 
         public void LogStructured(INode node, string format, object[] args)
@@ -50,7 +54,11 @@ namespace Protogame
                 name = name.Substring(0, 17) + "...";
             }
 
-            LogInternal(new ConsoleEntry { Count = 1, LogLevel = ConsoleLogLevel.Debug, Message = args == null ? format : string.Format(format, args), Name = name });
+            var message = (args == null ? format : string.Format(format, args)) ?? "";
+            foreach (var m in message.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                LogInternal(new ConsoleEntry { Count = 1, LogLevel = ConsoleLogLevel.Debug, Message = m?.TrimEnd(), Name = name });
+            }
         }
 
         public void LogStructured(INode node, ConsoleLogLevel logLevel, string format, object[] args)
@@ -62,7 +70,11 @@ namespace Protogame
                 name = name.Substring(0, 17) + "...";
             }
 
-            LogInternal(new ConsoleEntry { Count = 1, LogLevel = logLevel, Message = args == null ? format : string.Format(format, args), Name = name });
+            var message = (args == null ? format : string.Format(format, args)) ?? "";
+            foreach (var m in message.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                LogInternal(new ConsoleEntry { Count = 1, LogLevel = logLevel, Message = m?.TrimEnd(), Name = name });
+            }
         }
 
         private void LogInternal(ConsoleEntry consoleEntry)

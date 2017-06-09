@@ -7,10 +7,13 @@ namespace Protogame.Editor.Menu
 {
     public class ActionManagerMenuProvider : IMenuProvider
     {
-        public IEnumerable<MenuEntry> GetMenuItems()
+        public MenuEntry[] GetMenuItems()
         {
-            yield return new MenuEntry("Edit/Undo", true, 0, OnUndoAction, null) { DynamicTextHandler = OnUndoTextHandler, DynamicEnabledHandler = OnUndoEnabledHandler };
-            yield return new MenuEntry("Edit/Redo", true, 1, OnRedoAction, null) { DynamicTextHandler = OnRedoTextHandler, DynamicEnabledHandler = OnRedoEnabledHandler };
+            return new[]
+            {
+                new MenuEntry("Edit/Undo", true, 0, OnUndoAction, null) { DynamicTextHandler = OnUndoTextHandler, DynamicEnabledHandler = OnUndoEnabledHandler },
+                new MenuEntry("Edit/Redo", true, 1, OnRedoAction, null) { DynamicTextHandler = OnRedoTextHandler, DynamicEnabledHandler = OnRedoEnabledHandler },
+            };
         }
 
         private void OnUndoAction(MenuEntry obj)

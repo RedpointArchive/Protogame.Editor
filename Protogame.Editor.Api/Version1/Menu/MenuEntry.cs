@@ -3,6 +3,7 @@ using System;
 
 namespace Protogame.Editor.Api.Version1.Menu
 {
+    [Serializable]
     public class MenuEntry
     {
         public MenuEntry(string path, bool enabled, int order, MenuClickHandler handler, object userdata)

@@ -21,12 +21,15 @@ namespace Protogame.Editor.Menu
             _coroutine = coroutine;
         }
 
-        public IEnumerable<MenuEntry> GetMenuItems()
+        public MenuEntry[] GetMenuItems()
         {
-            yield return new MenuEntry("File/New Project...", true, 0, OnNewProject, null);
-            yield return new MenuEntry("File/Open Project...", true, 1, OnOpenProject, null);
-            yield return new MenuEntry("File/Save Project", true, 2, OnSaveProject, null);
-            yield return new MenuEntry("File/Exit", true, 400, OnExitApplication, null);
+            return new[]
+            {
+                new MenuEntry("File/New Project...", true, 0, OnNewProject, null),
+                new MenuEntry("File/Open Project...", true, 1, OnOpenProject, null),
+                new MenuEntry("File/Save Project", true, 2, OnSaveProject, null),
+                new MenuEntry("File/Exit", true, 400, OnExitApplication, null),
+            };
         }
 
         private void OnNewProject(MenuEntry obj)
