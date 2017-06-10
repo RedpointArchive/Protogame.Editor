@@ -6,6 +6,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Protoinject" />
     <Reference Include="Protogame.Editor.Api" />
   </References>
   <Files>

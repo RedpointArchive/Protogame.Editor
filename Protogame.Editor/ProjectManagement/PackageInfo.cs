@@ -1,9 +1,8 @@
-﻿using Protogame.Editor.Api.Version1.ProjectManagement;
-using System;
+﻿using System;
 
 namespace Protogame.Editor.ProjectManagement
 {
-    public class PackageInfo : MarshalByRefObject, IPackageInfo
+    public class PackageInfo : IPackageInfo
     {
         public string Repository { get; set; }
 

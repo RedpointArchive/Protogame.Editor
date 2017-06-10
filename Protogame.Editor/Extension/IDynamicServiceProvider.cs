@@ -1,9 +1,6 @@
-﻿using Protogame.Editor.Api.Version1;
-using System.Collections.Generic;
-
-namespace Protogame.Editor.Extension
+﻿namespace Protogame.Editor.Extension
 {
-    public interface IDynamicServiceProvider : IServiceRegistration
+    public interface IDynamicServiceProvider
     {
         T[] GetAll<T>();
     }

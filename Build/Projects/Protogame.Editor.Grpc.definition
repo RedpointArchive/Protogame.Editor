@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Name="Protogame.Editor.Grpc" Path="Protogame.Editor.Grpc" Type="Library">
+  <Properties>
+    <DoGrpcGenerate>True</DoGrpcGenerate>
+  </Properties>
+  <References>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Grpc" />
+    <Reference Include="Grpc.Native" />
+    <Reference Include="System.Interactive.Async" />
+    <Reference Include="Google.Protobuf" />
+  </References>
+  <Files>
+    <Compile Include="Editor\Editor.cs" />
+    <Compile Include="Editor\EditorGrpc.cs" />
+    <Compile Include="ExtensionHost\ExtensionHost.cs" />
+    <Compile Include="ExtensionHost\ExtensionHostGrpc.cs" />
+    <Compile Include="GameHost\GameHost.cs" />
+    <Compile Include="GameHost\GameHostGrpc.cs" />
+    <None Include="Editor.proto" />
+    <None Include="ExtensionHost.proto" />
+    <None Include="GameHost.proto" />
+  </Files>
+</Project>

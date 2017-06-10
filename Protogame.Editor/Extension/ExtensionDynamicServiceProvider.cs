@@ -1,12 +1,11 @@
-﻿using Protogame.Editor.Api.Version1;
-using Protoinject;
+﻿using Protoinject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Protogame.Editor.Extension
 {
-    public class ExtensionDynamicServiceProvider : IDynamicServiceProvider, IServiceRegistration
+    public class ExtensionDynamicServiceProvider : IDynamicServiceProvider
     {
         private readonly IKernel _kernel;
         private Dictionary<Type, object> _objectCache;

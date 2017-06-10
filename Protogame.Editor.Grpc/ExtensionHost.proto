@@ -1,0 +1,27 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "Protogame.Editor.Grpc.ExtensionHost";
+
+service ExtensionHostServer {
+  rpc Start(StartRequest) returns (StartResponse);
+}
+
+message StartRequest {
+  string assemblyPath = 1;
+  string editorUrl = 2;
+}
+
+message StartResponse {
+  string extensionUrl = 3;
+}
+
+service MenuCallback {
+  rpc MenuItemClicked(MenuItemClickedRequest) returns (MenuItemClickedResponse);
+}
+
+message MenuItemClickedRequest {
+  int64 menuItemId = 1;
+}
+
+message MenuItemClickedResponse {
+}

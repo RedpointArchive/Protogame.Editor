@@ -1,31 +1,16 @@
 ﻿using Protogame.Editor.Api.Version1;
+using Protoinject;
 using System;
 using System.Collections;
 using System.Diagnostics;
-using System.Runtime.Remoting;
-using System.Runtime.Remoting.Channels;
-using System.Runtime.Remoting.Channels.Tcp;
 using System.Threading;
 
 namespace Protogame.Editor.ExtHost
 {
     public static class Program
     {
-        private static ExtensionHostServer _extensionHostServer;
-
         public static void Main(string[] args)
         {
-            var serverProvider = new BinaryServerFormatterSinkProvider();
-            serverProvider.TypeFilterLevel = System.Runtime.Serialization.Formatters.TypeFilterLevel.Full;
-            var clientProvider = new BinaryClientFormatterSinkProvider();
-            var properties = new Hashtable();
-            properties["port"] = 0;
-
-            var channel = new TcpChannel(properties, clientProvider, serverProvider);
-            ChannelServices.RegisterChannel(channel, false);
-            var channelData = (ChannelDataStore)channel.ChannelData;
-            var port = new System.Uri(channelData.ChannelUris[0]).Port;
-
             int? trackProcessId = null;
             if (args.Length == 2)
             {
@@ -41,19 +26,29 @@ namespace Protogame.Editor.ExtHost
                 }
             }
 
-            var hostUri = "tcp://localhost:" + port + "/";
+            AppDomain.CurrentDomain.UnhandledException += (sender, e) =>
+            {
+                Console.Error.WriteLine(e.ExceptionObject);
+            };
+            
+            var hostKernel = new StandardKernel();
+            hostKernel.Bind<ExtensionHostServerImpl>().To<ExtensionHostServerImpl>().InSingletonScope();
+            hostKernel.Bind<IGrpcServer>().To<GrpcServer>().InSingletonScope();
+            hostKernel.Bind<ExtensionHost>().To<ExtensionHost>().InSingletonScope();
+            hostKernel.Bind<IEditorClientProvider>().To<EditorClientProvider>().InSingletonScope();
 
-            _extensionHostServer = new ExtensionHostServer();
-            RemotingServices.Marshal(_extensionHostServer, "HostServer", typeof(IExtensionHostServer));
+            var grpcServer = hostKernel.Get<IGrpcServer>();
+            var hostUri = grpcServer.GetServerUrl();
+            var extensionHost = hostKernel.Get<ExtensionHost>();
             
             Console.WriteLine(hostUri);
             Console.Error.WriteLine(hostUri);
 
-            while (_extensionHostServer.Running)
+            while (extensionHost.Running)
             {
                 // TODO: Do a proper tick loop.
 
-                _extensionHostServer.Update();
+                extensionHost.Update();
 
                 Thread.Sleep(16);
             }

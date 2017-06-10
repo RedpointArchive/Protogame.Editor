@@ -1,12 +1,11 @@
-﻿using Protogame.Editor.Api.Version1.ProjectManagement;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 
 namespace Protogame.Editor.ProjectManagement
 {
-    public class DefinitionInfo : MarshalByRefObject, IDefinitionInfo
+    public class DefinitionInfo : IDefinitionInfo
     {
         public string Name { get; set; }
 

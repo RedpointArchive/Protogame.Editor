@@ -12,7 +12,6 @@ using Protogame.Editor.Override;
 using System.Threading;
 using System.Diagnostics;
 using Microsoft.Xna.Framework.Input;
-using Protogame.Editor.Api.Version1.ProjectManagement;
 
 namespace Protogame.Editor.LoadedGame
 {

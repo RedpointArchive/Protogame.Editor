@@ -12,7 +12,6 @@ using Protogame.Editor.EditorWindow;
 using Protogame.Editor.ProjectManagement;
 using Protogame.Editor.LoadedGame;
 using System;
-using Protogame.Editor.Api.Version1.ProjectManagement;
 using Protogame.Editor.Extension;
 
 namespace Protogame.Editor

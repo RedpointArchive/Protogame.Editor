@@ -1,5 +1,3 @@
-using System;
-using Protogame;
 using Protoinject;
 using Protogame.Editor.Nui;
 using Protogame.Editor.Layout;
@@ -7,11 +5,8 @@ using Protogame.Editor.Menu;
 using Protogame.Editor.ProjectManagement;
 using Protogame.Editor.EditorWindow;
 using Protogame.Editor.LoadedGame;
-using Protogame.Editor.Api.Version1.ProjectManagement;
-using Protogame.Editor.Api.Version1;
-using Protogame.Editor.Ext.CodeManager;
 using Protogame.Editor.Extension;
-using Protogame.Editor.Api.Version1.Menu;
+using Protogame.Editor.Server;
 
 namespace Protogame.Editor
 {
@@ -40,8 +35,8 @@ namespace Protogame.Editor
             kernel.Bind<IMainMenuController>().To<WindowsMainMenuController>().InSingletonScope();
 #endif
 
-            kernel.Bind<IMenuProvider>().To<ProjectManagerMenuProvider>().InSingletonScope();
-            kernel.Bind<IMenuProvider>().To<ActionManagerMenuProvider>().InSingletonScope();
+            /*kernel.Bind<IMenuProvider>().To<ProjectManagerMenuProvider>().InSingletonScope();
+            kernel.Bind<IMenuProvider>().To<ActionManagerMenuProvider>().InSingletonScope();*/
 
             kernel.Bind<IProjectManager>().To<ProjectManager>().InSingletonScope();
             kernel.Bind<IProjectManagerUi>().To<ProjectManagerUi>().InSingletonScope();
@@ -64,11 +59,13 @@ namespace Protogame.Editor
             kernel.Bind<IRecentProjects>().To<RecentProjects>().InSingletonScope();
             kernel.Bind<IThumbnailSampler>().To<ThumbnailSampler>().InSingletonScope();
 
-            kernel.Bind<IServiceRegistration>().To<ExtensionServiceRegistration>().InSingletonScope();
+            //kernel.Bind<IServiceRegistration>().To<ExtensionServiceRegistration>().InSingletonScope();
             kernel.Bind<IExtensionManager>().To<ExtensionManager>().InSingletonScope();
             kernel.Bind<IDynamicServiceProvider>().To<ExtensionDynamicServiceProvider>().InSingletonScope();
 
-            kernel.Bind<Protogame.Editor.Api.Version1.Core.IConsoleHandle>().To<ExtensionConsoleHandle>().InSingletonScope();
+            kernel.Bind<IGrpcServer>().To<GrpcServer>().InSingletonScope();
+
+            //kernel.Bind<Protogame.Editor.Api.Version1.Core.IConsoleHandle>().To<ExtensionConsoleHandle>().InSingletonScope();
         }
     }
 }

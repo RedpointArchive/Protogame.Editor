@@ -4,7 +4,6 @@ using System.Linq;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Protogame.Editor.Extension;
-using Protogame.Editor.Api.Version1.Menu;
 
 namespace Protogame.Editor.Menu
 {
@@ -30,10 +29,12 @@ namespace Protogame.Editor.Menu
         public void Update(IGameContext gameContext, IUpdateContext updateContext)
         {
             _gameContext = gameContext;
+            
+            var menuStrip = CreateMainMenuControlIfNecessary(gameContext);
+
+            /*
 
             var menuEntries = _dynamicServiceProvider.GetAll<IMenuProvider>().SelectMany(x => x.GetMenuItems());
-
-            var menuStrip = CreateMainMenuControlIfNecessary(gameContext);
 
             var existingMenuItems = new Dictionary<string, System.Windows.Forms.MenuItem>();
 
@@ -81,6 +82,7 @@ namespace Protogame.Editor.Menu
             {
                 UpdateMenuSeperators(menuItem);
             }
+            */
         }
 
         private void UpdateMenuSeperators(System.Windows.Forms.MenuItem menuItem)

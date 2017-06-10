@@ -8,6 +8,11 @@
     <Reference Include="System.Runtime.Remoting" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MonoGame.Framework" />
+    <Reference Include="Protogame.Editor.Grpc" />
+    <Reference Include="Grpc" />
+    <Reference Include="Grpc.Native" />
+    <Reference Include="System.Interactive.Async" />
+    <Reference Include="Google.Protobuf" />
     <Reference Include="Protoinject" />
     <Reference Include="Protogame" />
     <Reference Include="Protogame.Editor.Api" />

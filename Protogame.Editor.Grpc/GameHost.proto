@@ -1,0 +1,16 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "Protogame.Editor.Grpc.GameHost";
+
+service GameHostServer {
+  rpc Start(StartRequest) returns (StartResponse);
+}
+
+message StartRequest {
+  string assemblyPath = 1;
+  string editorUrl = 2;
+}
+
+message StartResponse {
+  string extensionUrl = 3;
+}

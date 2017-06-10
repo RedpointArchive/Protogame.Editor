@@ -2,6 +2,7 @@
 using Protogame.Editor.Api.Version1.Menu;
 using Protogame.Editor.Ext.CodeManager;
 using Protogame.Editor.Api.Version1.Core;
+using Protoinject;
 
 [assembly: Extension(typeof(CodeManagerEditorExtension))]
 
@@ -9,11 +10,11 @@ namespace Protogame.Editor.Ext.CodeManager
 {
     public class CodeManagerEditorExtension : IEditorExtension
     {
-        public void RegisterServices(IServiceRegistration services)
+        public void RegisterServices(IKernel kernel)
         {
-            services.BindSingleton<IMenuProvider, CodeManagerMenuProvider>();
-            services.BindSingleton<IWantsUpdateSignal, CodeManagerUpdateSignal>();
-            services.BindSingleton<ICodeManagerService, CodeManagerService>();
+            kernel.Bind<IMenuProvider>().To<CodeManagerMenuProvider>().InSingletonScope();
+            kernel.Bind<IWantsUpdateSignal>().To<CodeManagerUpdateSignal>().InSingletonScope();
+            kernel.Bind<ICodeManagerService>().To<CodeManagerService>().InSingletonScope();
         }
     }
 }
