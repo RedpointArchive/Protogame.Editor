@@ -8,10 +8,20 @@
     <Reference Include="System.Runtime.Remoting" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Protogame.Editor.Api" />
+    <Reference Include="Protogame.Editor.Grpc" />
+    <Reference Include="Grpc" />
+    <Reference Include="Grpc.Native" />
+    <Reference Include="System.Interactive.Async" />
+    <Reference Include="Google.Protobuf" />
     <Reference Include="Protoinject" />
   </References>
   <Files>
-    <Compile Include="ExtensionHostServer.cs" />
+    <Compile Include="EditorClientProvider.cs" />
+    <Compile Include="ExtensionHost.cs" />
+    <Compile Include="ExtensionHostServerImpl.cs" />
+    <Compile Include="GrpcServer.cs" />
+    <Compile Include="IEditorClientProvider.cs" />
+    <Compile Include="IGrpcServer.cs" />
     <Compile Include="Program.cs" />
   </Files>
 </Project>

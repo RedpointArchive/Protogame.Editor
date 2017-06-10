@@ -1,15 +1,10 @@
-﻿using System;
-using Protogame.Editor.Api.Version1;
-using Protoinject;
-using Protogame.Editor.Api.Version1.Core;
+﻿using Protoinject;
 using System.Reflection;
 using System.IO;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Runtime.Remoting.Channels.Tcp;
-using System.Runtime.Remoting;
-using System.Runtime.Remoting.Channels;
-using System.Collections;
+using Grpc.Core;
+using Protogame.Editor.Server;
 
 namespace Protogame.Editor.Extension
 {
@@ -18,29 +13,18 @@ namespace Protogame.Editor.Extension
         private bool _hasLoadedBundledExtensions;
         private Dictionary<string, ManagedExtension> _extensions;
         private readonly IConsoleHandle _consoleHandle;
-        private readonly IServiceRegistration _serviceRegistration;
         private readonly IKernel _kernel;
-        private readonly ExtensionManagerRemoteResolve _extensionRemoteResolve;
+        private readonly IGrpcServer _grpcServer;
 
         public ExtensionManager(
             IKernel kernel,
             IConsoleHandle consoleHandle,
-            IServiceRegistration serviceRegistration)
+            IGrpcServer grpcServer)
         {
             _kernel = kernel;
             _consoleHandle = consoleHandle;
             _extensions = new Dictionary<string, ManagedExtension>();
-            _serviceRegistration = serviceRegistration;
-            _extensionRemoteResolve = new ExtensionManagerRemoteResolve(_kernel);
-            
-            var serverProvider = new BinaryServerFormatterSinkProvider();
-            serverProvider.TypeFilterLevel = System.Runtime.Serialization.Formatters.TypeFilterLevel.Full;
-            var clientProvider = new BinaryClientFormatterSinkProvider();
-            var properties = new Hashtable();
-            properties["port"] = 0;
-
-            var channel = new TcpChannel(properties, clientProvider, serverProvider);
-            ChannelServices.RegisterChannel(channel, false);
+            _grpcServer = grpcServer;
         }
 
         public void Update()
@@ -59,7 +43,8 @@ namespace Protogame.Editor.Extension
                         File = file,
                         Owner = "bundled",
                         ExtensionProcess = null,
-                        ExtensionHostServer = null
+                        ExtensionHostChannel = null,
+                        ExtensionHostServerClient = null
                     });
                 }
 
@@ -81,60 +66,55 @@ namespace Protogame.Editor.Extension
                         WorkingDirectory = ext.Value.File.DirectoryName,
                         UseShellExecute = false,
                         RedirectStandardOutput = true,
+                        RedirectStandardError = true,
                         CreateNoWindow = true
                     };
                     ext.Value.ExtensionProcess = Process.Start(processStartInfo);
+                    ext.Value.ExtensionProcess.Exited += (sender, e) =>
+                    {
+                        _consoleHandle.LogWarning("Extension host process has unexpectedly quit: {0}", ext.Value.File.FullName);
+                        ext.Value.ExtensionProcess = null;
+                    };
                     ext.Value.ExtensionProcess.OutputDataReceived += (sender, e) =>
                     {
                         if (e.Data == null)
                         {
                             return;
                         }
-                        if (ext.Value.ExtensionHostServer != null)
+                        if (ext.Value.ExtensionHostServerClient != null)
                         {
                             _consoleHandle.LogDebug(e.Data);
                             return;
                         }
 
+                        var editorGrpcServer = _grpcServer.GetServerUrl();
+                        _consoleHandle.LogDebug("Editor gRPC server is {0}", editorGrpcServer);
+
                         var url = e.Data?.Trim();
-                        _consoleHandle.LogDebug("Connecting to extension host server on {0}...", url);
-                        ext.Value.ExtensionHostServer = (IExtensionHostServer)Activator.GetObject(
-                            typeof(IExtensionHostServer),
-                            url + "HostServer");
-                        _consoleHandle.LogDebug("Connected to extension host server on {0}", url);
+                        _consoleHandle.LogDebug("Creating gRPC channel on {0}...", url);
+                        ext.Value.ExtensionHostChannel = new Channel(url, ChannelCredentials.Insecure);
+
+                        _consoleHandle.LogDebug("Creating extension host client on gRPC channel...");
+                        ext.Value.ExtensionHostServerClient = new Grpc.ExtensionHost.ExtensionHostServer.ExtensionHostServerClient(ext.Value.ExtensionHostChannel);
+                        _consoleHandle.LogDebug("Created extension host client on gRPC channel");
 
                         _consoleHandle.LogDebug("Requesting extension load of {0}...", ext.Value.File.FullName);
-                        ext.Value.ExtensionHostServer.RegisterRemoteResolve(_extensionRemoteResolve);
-                        var registeredServices = ext.Value.ExtensionHostServer.Start(ext.Value.File.FullName);
-                        _consoleHandle.LogDebug("Extension loaded: {0}", ext.Value.File.FullName);
-
-                        foreach (var _svc in registeredServices)
+                        var registeredServices = ext.Value.ExtensionHostServerClient.Start(new Grpc.ExtensionHost.StartRequest
                         {
-                            var svc = _svc;
-                            if (svc.IsSingleton)
-                            {
-                                _serviceRegistration.BindSingleton(
-                                    svc.Interface,
-                                    () =>
-                                    {
-                                        return ((IRemoteFactory)Activator.GetObject(
-                                            svc.Interface,
-                                            url + svc.ImplementationUri)).GetInstance();
-                                    });
-                            }
-                            else
-                            {
-                                _serviceRegistration.BindTransient(
-                                    svc.Interface,
-                                    () =>
-                                    {
-                                        return ((IRemoteFactory)Activator.GetObject(
-                                            svc.Interface,
-                                            url + svc.ImplementationUri)).GetInstance();
-                                    });
-                            }
+                            AssemblyPath = ext.Value.File.FullName,
+                            EditorUrl = editorGrpcServer
+                        });
+                        _consoleHandle.LogDebug("Extension loaded: {0}", ext.Value.File.FullName);
+                    };
+                    ext.Value.ExtensionProcess.ErrorDataReceived += (sender, e) =>
+                    {
+                        if (e.Data != null)
+                        {
+                            _consoleHandle.LogError(e.Data);
                         }
                     };
+                    ext.Value.ExtensionProcess.EnableRaisingEvents = true;
+                    ext.Value.ExtensionProcess.BeginErrorReadLine();
                     ext.Value.ExtensionProcess.BeginOutputReadLine();
                 }
             }
@@ -148,7 +128,9 @@ namespace Protogame.Editor.Extension
 
             public Process ExtensionProcess { get; set; }
 
-            public IExtensionHostServer ExtensionHostServer { get; set; }
+            public Channel ExtensionHostChannel { get; set; }
+
+            public Protogame.Editor.Grpc.ExtensionHost.ExtensionHostServer.ExtensionHostServerClient ExtensionHostServerClient { get; set; }
         }
     }
 }

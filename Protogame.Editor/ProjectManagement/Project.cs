@@ -1,5 +1,4 @@
-﻿using Protogame.Editor.Api.Version1.ProjectManagement;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -7,7 +6,7 @@ using System.Linq;
 
 namespace Protogame.Editor.ProjectManagement
 {
-    public class Project : MarshalByRefObject, IProject
+    public class Project : IProject
     {
         public DirectoryInfo ProjectPath { get; set; }
 

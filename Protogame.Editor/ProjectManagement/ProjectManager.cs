@@ -1,5 +1,4 @@
-﻿using Protogame.Editor.Api.Version1.ProjectManagement;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,7 +7,7 @@ using System.Xml;
 
 namespace Protogame.Editor.ProjectManagement
 {
-    public class ProjectManager : MarshalByRefObject, IProjectManager
+    public class ProjectManager : IProjectManager
     {
         private readonly ICoroutine _coroutine;
         private readonly IConsoleHandle _consoleHandle;

@@ -16,13 +16,15 @@
     <Reference Include="Protogame.EntryPoint" />
     <Reference Include="Protogame.Editor.Content" />
     <Reference Include="Protogame.Editor.GameHost" />
-    <Reference Include="Protogame.Editor.ThirdParty" />
-    <Reference Include="Protogame.Editor.Api" />
-    <Reference Include="Protogame.Editor.Api.Game" />
     <Reference Include="Protogame.Editor.ExtHost" />
-    <Reference Include="Protogame.Editor.Ext.CodeManager" />
+    <Reference Include="Protogame.Editor.ThirdParty" />
+    <Reference Include="Protogame.Editor.Grpc" />
+    <Reference Include="Grpc" />
+    <Reference Include="Grpc.Native" />
+    <Reference Include="System.Interactive.Async" />
+    <Reference Include="Google.Protobuf" />
     <Reference Include="Protogame.Editor.Ext.Inspector" />
-    <Reference Include="Protogame.Editor.Ext.Inspector.Game" />
+    <Reference Include="Protogame.Editor.Ext.CodeManager" />
   </References>
   <Dependencies>
     <Uses Name="Prestart" />
@@ -47,10 +49,8 @@
     <Compile Include="EditorWindow\ProjectEditorWindow.cs" />
     <Compile Include="EditorWindow\StartEditorWindow.cs" />
     <Compile Include="EditorWindow\WorldEditorWindow.cs" />
-    <Compile Include="Extension\ExtensionConsoleHandle.cs" />
     <Compile Include="Extension\ExtensionDynamicServiceProvider.cs" />
     <Compile Include="Extension\ExtensionManager.cs" />
-    <Compile Include="Extension\ExtensionServiceRegistration.cs" />
     <Compile Include="Extension\IDynamicServiceProvider.cs" />
     <Compile Include="Extension\IExtensionManager.cs" />
     <Compile Include="Layout\ClickableHorizontalContainer.cs" />
@@ -90,6 +90,11 @@
     <Compile Include="Override\GameBaseDirectory.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectManagement\DefinitionInfo.cs" />
+    <Compile Include="ProjectManagement\IDefinitionInfo.cs" />
+    <Compile Include="ProjectManagement\IPackageInfo.cs" />
+    <Compile Include="ProjectManagement\IProject.cs" />
+    <Compile Include="ProjectManagement\IProjectManager.cs" />
+    <Compile Include="ProjectManagement\IProjectManagerUi.cs" />
     <Compile Include="ProjectManagement\PackageInfo.cs" />
     <Compile Include="ProjectManagement\Project.cs" />
     <Compile Include="ProjectManagement\ProjectManager.cs" />
@@ -100,6 +105,10 @@
     <Compile Include="ProtogameEditorGameConfiguration.cs" />
     <Compile Include="ProtogameEditorModule.cs" />
     <Compile Include="ProtogameEditorWorld.cs" />
+    <Compile Include="Server\ConsoleImpl.cs" />
+    <Compile Include="Server\GrpcServer.cs" />
+    <Compile Include="Server\IGrpcServer.cs" />
+    <Compile Include="Server\MenuEntriesImpl.cs" />
     <Content Include="Properties\AndroidManifest.xml">
       <Platforms>Android,Ouya</Platforms>
     </Content>

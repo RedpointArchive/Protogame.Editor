@@ -10,3 +10,6 @@ packages/**
 .vs/
 Protogame/
 *.csproj.user
+/Google.Protobuf/
+/Grpc/
+/System.Interactive.Async/*

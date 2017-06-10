@@ -5,5 +5,8 @@
   <GenerateNuGetRepositories>true</GenerateNuGetRepositories>
   <Packages>
     <Package Repository="https://api.nuget.org/v3/index.json" Package="Protogame" Version="master" />
+    <Package Repository="https://api.nuget.org/v3/index.json" Package="Grpc" Version="1.3.6" />
+    <Package Repository="https://api.nuget.org/v3/index.json" Package="Google.Protobuf" Version="3.3.0" />
+    <Package Repository="https://api.nuget.org/v3/index.json" Package="System.Interactive.Async" Version="3.1.1" />
   </Packages>
 </Module>
