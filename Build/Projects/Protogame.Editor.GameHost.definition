@@ -20,6 +20,9 @@
     <Reference Include="Protogame.Editor.Ext.Inspector" />
     <Reference Include="Protogame.Editor.Ext.Inspector.Game" />
   </References>
+  <Properties>
+    <DebugSymbolsOnRelease>full</DebugSymbolsOnRelease>
+  </Properties>
   <Files>
     <Compile Include="BackBufferDimensionsProxy.cs" />
     <Compile Include="EditorEventEngineHook.cs" />

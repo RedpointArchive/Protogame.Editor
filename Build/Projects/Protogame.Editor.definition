@@ -26,6 +26,9 @@
     <Reference Include="Protogame.Editor.Ext.Inspector" />
     <Reference Include="Protogame.Editor.Ext.CodeManager" />
   </References>
+  <Properties>
+    <DebugSymbolsOnRelease>full</DebugSymbolsOnRelease>
+  </Properties>
   <Dependencies>
     <Uses Name="Prestart" />
   </Dependencies>

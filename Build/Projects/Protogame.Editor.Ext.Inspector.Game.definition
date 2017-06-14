@@ -16,6 +16,9 @@
     <Reference Include="Protogame.ThirdParty" />
     <Reference Include="Jitter" />
   </References>
+  <Properties>
+    <DebugSymbolsOnRelease>full</DebugSymbolsOnRelease>
+  </Properties>
   <Files>
     <Compile Include="InspectorDebugDraw.cs" />
     <Compile Include="InspectorDebugLayer.cs" />

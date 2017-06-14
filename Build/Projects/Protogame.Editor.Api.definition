@@ -8,6 +8,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Protoinject" />
   </References>
+  <Properties>
+    <DebugSymbolsOnRelease>full</DebugSymbolsOnRelease>
+  </Properties>
   <Files>
     <Compile Include="Version1\Core\IConsoleHandle.cs" />
     <Compile Include="Version1\Core\IWantsUpdateSignal.cs" />

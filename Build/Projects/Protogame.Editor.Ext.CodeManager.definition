@@ -9,6 +9,9 @@
     <Reference Include="Protoinject" />
     <Reference Include="Protogame.Editor.Api" />
   </References>
+  <Properties>
+    <DebugSymbolsOnRelease>full</DebugSymbolsOnRelease>
+  </Properties>
   <Files>
     <Compile Include="CodeManagerEditorExtension.cs" />
     <Compile Include="CodeManagerMenuProvider.cs" />

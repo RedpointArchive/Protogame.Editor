@@ -14,6 +14,9 @@
     <Reference Include="Protogame" />
     <Reference Include="Protogame.ThirdParty" />
   </References>
+  <Properties>
+    <DebugSymbolsOnRelease>full</DebugSymbolsOnRelease>
+  </Properties>
   <Files>
     <Compile Include="Version1\IGameHostExtension.cs" />
   </Files>

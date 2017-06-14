@@ -15,6 +15,9 @@
     <Reference Include="Google.Protobuf" />
     <Reference Include="Protoinject" />
   </References>
+  <Properties>
+    <DebugSymbolsOnRelease>full</DebugSymbolsOnRelease>
+  </Properties>
   <Files>
     <Compile Include="EditorClientProvider.cs" />
     <Compile Include="ExtensionHost.cs" />
