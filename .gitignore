@@ -13,3 +13,5 @@ Protogame/
 /Google.Protobuf/
 /Grpc/
 /System.Interactive.Async/*
+
+*.stackdump

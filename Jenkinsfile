@@ -5,6 +5,10 @@ stage("Windows") {
     bat ("git clean -xdff")
     bat ("Protobuild.exe --upgrade-all")
     bat ('Protobuild.exe --automated-build')
+    if (env.BRANCH_NAME == 'master') {
+      // Only run deploy if building on master.
+      bat ('Protobuild.exe --automated-build deploy.build')
+    }
   }
 }
 
