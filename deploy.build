@@ -1,0 +1,5 @@
+#version 1
+
+if file-exists C:\Butler\butler.exe
+  native-execute C:\Butler\butler.exe Protogame.Editor\bin\Windows\AnyCPU\Release redpoint/protogame:windows
+endif
