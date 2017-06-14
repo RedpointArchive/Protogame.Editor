@@ -115,6 +115,10 @@
     <Content Include="Properties\AndroidManifest.xml">
       <Platforms>Android,Ouya</Platforms>
     </Content>
+    <None Include="..\.itch.toml">
+      <Link>.itch.toml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="iOS\Info.plist">
       <Link>Info.plist</Link>
       <Platforms>iOS</Platforms>
