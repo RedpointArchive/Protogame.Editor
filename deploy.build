@@ -1,5 +1,5 @@
 #version 1
 
 if file-exists C:\Butler\butler.exe
-  native-execute cmd.exe /C C:\Butler\butler.exe Protogame.Editor\bin\Windows\AnyCPU\Release redpoint/protogame:windows
+  native-execute cmd.exe /C C:\Butler\butler.exe push Protogame.Editor\bin\Windows\AnyCPU\Release redpoint/protogame:windows
 endif
