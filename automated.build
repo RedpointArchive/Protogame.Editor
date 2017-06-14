@@ -1,0 +1,14 @@
+#version 1
+
+if host Windows
+  set target-platforms Windows
+endif
+if host MacOS
+  set target-platforms MacOS
+endif
+if host Linux
+  set target-platforms Linux
+endif
+
+generate
+build
