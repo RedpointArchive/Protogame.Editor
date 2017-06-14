@@ -4,6 +4,7 @@ using System.Linq;
 using Srv = global::Grpc.Core.Server;
 using System;
 using Grpc.Core.Logging;
+using Protoinject;
 
 namespace Protogame.Editor.ExtHost
 {
@@ -13,11 +14,14 @@ namespace Protogame.Editor.ExtHost
 
         private Srv _server;
         private string _serverUrl;
+        private readonly MenuEntriesImpl _menuEntriesImpl;
 
         public GrpcServer(
-            ExtensionHostServerImpl extensionHostServerImpl)
+            ExtensionHostServerImpl extensionHostServerImpl,
+            MenuEntriesImpl menuEntriesImpl)
         {
             _extensionHostServerImpl = extensionHostServerImpl;
+            _menuEntriesImpl = menuEntriesImpl;
         }
 
         public string GetServerUrl()
@@ -47,6 +51,29 @@ namespace Protogame.Editor.ExtHost
             _server.Start();
 
             _serverUrl = "localhost:" + _server.Ports.Select(x => x.BoundPort).First();
+        }
+        
+        public string StartAndGetRuntimeServerUrl(IKernel localKernel)
+        {
+            if (_server != null)
+            {
+                return _serverUrl;
+            }
+
+            GrpcEnvironment.SetLogger(new Logger());
+
+            _server = new Srv
+            {
+                Services =
+                {
+                    MenuEntries.BindService(localKernel.Get<MenuEntriesImpl>())
+                },
+                Ports = { new ServerPort("localhost", 0, ServerCredentials.Insecure) }
+            };
+            _server.Start();
+
+            _serverUrl = "localhost:" + _server.Ports.Select(x => x.BoundPort).First();
+            return _serverUrl;
         }
 
         private class Logger : ILogger

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Grpc.Core;
 using Protogame.Editor.Server;
+using System.Linq;
 
 namespace Protogame.Editor.Extension
 {
@@ -15,6 +16,8 @@ namespace Protogame.Editor.Extension
         private readonly IConsoleHandle _consoleHandle;
         private readonly IKernel _kernel;
         private readonly IGrpcServer _grpcServer;
+        private Extension[] _publicExtensions;
+        private bool _recomputeExtensions;
 
         public ExtensionManager(
             IKernel kernel,
@@ -25,7 +28,11 @@ namespace Protogame.Editor.Extension
             _consoleHandle = consoleHandle;
             _extensions = new Dictionary<string, ManagedExtension>();
             _grpcServer = grpcServer;
+            _publicExtensions = new Extension[0];
+            _recomputeExtensions = false;
         }
+
+        public Extension[] Extensions => _publicExtensions;
 
         public void Update()
         {
@@ -46,6 +53,7 @@ namespace Protogame.Editor.Extension
                         ExtensionHostChannel = null,
                         ExtensionHostServerClient = null
                     });
+                    _recomputeExtensions = true;
                 }
 
                 _hasLoadedBundledExtensions = true;
@@ -73,7 +81,10 @@ namespace Protogame.Editor.Extension
                     ext.Value.ExtensionProcess.Exited += (sender, e) =>
                     {
                         _consoleHandle.LogWarning("Extension host process has unexpectedly quit: {0}", ext.Value.File.FullName);
+                        _recomputeExtensions = true;
                         ext.Value.ExtensionProcess = null;
+                        ext.Value.ExtensionHostChannel = null;
+                        ext.Value.ExtensionHostServerClient = null;
                     };
                     ext.Value.ExtensionProcess.OutputDataReceived += (sender, e) =>
                     {
@@ -99,12 +110,17 @@ namespace Protogame.Editor.Extension
                         _consoleHandle.LogDebug("Created extension host client on gRPC channel");
 
                         _consoleHandle.LogDebug("Requesting extension load of {0}...", ext.Value.File.FullName);
-                        var registeredServices = ext.Value.ExtensionHostServerClient.Start(new Grpc.ExtensionHost.StartRequest
+                        var startResponse = ext.Value.ExtensionHostServerClient.Start(new Grpc.ExtensionHost.StartRequest
                         {
                             AssemblyPath = ext.Value.File.FullName,
                             EditorUrl = editorGrpcServer
                         });
                         _consoleHandle.LogDebug("Extension loaded: {0}", ext.Value.File.FullName);
+
+                        _consoleHandle.LogDebug("Creating gRPC runtime channel on {0}...", startResponse.ExtensionUrl);
+                        ext.Value.ExtensionRuntimeChannel = new Channel(startResponse.ExtensionUrl, ChannelCredentials.Insecure);
+
+                        _recomputeExtensions = true;
                     };
                     ext.Value.ExtensionProcess.ErrorDataReceived += (sender, e) =>
                     {
@@ -117,6 +133,14 @@ namespace Protogame.Editor.Extension
                     ext.Value.ExtensionProcess.BeginErrorReadLine();
                     ext.Value.ExtensionProcess.BeginOutputReadLine();
                 }
+            }
+
+            if (_recomputeExtensions)
+            {
+                _publicExtensions = _extensions.Values
+                    .Where(x => x.ExtensionRuntimeChannel != null)
+                    .Select(x => new Extension(x.ExtensionRuntimeChannel))
+                    .ToArray();
             }
         }
 
@@ -131,6 +155,8 @@ namespace Protogame.Editor.Extension
             public Channel ExtensionHostChannel { get; set; }
 
             public Protogame.Editor.Grpc.ExtensionHost.ExtensionHostServer.ExtensionHostServerClient ExtensionHostServerClient { get; set; }
+
+            public Channel ExtensionRuntimeChannel { get; internal set; }
         }
     }
 }

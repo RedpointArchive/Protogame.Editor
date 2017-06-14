@@ -8,91 +8,6 @@ using System.Threading.Tasks;
 using grpc = global::Grpc.Core;
 
 namespace Protogame.Editor.Grpc.Editor {
-  public static partial class MenuEntries
-  {
-    static readonly string __ServiceName = "MenuEntries";
-
-    static readonly grpc::Marshaller<global::Protogame.Editor.Grpc.Editor.GetMenuItemsRequest> __Marshaller_GetMenuItemsRequest = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Protogame.Editor.Grpc.Editor.GetMenuItemsRequest.Parser.ParseFrom);
-    static readonly grpc::Marshaller<global::Protogame.Editor.Grpc.Editor.GetMenuItemsResponse> __Marshaller_GetMenuItemsResponse = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Protogame.Editor.Grpc.Editor.GetMenuItemsResponse.Parser.ParseFrom);
-
-    static readonly grpc::Method<global::Protogame.Editor.Grpc.Editor.GetMenuItemsRequest, global::Protogame.Editor.Grpc.Editor.GetMenuItemsResponse> __Method_GetMenuItems = new grpc::Method<global::Protogame.Editor.Grpc.Editor.GetMenuItemsRequest, global::Protogame.Editor.Grpc.Editor.GetMenuItemsResponse>(
-        grpc::MethodType.Unary,
-        __ServiceName,
-        "GetMenuItems",
-        __Marshaller_GetMenuItemsRequest,
-        __Marshaller_GetMenuItemsResponse);
-
-    /// <summary>Service descriptor</summary>
-    public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
-    {
-      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.Services[0]; }
-    }
-
-    /// <summary>Base class for server-side implementations of MenuEntries</summary>
-    public abstract partial class MenuEntriesBase
-    {
-      public virtual global::System.Threading.Tasks.Task<global::Protogame.Editor.Grpc.Editor.GetMenuItemsResponse> GetMenuItems(global::Protogame.Editor.Grpc.Editor.GetMenuItemsRequest request, grpc::ServerCallContext context)
-      {
-        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
-      }
-
-    }
-
-    /// <summary>Client for MenuEntries</summary>
-    public partial class MenuEntriesClient : grpc::ClientBase<MenuEntriesClient>
-    {
-      /// <summary>Creates a new client for MenuEntries</summary>
-      /// <param name="channel">The channel to use to make remote calls.</param>
-      public MenuEntriesClient(grpc::Channel channel) : base(channel)
-      {
-      }
-      /// <summary>Creates a new client for MenuEntries that uses a custom <c>CallInvoker</c>.</summary>
-      /// <param name="callInvoker">The callInvoker to use to make remote calls.</param>
-      public MenuEntriesClient(grpc::CallInvoker callInvoker) : base(callInvoker)
-      {
-      }
-      /// <summary>Protected parameterless constructor to allow creation of test doubles.</summary>
-      protected MenuEntriesClient() : base()
-      {
-      }
-      /// <summary>Protected constructor to allow creation of configured clients.</summary>
-      /// <param name="configuration">The client configuration.</param>
-      protected MenuEntriesClient(ClientBaseConfiguration configuration) : base(configuration)
-      {
-      }
-
-      public virtual global::Protogame.Editor.Grpc.Editor.GetMenuItemsResponse GetMenuItems(global::Protogame.Editor.Grpc.Editor.GetMenuItemsRequest request, grpc::Metadata headers = null, DateTime? deadline = null, CancellationToken cancellationToken = default(CancellationToken))
-      {
-        return GetMenuItems(request, new grpc::CallOptions(headers, deadline, cancellationToken));
-      }
-      public virtual global::Protogame.Editor.Grpc.Editor.GetMenuItemsResponse GetMenuItems(global::Protogame.Editor.Grpc.Editor.GetMenuItemsRequest request, grpc::CallOptions options)
-      {
-        return CallInvoker.BlockingUnaryCall(__Method_GetMenuItems, null, options, request);
-      }
-      public virtual grpc::AsyncUnaryCall<global::Protogame.Editor.Grpc.Editor.GetMenuItemsResponse> GetMenuItemsAsync(global::Protogame.Editor.Grpc.Editor.GetMenuItemsRequest request, grpc::Metadata headers = null, DateTime? deadline = null, CancellationToken cancellationToken = default(CancellationToken))
-      {
-        return GetMenuItemsAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
-      }
-      public virtual grpc::AsyncUnaryCall<global::Protogame.Editor.Grpc.Editor.GetMenuItemsResponse> GetMenuItemsAsync(global::Protogame.Editor.Grpc.Editor.GetMenuItemsRequest request, grpc::CallOptions options)
-      {
-        return CallInvoker.AsyncUnaryCall(__Method_GetMenuItems, null, options, request);
-      }
-      /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
-      protected override MenuEntriesClient NewInstance(ClientBaseConfiguration configuration)
-      {
-        return new MenuEntriesClient(configuration);
-      }
-    }
-
-    /// <summary>Creates service definition that can be registered with a server</summary>
-    /// <param name="serviceImpl">An object implementing the server-side handling logic.</param>
-    public static grpc::ServerServiceDefinition BindService(MenuEntriesBase serviceImpl)
-    {
-      return grpc::ServerServiceDefinition.CreateBuilder()
-          .AddMethod(__Method_GetMenuItems, serviceImpl.GetMenuItems).Build();
-    }
-
-  }
   public static partial class Console
   {
     static readonly string __ServiceName = "Console";
@@ -131,7 +46,7 @@ namespace Protogame.Editor.Grpc.Editor {
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
     {
-      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.Services[1]; }
+      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.Services[0]; }
     }
 
     /// <summary>Base class for server-side implementations of Console</summary>

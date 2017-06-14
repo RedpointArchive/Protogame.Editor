@@ -35,8 +35,9 @@ namespace Protogame.Editor
             kernel.Bind<IMainMenuController>().To<WindowsMainMenuController>().InSingletonScope();
 #endif
 
-            /*kernel.Bind<IMenuProvider>().To<ProjectManagerMenuProvider>().InSingletonScope();
-            kernel.Bind<IMenuProvider>().To<ActionManagerMenuProvider>().InSingletonScope();*/
+            kernel.Bind<IMenuProvider>().To<ProjectManagerMenuProvider>().InSingletonScope();
+            kernel.Bind<IMenuProvider>().To<ActionManagerMenuProvider>().InSingletonScope();
+            kernel.Bind<IMenuProvider>().To<ExtensionBasedMenuProvider>().InSingletonScope();
 
             kernel.Bind<IProjectManager>().To<ProjectManager>().InSingletonScope();
             kernel.Bind<IProjectManagerUi>().To<ProjectManagerUi>().InSingletonScope();

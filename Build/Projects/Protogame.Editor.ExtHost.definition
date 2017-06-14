@@ -25,6 +25,7 @@
     <Compile Include="GrpcServer.cs" />
     <Compile Include="IEditorClientProvider.cs" />
     <Compile Include="IGrpcServer.cs" />
+    <Compile Include="MenuEntriesImpl.cs" />
     <Compile Include="Program.cs" />
   </Files>
 </Project>

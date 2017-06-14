@@ -1,6 +1,7 @@
 ﻿using Protogame.Editor.Api.Version1;
 using Protogame.Editor.Api.Version1.Core;
 using Protogame.Editor.Grpc.Editor;
+using Protogame.Editor.Grpc.ExtensionHost;
 using Protoinject;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace Protogame.Editor.ExtHost
 
         public bool Running => true;
         
-        public void Start(IEditorClientProvider editorClientProvider, string assemblyFile)
+        public string Start(IGrpcServer grpcServer, IEditorClientProvider editorClientProvider, string assemblyFile)
         {
             var console = editorClientProvider.GetClient<Protogame.Editor.Grpc.Editor.Console.ConsoleClient>();
 
@@ -52,6 +53,9 @@ namespace Protogame.Editor.ExtHost
             {
                 // Maybe no update signals are registered - so ignore.
             }
+
+            // Add services to gRPC server now that we can resolve implementations.
+            return grpcServer.StartAndGetRuntimeServerUrl(localKernel);
         }
 
         public void Update()

@@ -52,6 +52,7 @@
     <Compile Include="EditorWindow\ProjectEditorWindow.cs" />
     <Compile Include="EditorWindow\StartEditorWindow.cs" />
     <Compile Include="EditorWindow\WorldEditorWindow.cs" />
+    <Compile Include="Extension\Extension.cs" />
     <Compile Include="Extension\ExtensionDynamicServiceProvider.cs" />
     <Compile Include="Extension\ExtensionManager.cs" />
     <Compile Include="Extension\IDynamicServiceProvider.cs" />
@@ -70,7 +71,10 @@
     <Compile Include="LoadedGame\ILoadedGame.cs" />
     <Compile Include="LoadedGame\LoadedGameState.cs" />
     <Compile Include="Menu\ActionManagerMenuProvider.cs" />
+    <Compile Include="Menu\ExtensionBasedMenuProvider.cs" />
     <Compile Include="Menu\IMainMenuController.cs" />
+    <Compile Include="Menu\IMenuProvider.cs" />
+    <Compile Include="Menu\MenuEntry.cs" />
     <Compile Include="Menu\ProjectManagerMenuProvider.cs" />
     <Compile Include="Menu\WindowsMainMenuController.cs" />
     <Compile Include="Nui\NuiButtonSkinRenderer.cs" />
@@ -111,7 +115,6 @@
     <Compile Include="Server\ConsoleImpl.cs" />
     <Compile Include="Server\GrpcServer.cs" />
     <Compile Include="Server\IGrpcServer.cs" />
-    <Compile Include="Server\MenuEntriesImpl.cs" />
     <Content Include="Properties\AndroidManifest.xml">
       <Platforms>Android,Ouya</Platforms>
     </Content>

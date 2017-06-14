@@ -39,9 +39,10 @@ namespace Protogame.Editor.ExtHost
                 _editorClientProvider.CreateChannel(request.EditorUrl);
 
                 System.Console.Error.WriteLine("Requesting start from assembly path...");
+                string extensionUrl = null;
                 try
                 {
-                    _extensionHost.Start(_editorClientProvider, request.AssemblyPath);
+                    extensionUrl = _extensionHost.Start(_grpcServer, _editorClientProvider, request.AssemblyPath);
                 }
                 catch (Exception e)
                 {
@@ -52,7 +53,7 @@ namespace Protogame.Editor.ExtHost
 
                 return new StartResponse
                 {
-                    ExtensionUrl = _grpcServer.GetServerUrl()
+                    ExtensionUrl = extensionUrl
                 };
             });
         }
