@@ -23,39 +23,36 @@ namespace Protogame.Editor.ExtHost
             _editorClientProvider = editorClientProvider;
         }
 
-        public override Task<StartResponse> Start(StartRequest request, ServerCallContext context)
+        public override async Task<StartResponse> Start(StartRequest request, ServerCallContext context)
         {
-            return Task.Run(() =>
+            System.Console.Error.WriteLine("Handling Start request...");
+
+            if (_grpcServer == null)
             {
-                System.Console.Error.WriteLine("Handling Start request...");
+                System.Console.Error.WriteLine("Getting gRPC server instance for extension host...");
+                _grpcServer = _kernel.Get<IGrpcServer>();
+            }
 
-                if (_grpcServer == null)
-                {
-                    System.Console.Error.WriteLine("Getting gRPC server instance for extension host...");
-                    _grpcServer = _kernel.Get<IGrpcServer>();
-                }
+            System.Console.Error.WriteLine("Creating channel to editor gRPC server...");
+            _editorClientProvider.CreateChannel(request.EditorUrl);
 
-                System.Console.Error.WriteLine("Creating channel to editor gRPC server...");
-                _editorClientProvider.CreateChannel(request.EditorUrl);
+            System.Console.Error.WriteLine("Requesting start from assembly path...");
+            string extensionUrl = null;
+            try
+            {
+                extensionUrl = await _extensionHost.Start(_grpcServer, _editorClientProvider, request.AssemblyPath);
+            }
+            catch (Exception e)
+            {
+                System.Console.Error.WriteLine(e);
+            }
 
-                System.Console.Error.WriteLine("Requesting start from assembly path...");
-                string extensionUrl = null;
-                try
-                {
-                    extensionUrl = _extensionHost.Start(_grpcServer, _editorClientProvider, request.AssemblyPath);
-                }
-                catch (Exception e)
-                {
-                    System.Console.Error.WriteLine(e);
-                }
+            System.Console.Error.WriteLine("Returning start response with gRPC extension server URL...");
 
-                System.Console.Error.WriteLine("Returning start response with gRPC extension server URL...");
-
-                return new StartResponse
-                {
-                    ExtensionUrl = extensionUrl
-                };
-            });
+            return new StartResponse
+            {
+                ExtensionUrl = extensionUrl
+            };
         }
     }
 }

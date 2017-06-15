@@ -202,6 +202,7 @@ namespace Protogame.Editor.ProjectManagement
                     Path = definitionXmlDocument.DocumentElement.GetAttribute("Path"),
                     Type = type,
                     Role = role,
+                    LoadedDocumentPath = definitionFile.FullName,
                     LoadedDocument = definitionXmlDocument,
                 };
                 definitionsList.Add(definitionInfo);

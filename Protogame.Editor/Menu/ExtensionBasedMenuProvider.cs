@@ -13,11 +13,17 @@ namespace Protogame.Editor.Menu
         private readonly IExtensionManager _extensionManager;
         private Task _updateMenuItems;
         private MenuEntry[] _menuItems;
+        private List<WeakReference<Extension.Extension>> _ignoredExtensions;
+        private readonly IConsoleHandle _consoleHandle;
 
-        public ExtensionBasedMenuProvider(IExtensionManager extensionManager)
+        public ExtensionBasedMenuProvider(
+            IConsoleHandle consoleHandle,
+            IExtensionManager extensionManager)
         {
+            _consoleHandle = consoleHandle;
             _extensionManager = extensionManager;
             _menuItems = new MenuEntry[0];
+            _ignoredExtensions = new List<WeakReference<Extension.Extension>>();
         }
 
         public MenuEntry[] GetMenuItems()
@@ -29,6 +35,25 @@ namespace Protogame.Editor.Menu
                     var items = new List<MenuEntry>();
                     foreach (var ext in _extensionManager.Extensions)
                     {
+                        var toRemove = new List<WeakReference<Extension.Extension>>();
+                        if (_ignoredExtensions.Any(x =>
+                        {
+                            Extension.Extension oext;
+                            if (x.TryGetTarget(out oext))
+                            {
+                                return oext == ext;
+                            }
+                            else
+                            {
+                                toRemove.Add(x);
+                            }
+                            return false;
+                        }))
+                        {
+                            continue;
+                        }
+                        _ignoredExtensions.RemoveAll(toRemove.Contains);
+
                         var client = ext.GetClient<Grpc.ExtensionHost.MenuEntries.MenuEntriesClient>();
                         RepeatedField<Grpc.ExtensionHost.MenuItem> rawItems;
                         try
@@ -37,6 +62,8 @@ namespace Protogame.Editor.Menu
                         }
                         catch (Exception ex)
                         {
+                            _consoleHandle.LogError(ex);
+                            _ignoredExtensions.Add(new WeakReference<Extension.Extension>(ext));
                             continue;
                         }
                         items.AddRange(rawItems.Select(y =>
@@ -49,6 +76,7 @@ namespace Protogame.Editor.Menu
                         }));
                     }
                     _menuItems = items.ToArray();
+                    await Task.Delay(1000);
                 });
             }
 

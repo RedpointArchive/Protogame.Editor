@@ -15,3 +15,48 @@ message LogRequest {
 
 message LogResponse {
 }
+
+service ProjectManager {
+  rpc GetProject(GetProjectRequest) returns (GetProjectResponse);
+  rpc GetScannedContentPaths(GetScannedContentPathsRequest) returns (GetScannedContentPathsResponse);
+}
+
+message GetProjectRequest {
+}
+
+message GetProjectResponse {
+  bool hasProject = 1;
+  Project project = 2;
+}
+
+message GetScannedContentPathsRequest {
+  string definitionName = 1;
+}
+
+message GetScannedContentPathsResponse {
+  repeated string filePath = 1; 
+}
+
+message Project {
+  string projectPath = 1;
+  string loadingStatus = 2;
+  string name = 3;
+  repeated Package packages = 4;
+  repeated Definition definitions = 5;
+  string defaultGameDefinitionName = 6;
+  string solutionFilePath = 7;
+  string defaultGameBinPath = 8;
+}
+
+message Package {
+  string repository = 1;
+  string package = 2;
+  string version = 3;
+}
+
+message Definition {
+  string name = 1;
+  string type = 2;
+  string role = 3;
+  string xmlDocumentPath = 4;
+}

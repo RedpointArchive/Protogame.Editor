@@ -11,7 +11,7 @@ namespace Protogame.Editor.ExtHost
     {
         private readonly IMenuProvider[] _menuProvider;
 
-        public MenuEntriesImpl([Optional] IMenuProvider[] menuProvider)
+        public MenuEntriesImpl(IMenuProvider[] menuProvider)
         {
             _menuProvider = menuProvider;
         }

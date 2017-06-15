@@ -19,6 +19,7 @@
     <DebugSymbolsOnRelease>full</DebugSymbolsOnRelease>
   </Properties>
   <Files>
+    <Compile Include="ConsoleHandle.cs" />
     <Compile Include="EditorClientProvider.cs" />
     <Compile Include="ExtensionHost.cs" />
     <Compile Include="ExtensionHostServerImpl.cs" />
@@ -27,5 +28,7 @@
     <Compile Include="IGrpcServer.cs" />
     <Compile Include="MenuEntriesImpl.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="ProjectManager.cs" />
+    <Compile Include="ProjectManagerUpdateSignal.cs" />
   </Files>
 </Project>

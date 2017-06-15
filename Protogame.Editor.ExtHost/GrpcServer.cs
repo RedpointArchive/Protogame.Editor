@@ -5,6 +5,7 @@ using Srv = global::Grpc.Core.Server;
 using System;
 using Grpc.Core.Logging;
 using Protoinject;
+using System.Threading.Tasks;
 
 namespace Protogame.Editor.ExtHost
 {
@@ -13,15 +14,14 @@ namespace Protogame.Editor.ExtHost
         private readonly ExtensionHostServerImpl _extensionHostServerImpl;
 
         private Srv _server;
+        private Srv _runtimeServer;
         private string _serverUrl;
-        private readonly MenuEntriesImpl _menuEntriesImpl;
+        private string _runtimeServerUrl;
 
         public GrpcServer(
-            ExtensionHostServerImpl extensionHostServerImpl,
-            MenuEntriesImpl menuEntriesImpl)
+            ExtensionHostServerImpl extensionHostServerImpl)
         {
             _extensionHostServerImpl = extensionHostServerImpl;
-            _menuEntriesImpl = menuEntriesImpl;
         }
 
         public string GetServerUrl()
@@ -52,28 +52,26 @@ namespace Protogame.Editor.ExtHost
 
             _serverUrl = "localhost:" + _server.Ports.Select(x => x.BoundPort).First();
         }
-        
-        public string StartAndGetRuntimeServerUrl(IKernel localKernel)
+
+        public async Task<string> StartAndGetRuntimeServerUrlAsync(IKernel localKernel)
         {
-            if (_server != null)
+            if (_runtimeServer != null)
             {
-                return _serverUrl;
+                return _runtimeServerUrl;
             }
 
-            GrpcEnvironment.SetLogger(new Logger());
-
-            _server = new Srv
+            _runtimeServer = new Srv
             {
                 Services =
                 {
-                    MenuEntries.BindService(localKernel.Get<MenuEntriesImpl>())
+                    MenuEntries.BindService(await localKernel.GetAsync<MenuEntriesImpl>())
                 },
                 Ports = { new ServerPort("localhost", 0, ServerCredentials.Insecure) }
             };
-            _server.Start();
+            _runtimeServer.Start();
 
-            _serverUrl = "localhost:" + _server.Ports.Select(x => x.BoundPort).First();
-            return _serverUrl;
+            _runtimeServerUrl = "localhost:" + _server.Ports.Select(x => x.BoundPort).First();
+            return _runtimeServerUrl;
         }
 
         private class Logger : ILogger

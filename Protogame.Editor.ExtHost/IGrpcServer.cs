@@ -1,5 +1,6 @@
 ﻿using Grpc.Core;
 using Protoinject;
+using System.Threading.Tasks;
 
 namespace Protogame.Editor.ExtHost
 {
@@ -7,6 +8,6 @@ namespace Protogame.Editor.ExtHost
     {
         string GetServerUrl();
 
-        string StartAndGetRuntimeServerUrl(IKernel localKernel);
+        Task<string> StartAndGetRuntimeServerUrlAsync(IKernel localKernel);
     }
 }

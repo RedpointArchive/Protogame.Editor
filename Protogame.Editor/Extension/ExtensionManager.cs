@@ -6,6 +6,7 @@ using System.Diagnostics;
 using Grpc.Core;
 using Protogame.Editor.Server;
 using System.Linq;
+using System;
 
 namespace Protogame.Editor.Extension
 {
@@ -110,17 +111,25 @@ namespace Protogame.Editor.Extension
                         _consoleHandle.LogDebug("Created extension host client on gRPC channel");
 
                         _consoleHandle.LogDebug("Requesting extension load of {0}...", ext.Value.File.FullName);
-                        var startResponse = ext.Value.ExtensionHostServerClient.Start(new Grpc.ExtensionHost.StartRequest
+                        try
                         {
-                            AssemblyPath = ext.Value.File.FullName,
-                            EditorUrl = editorGrpcServer
-                        });
-                        _consoleHandle.LogDebug("Extension loaded: {0}", ext.Value.File.FullName);
+                            var startResponse = ext.Value.ExtensionHostServerClient.Start(new Grpc.ExtensionHost.StartRequest
+                            {
+                                AssemblyPath = ext.Value.File.FullName,
+                                EditorUrl = editorGrpcServer
+                            });
+                            _consoleHandle.LogDebug("Extension loaded: {0}", ext.Value.File.FullName);
 
-                        _consoleHandle.LogDebug("Creating gRPC runtime channel on {0}...", startResponse.ExtensionUrl);
-                        ext.Value.ExtensionRuntimeChannel = new Channel(startResponse.ExtensionUrl, ChannelCredentials.Insecure);
+                            _consoleHandle.LogDebug("Creating gRPC runtime channel on {0}...", startResponse.ExtensionUrl);
+                            ext.Value.ExtensionRuntimeChannel = new Channel(startResponse.ExtensionUrl, ChannelCredentials.Insecure);
 
-                        _recomputeExtensions = true;
+                            _recomputeExtensions = true;
+                        }
+                        catch (Exception ex)
+                        {
+                            _consoleHandle.LogError("Unable to load extension: {0}", ext.Value.File.FullName);
+                            _consoleHandle.LogError(ex);
+                        }
                     };
                     ext.Value.ExtensionProcess.ErrorDataReceived += (sender, e) =>
                     {
@@ -141,6 +150,8 @@ namespace Protogame.Editor.Extension
                     .Where(x => x.ExtensionRuntimeChannel != null)
                     .Select(x => new Extension(x.ExtensionRuntimeChannel))
                     .ToArray();
+                _consoleHandle.LogInfo("Recomputed loaded extension list");
+                _recomputeExtensions = false;
             }
         }
 
