@@ -8,19 +8,19 @@ using System.Threading.Tasks;
 using grpc = global::Grpc.Core;
 
 namespace Protogame.Editor.Grpc.Editor {
-  public static partial class MenuEntries
+  public static partial class Presence
   {
-    static readonly string __ServiceName = "MenuEntries";
+    static readonly string __ServiceName = "Presence";
 
-    static readonly grpc::Marshaller<global::Protogame.Editor.Grpc.Editor.GetMenuItemsRequest> __Marshaller_GetMenuItemsRequest = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Protogame.Editor.Grpc.Editor.GetMenuItemsRequest.Parser.ParseFrom);
-    static readonly grpc::Marshaller<global::Protogame.Editor.Grpc.Editor.GetMenuItemsResponse> __Marshaller_GetMenuItemsResponse = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Protogame.Editor.Grpc.Editor.GetMenuItemsResponse.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Protogame.Editor.Grpc.Editor.CheckPresenceRequest> __Marshaller_CheckPresenceRequest = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Protogame.Editor.Grpc.Editor.CheckPresenceRequest.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Protogame.Editor.Grpc.Editor.CheckPresenceResponse> __Marshaller_CheckPresenceResponse = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Protogame.Editor.Grpc.Editor.CheckPresenceResponse.Parser.ParseFrom);
 
-    static readonly grpc::Method<global::Protogame.Editor.Grpc.Editor.GetMenuItemsRequest, global::Protogame.Editor.Grpc.Editor.GetMenuItemsResponse> __Method_GetMenuItems = new grpc::Method<global::Protogame.Editor.Grpc.Editor.GetMenuItemsRequest, global::Protogame.Editor.Grpc.Editor.GetMenuItemsResponse>(
+    static readonly grpc::Method<global::Protogame.Editor.Grpc.Editor.CheckPresenceRequest, global::Protogame.Editor.Grpc.Editor.CheckPresenceResponse> __Method_Check = new grpc::Method<global::Protogame.Editor.Grpc.Editor.CheckPresenceRequest, global::Protogame.Editor.Grpc.Editor.CheckPresenceResponse>(
         grpc::MethodType.Unary,
         __ServiceName,
-        "GetMenuItems",
-        __Marshaller_GetMenuItemsRequest,
-        __Marshaller_GetMenuItemsResponse);
+        "Check",
+        __Marshaller_CheckPresenceRequest,
+        __Marshaller_CheckPresenceResponse);
 
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
@@ -28,68 +28,68 @@ namespace Protogame.Editor.Grpc.Editor {
       get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.Services[0]; }
     }
 
-    /// <summary>Base class for server-side implementations of MenuEntries</summary>
-    public abstract partial class MenuEntriesBase
+    /// <summary>Base class for server-side implementations of Presence</summary>
+    public abstract partial class PresenceBase
     {
-      public virtual global::System.Threading.Tasks.Task<global::Protogame.Editor.Grpc.Editor.GetMenuItemsResponse> GetMenuItems(global::Protogame.Editor.Grpc.Editor.GetMenuItemsRequest request, grpc::ServerCallContext context)
+      public virtual global::System.Threading.Tasks.Task<global::Protogame.Editor.Grpc.Editor.CheckPresenceResponse> Check(global::Protogame.Editor.Grpc.Editor.CheckPresenceRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
 
     }
 
-    /// <summary>Client for MenuEntries</summary>
-    public partial class MenuEntriesClient : grpc::ClientBase<MenuEntriesClient>
+    /// <summary>Client for Presence</summary>
+    public partial class PresenceClient : grpc::ClientBase<PresenceClient>
     {
-      /// <summary>Creates a new client for MenuEntries</summary>
+      /// <summary>Creates a new client for Presence</summary>
       /// <param name="channel">The channel to use to make remote calls.</param>
-      public MenuEntriesClient(grpc::Channel channel) : base(channel)
+      public PresenceClient(grpc::Channel channel) : base(channel)
       {
       }
-      /// <summary>Creates a new client for MenuEntries that uses a custom <c>CallInvoker</c>.</summary>
+      /// <summary>Creates a new client for Presence that uses a custom <c>CallInvoker</c>.</summary>
       /// <param name="callInvoker">The callInvoker to use to make remote calls.</param>
-      public MenuEntriesClient(grpc::CallInvoker callInvoker) : base(callInvoker)
+      public PresenceClient(grpc::CallInvoker callInvoker) : base(callInvoker)
       {
       }
       /// <summary>Protected parameterless constructor to allow creation of test doubles.</summary>
-      protected MenuEntriesClient() : base()
+      protected PresenceClient() : base()
       {
       }
       /// <summary>Protected constructor to allow creation of configured clients.</summary>
       /// <param name="configuration">The client configuration.</param>
-      protected MenuEntriesClient(ClientBaseConfiguration configuration) : base(configuration)
+      protected PresenceClient(ClientBaseConfiguration configuration) : base(configuration)
       {
       }
 
-      public virtual global::Protogame.Editor.Grpc.Editor.GetMenuItemsResponse GetMenuItems(global::Protogame.Editor.Grpc.Editor.GetMenuItemsRequest request, grpc::Metadata headers = null, DateTime? deadline = null, CancellationToken cancellationToken = default(CancellationToken))
+      public virtual global::Protogame.Editor.Grpc.Editor.CheckPresenceResponse Check(global::Protogame.Editor.Grpc.Editor.CheckPresenceRequest request, grpc::Metadata headers = null, DateTime? deadline = null, CancellationToken cancellationToken = default(CancellationToken))
       {
-        return GetMenuItems(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+        return Check(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
-      public virtual global::Protogame.Editor.Grpc.Editor.GetMenuItemsResponse GetMenuItems(global::Protogame.Editor.Grpc.Editor.GetMenuItemsRequest request, grpc::CallOptions options)
+      public virtual global::Protogame.Editor.Grpc.Editor.CheckPresenceResponse Check(global::Protogame.Editor.Grpc.Editor.CheckPresenceRequest request, grpc::CallOptions options)
       {
-        return CallInvoker.BlockingUnaryCall(__Method_GetMenuItems, null, options, request);
+        return CallInvoker.BlockingUnaryCall(__Method_Check, null, options, request);
       }
-      public virtual grpc::AsyncUnaryCall<global::Protogame.Editor.Grpc.Editor.GetMenuItemsResponse> GetMenuItemsAsync(global::Protogame.Editor.Grpc.Editor.GetMenuItemsRequest request, grpc::Metadata headers = null, DateTime? deadline = null, CancellationToken cancellationToken = default(CancellationToken))
+      public virtual grpc::AsyncUnaryCall<global::Protogame.Editor.Grpc.Editor.CheckPresenceResponse> CheckAsync(global::Protogame.Editor.Grpc.Editor.CheckPresenceRequest request, grpc::Metadata headers = null, DateTime? deadline = null, CancellationToken cancellationToken = default(CancellationToken))
       {
-        return GetMenuItemsAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+        return CheckAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
-      public virtual grpc::AsyncUnaryCall<global::Protogame.Editor.Grpc.Editor.GetMenuItemsResponse> GetMenuItemsAsync(global::Protogame.Editor.Grpc.Editor.GetMenuItemsRequest request, grpc::CallOptions options)
+      public virtual grpc::AsyncUnaryCall<global::Protogame.Editor.Grpc.Editor.CheckPresenceResponse> CheckAsync(global::Protogame.Editor.Grpc.Editor.CheckPresenceRequest request, grpc::CallOptions options)
       {
-        return CallInvoker.AsyncUnaryCall(__Method_GetMenuItems, null, options, request);
+        return CallInvoker.AsyncUnaryCall(__Method_Check, null, options, request);
       }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
-      protected override MenuEntriesClient NewInstance(ClientBaseConfiguration configuration)
+      protected override PresenceClient NewInstance(ClientBaseConfiguration configuration)
       {
-        return new MenuEntriesClient(configuration);
+        return new PresenceClient(configuration);
       }
     }
 
     /// <summary>Creates service definition that can be registered with a server</summary>
     /// <param name="serviceImpl">An object implementing the server-side handling logic.</param>
-    public static grpc::ServerServiceDefinition BindService(MenuEntriesBase serviceImpl)
+    public static grpc::ServerServiceDefinition BindService(PresenceBase serviceImpl)
     {
       return grpc::ServerServiceDefinition.CreateBuilder()
-          .AddMethod(__Method_GetMenuItems, serviceImpl.GetMenuItems).Build();
+          .AddMethod(__Method_Check, serviceImpl.Check).Build();
     }
 
   }
@@ -262,6 +262,122 @@ namespace Protogame.Editor.Grpc.Editor {
           .AddMethod(__Method_LogInfo, serviceImpl.LogInfo)
           .AddMethod(__Method_LogWarn, serviceImpl.LogWarn)
           .AddMethod(__Method_LogError, serviceImpl.LogError).Build();
+    }
+
+  }
+  public static partial class ProjectManager
+  {
+    static readonly string __ServiceName = "ProjectManager";
+
+    static readonly grpc::Marshaller<global::Protogame.Editor.Grpc.Editor.GetProjectRequest> __Marshaller_GetProjectRequest = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Protogame.Editor.Grpc.Editor.GetProjectRequest.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Protogame.Editor.Grpc.Editor.GetProjectResponse> __Marshaller_GetProjectResponse = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Protogame.Editor.Grpc.Editor.GetProjectResponse.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Protogame.Editor.Grpc.Editor.GetScannedContentPathsRequest> __Marshaller_GetScannedContentPathsRequest = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Protogame.Editor.Grpc.Editor.GetScannedContentPathsRequest.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Protogame.Editor.Grpc.Editor.GetScannedContentPathsResponse> __Marshaller_GetScannedContentPathsResponse = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Protogame.Editor.Grpc.Editor.GetScannedContentPathsResponse.Parser.ParseFrom);
+
+    static readonly grpc::Method<global::Protogame.Editor.Grpc.Editor.GetProjectRequest, global::Protogame.Editor.Grpc.Editor.GetProjectResponse> __Method_GetProject = new grpc::Method<global::Protogame.Editor.Grpc.Editor.GetProjectRequest, global::Protogame.Editor.Grpc.Editor.GetProjectResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "GetProject",
+        __Marshaller_GetProjectRequest,
+        __Marshaller_GetProjectResponse);
+
+    static readonly grpc::Method<global::Protogame.Editor.Grpc.Editor.GetScannedContentPathsRequest, global::Protogame.Editor.Grpc.Editor.GetScannedContentPathsResponse> __Method_GetScannedContentPaths = new grpc::Method<global::Protogame.Editor.Grpc.Editor.GetScannedContentPathsRequest, global::Protogame.Editor.Grpc.Editor.GetScannedContentPathsResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "GetScannedContentPaths",
+        __Marshaller_GetScannedContentPathsRequest,
+        __Marshaller_GetScannedContentPathsResponse);
+
+    /// <summary>Service descriptor</summary>
+    public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
+    {
+      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.Services[2]; }
+    }
+
+    /// <summary>Base class for server-side implementations of ProjectManager</summary>
+    public abstract partial class ProjectManagerBase
+    {
+      public virtual global::System.Threading.Tasks.Task<global::Protogame.Editor.Grpc.Editor.GetProjectResponse> GetProject(global::Protogame.Editor.Grpc.Editor.GetProjectRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      public virtual global::System.Threading.Tasks.Task<global::Protogame.Editor.Grpc.Editor.GetScannedContentPathsResponse> GetScannedContentPaths(global::Protogame.Editor.Grpc.Editor.GetScannedContentPathsRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+    }
+
+    /// <summary>Client for ProjectManager</summary>
+    public partial class ProjectManagerClient : grpc::ClientBase<ProjectManagerClient>
+    {
+      /// <summary>Creates a new client for ProjectManager</summary>
+      /// <param name="channel">The channel to use to make remote calls.</param>
+      public ProjectManagerClient(grpc::Channel channel) : base(channel)
+      {
+      }
+      /// <summary>Creates a new client for ProjectManager that uses a custom <c>CallInvoker</c>.</summary>
+      /// <param name="callInvoker">The callInvoker to use to make remote calls.</param>
+      public ProjectManagerClient(grpc::CallInvoker callInvoker) : base(callInvoker)
+      {
+      }
+      /// <summary>Protected parameterless constructor to allow creation of test doubles.</summary>
+      protected ProjectManagerClient() : base()
+      {
+      }
+      /// <summary>Protected constructor to allow creation of configured clients.</summary>
+      /// <param name="configuration">The client configuration.</param>
+      protected ProjectManagerClient(ClientBaseConfiguration configuration) : base(configuration)
+      {
+      }
+
+      public virtual global::Protogame.Editor.Grpc.Editor.GetProjectResponse GetProject(global::Protogame.Editor.Grpc.Editor.GetProjectRequest request, grpc::Metadata headers = null, DateTime? deadline = null, CancellationToken cancellationToken = default(CancellationToken))
+      {
+        return GetProject(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      public virtual global::Protogame.Editor.Grpc.Editor.GetProjectResponse GetProject(global::Protogame.Editor.Grpc.Editor.GetProjectRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_GetProject, null, options, request);
+      }
+      public virtual grpc::AsyncUnaryCall<global::Protogame.Editor.Grpc.Editor.GetProjectResponse> GetProjectAsync(global::Protogame.Editor.Grpc.Editor.GetProjectRequest request, grpc::Metadata headers = null, DateTime? deadline = null, CancellationToken cancellationToken = default(CancellationToken))
+      {
+        return GetProjectAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      public virtual grpc::AsyncUnaryCall<global::Protogame.Editor.Grpc.Editor.GetProjectResponse> GetProjectAsync(global::Protogame.Editor.Grpc.Editor.GetProjectRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_GetProject, null, options, request);
+      }
+      public virtual global::Protogame.Editor.Grpc.Editor.GetScannedContentPathsResponse GetScannedContentPaths(global::Protogame.Editor.Grpc.Editor.GetScannedContentPathsRequest request, grpc::Metadata headers = null, DateTime? deadline = null, CancellationToken cancellationToken = default(CancellationToken))
+      {
+        return GetScannedContentPaths(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      public virtual global::Protogame.Editor.Grpc.Editor.GetScannedContentPathsResponse GetScannedContentPaths(global::Protogame.Editor.Grpc.Editor.GetScannedContentPathsRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_GetScannedContentPaths, null, options, request);
+      }
+      public virtual grpc::AsyncUnaryCall<global::Protogame.Editor.Grpc.Editor.GetScannedContentPathsResponse> GetScannedContentPathsAsync(global::Protogame.Editor.Grpc.Editor.GetScannedContentPathsRequest request, grpc::Metadata headers = null, DateTime? deadline = null, CancellationToken cancellationToken = default(CancellationToken))
+      {
+        return GetScannedContentPathsAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      public virtual grpc::AsyncUnaryCall<global::Protogame.Editor.Grpc.Editor.GetScannedContentPathsResponse> GetScannedContentPathsAsync(global::Protogame.Editor.Grpc.Editor.GetScannedContentPathsRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_GetScannedContentPaths, null, options, request);
+      }
+      /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
+      protected override ProjectManagerClient NewInstance(ClientBaseConfiguration configuration)
+      {
+        return new ProjectManagerClient(configuration);
+      }
+    }
+
+    /// <summary>Creates service definition that can be registered with a server</summary>
+    /// <param name="serviceImpl">An object implementing the server-side handling logic.</param>
+    public static grpc::ServerServiceDefinition BindService(ProjectManagerBase serviceImpl)
+    {
+      return grpc::ServerServiceDefinition.CreateBuilder()
+          .AddMethod(__Method_GetProject, serviceImpl.GetProject)
+          .AddMethod(__Method_GetScannedContentPaths, serviceImpl.GetScannedContentPaths).Build();
     }
 
   }

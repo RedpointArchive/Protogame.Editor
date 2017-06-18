@@ -22,35 +22,56 @@ namespace Protogame.Editor.Grpc.Editor {
     static EditorReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "CgxFZGl0b3IucHJvdG8iFQoTR2V0TWVudUl0ZW1zUmVxdWVzdCI0ChRHZXRN",
-            "ZW51SXRlbXNSZXNwb25zZRIcCgltZW51SXRlbXMYASADKAsyCS5NZW51SXRl",
-            "bSJECghNZW51SXRlbRIKCgJpZBgBIAEoAxINCgVvcmRlchgCIAEoAxIMCgR0",
-            "ZXh0GAMgASgJEg8KB2VuYWJsZWQYBCABKAgiHQoKTG9nUmVxdWVzdBIPCgdt",
-            "ZXNzYWdlGAEgASgJIg0KC0xvZ1Jlc3BvbnNlMkoKC01lbnVFbnRyaWVzEjsK",
-            "DEdldE1lbnVJdGVtcxIULkdldE1lbnVJdGVtc1JlcXVlc3QaFS5HZXRNZW51",
-            "SXRlbXNSZXNwb25zZTKjAQoHQ29uc29sZRIlCghMb2dEZWJ1ZxILLkxvZ1Jl",
-            "cXVlc3QaDC5Mb2dSZXNwb25zZRIkCgdMb2dJbmZvEgsuTG9nUmVxdWVzdBoM",
-            "LkxvZ1Jlc3BvbnNlEiQKB0xvZ1dhcm4SCy5Mb2dSZXF1ZXN0GgwuTG9nUmVz",
-            "cG9uc2USJQoITG9nRXJyb3ISCy5Mb2dSZXF1ZXN0GgwuTG9nUmVzcG9uc2VC",
-            "H6oCHFByb3RvZ2FtZS5FZGl0b3IuR3JwYy5FZGl0b3JiBnByb3RvMw=="));
+            "CgxFZGl0b3IucHJvdG8iFgoUQ2hlY2tQcmVzZW5jZVJlcXVlc3QiFwoVQ2hl",
+            "Y2tQcmVzZW5jZVJlc3BvbnNlIh0KCkxvZ1JlcXVlc3QSDwoHbWVzc2FnZRgB",
+            "IAEoCSINCgtMb2dSZXNwb25zZSITChFHZXRQcm9qZWN0UmVxdWVzdCJDChJH",
+            "ZXRQcm9qZWN0UmVzcG9uc2USEgoKaGFzUHJvamVjdBgBIAEoCBIZCgdwcm9q",
+            "ZWN0GAIgASgLMgguUHJvamVjdCI3Ch1HZXRTY2FubmVkQ29udGVudFBhdGhz",
+            "UmVxdWVzdBIWCg5kZWZpbml0aW9uTmFtZRgBIAEoCSIyCh5HZXRTY2FubmVk",
+            "Q29udGVudFBhdGhzUmVzcG9uc2USEAoIZmlsZVBhdGgYASADKAki7AEKB1By",
+            "b2plY3QSEwoLcHJvamVjdFBhdGgYASABKAkSFQoNbG9hZGluZ1N0YXR1cxgC",
+            "IAEoCRIMCgRuYW1lGAMgASgJEhoKCHBhY2thZ2VzGAQgAygLMgguUGFja2Fn",
+            "ZRIgCgtkZWZpbml0aW9ucxgFIAMoCzILLkRlZmluaXRpb24SIQoZZGVmYXVs",
+            "dEdhbWVEZWZpbml0aW9uTmFtZRgGIAEoCRIYChBzb2x1dGlvbkZpbGVQYXRo",
+            "GAcgASgJEhoKEmRlZmF1bHRHYW1lQmluUGF0aBgIIAEoCRIQCghoYXNoQ29k",
+            "ZRgJIAEoBSI/CgdQYWNrYWdlEhIKCnJlcG9zaXRvcnkYASABKAkSDwoHcGFj",
+            "a2FnZRgCIAEoCRIPCgd2ZXJzaW9uGAMgASgJIk8KCkRlZmluaXRpb24SDAoE",
+            "bmFtZRgBIAEoCRIMCgR0eXBlGAIgASgJEgwKBHJvbGUYAyABKAkSFwoPeG1s",
+            "RG9jdW1lbnRQYXRoGAQgASgJMkIKCFByZXNlbmNlEjYKBUNoZWNrEhUuQ2hl",
+            "Y2tQcmVzZW5jZVJlcXVlc3QaFi5DaGVja1ByZXNlbmNlUmVzcG9uc2UyowEK",
+            "B0NvbnNvbGUSJQoITG9nRGVidWcSCy5Mb2dSZXF1ZXN0GgwuTG9nUmVzcG9u",
+            "c2USJAoHTG9nSW5mbxILLkxvZ1JlcXVlc3QaDC5Mb2dSZXNwb25zZRIkCgdM",
+            "b2dXYXJuEgsuTG9nUmVxdWVzdBoMLkxvZ1Jlc3BvbnNlEiUKCExvZ0Vycm9y",
+            "EgsuTG9nUmVxdWVzdBoMLkxvZ1Jlc3BvbnNlMqIBCg5Qcm9qZWN0TWFuYWdl",
+            "chI1CgpHZXRQcm9qZWN0EhIuR2V0UHJvamVjdFJlcXVlc3QaEy5HZXRQcm9q",
+            "ZWN0UmVzcG9uc2USWQoWR2V0U2Nhbm5lZENvbnRlbnRQYXRocxIeLkdldFNj",
+            "YW5uZWRDb250ZW50UGF0aHNSZXF1ZXN0Gh8uR2V0U2Nhbm5lZENvbnRlbnRQ",
+            "YXRoc1Jlc3BvbnNlQh+qAhxQcm90b2dhbWUuRWRpdG9yLkdycGMuRWRpdG9y",
+            "YgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.GetMenuItemsRequest), global::Protogame.Editor.Grpc.Editor.GetMenuItemsRequest.Parser, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.GetMenuItemsResponse), global::Protogame.Editor.Grpc.Editor.GetMenuItemsResponse.Parser, new[]{ "MenuItems" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.MenuItem), global::Protogame.Editor.Grpc.Editor.MenuItem.Parser, new[]{ "Id", "Order", "Text", "Enabled" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.CheckPresenceRequest), global::Protogame.Editor.Grpc.Editor.CheckPresenceRequest.Parser, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.CheckPresenceResponse), global::Protogame.Editor.Grpc.Editor.CheckPresenceResponse.Parser, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.LogRequest), global::Protogame.Editor.Grpc.Editor.LogRequest.Parser, new[]{ "Message" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.LogResponse), global::Protogame.Editor.Grpc.Editor.LogResponse.Parser, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.LogResponse), global::Protogame.Editor.Grpc.Editor.LogResponse.Parser, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.GetProjectRequest), global::Protogame.Editor.Grpc.Editor.GetProjectRequest.Parser, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.GetProjectResponse), global::Protogame.Editor.Grpc.Editor.GetProjectResponse.Parser, new[]{ "HasProject", "Project" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.GetScannedContentPathsRequest), global::Protogame.Editor.Grpc.Editor.GetScannedContentPathsRequest.Parser, new[]{ "DefinitionName" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.GetScannedContentPathsResponse), global::Protogame.Editor.Grpc.Editor.GetScannedContentPathsResponse.Parser, new[]{ "FilePath" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.Project), global::Protogame.Editor.Grpc.Editor.Project.Parser, new[]{ "ProjectPath", "LoadingStatus", "Name", "Packages", "Definitions", "DefaultGameDefinitionName", "SolutionFilePath", "DefaultGameBinPath", "HashCode" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.Package), global::Protogame.Editor.Grpc.Editor.Package.Parser, new[]{ "Repository", "Package_", "Version" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.Definition), global::Protogame.Editor.Grpc.Editor.Definition.Parser, new[]{ "Name", "Type", "Role", "XmlDocumentPath" }, null, null, null)
           }));
     }
     #endregion
 
   }
   #region Messages
-  public sealed partial class GetMenuItemsRequest : pb::IMessage<GetMenuItemsRequest> {
-    private static readonly pb::MessageParser<GetMenuItemsRequest> _parser = new pb::MessageParser<GetMenuItemsRequest>(() => new GetMenuItemsRequest());
+  public sealed partial class CheckPresenceRequest : pb::IMessage<CheckPresenceRequest> {
+    private static readonly pb::MessageParser<CheckPresenceRequest> _parser = new pb::MessageParser<CheckPresenceRequest>(() => new CheckPresenceRequest());
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<GetMenuItemsRequest> Parser { get { return _parser; } }
+    public static pb::MessageParser<CheckPresenceRequest> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
@@ -63,28 +84,28 @@ namespace Protogame.Editor.Grpc.Editor {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public GetMenuItemsRequest() {
+    public CheckPresenceRequest() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public GetMenuItemsRequest(GetMenuItemsRequest other) : this() {
+    public CheckPresenceRequest(CheckPresenceRequest other) : this() {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public GetMenuItemsRequest Clone() {
-      return new GetMenuItemsRequest(this);
+    public CheckPresenceRequest Clone() {
+      return new CheckPresenceRequest(this);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
-      return Equals(other as GetMenuItemsRequest);
+      return Equals(other as CheckPresenceRequest);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(GetMenuItemsRequest other) {
+    public bool Equals(CheckPresenceRequest other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -116,7 +137,7 @@ namespace Protogame.Editor.Grpc.Editor {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(GetMenuItemsRequest other) {
+    public void MergeFrom(CheckPresenceRequest other) {
       if (other == null) {
         return;
       }
@@ -136,10 +157,10 @@ namespace Protogame.Editor.Grpc.Editor {
 
   }
 
-  public sealed partial class GetMenuItemsResponse : pb::IMessage<GetMenuItemsResponse> {
-    private static readonly pb::MessageParser<GetMenuItemsResponse> _parser = new pb::MessageParser<GetMenuItemsResponse>(() => new GetMenuItemsResponse());
+  public sealed partial class CheckPresenceResponse : pb::IMessage<CheckPresenceResponse> {
+    private static readonly pb::MessageParser<CheckPresenceResponse> _parser = new pb::MessageParser<CheckPresenceResponse>(() => new CheckPresenceResponse());
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<GetMenuItemsResponse> Parser { get { return _parser; } }
+    public static pb::MessageParser<CheckPresenceResponse> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
@@ -152,53 +173,40 @@ namespace Protogame.Editor.Grpc.Editor {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public GetMenuItemsResponse() {
+    public CheckPresenceResponse() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public GetMenuItemsResponse(GetMenuItemsResponse other) : this() {
-      menuItems_ = other.menuItems_.Clone();
+    public CheckPresenceResponse(CheckPresenceResponse other) : this() {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public GetMenuItemsResponse Clone() {
-      return new GetMenuItemsResponse(this);
-    }
-
-    /// <summary>Field number for the "menuItems" field.</summary>
-    public const int MenuItemsFieldNumber = 1;
-    private static readonly pb::FieldCodec<global::Protogame.Editor.Grpc.Editor.MenuItem> _repeated_menuItems_codec
-        = pb::FieldCodec.ForMessage(10, global::Protogame.Editor.Grpc.Editor.MenuItem.Parser);
-    private readonly pbc::RepeatedField<global::Protogame.Editor.Grpc.Editor.MenuItem> menuItems_ = new pbc::RepeatedField<global::Protogame.Editor.Grpc.Editor.MenuItem>();
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::Protogame.Editor.Grpc.Editor.MenuItem> MenuItems {
-      get { return menuItems_; }
+    public CheckPresenceResponse Clone() {
+      return new CheckPresenceResponse(this);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
-      return Equals(other as GetMenuItemsResponse);
+      return Equals(other as CheckPresenceResponse);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(GetMenuItemsResponse other) {
+    public bool Equals(CheckPresenceResponse other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if(!menuItems_.Equals(other.menuItems_)) return false;
       return true;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      hash ^= menuItems_.GetHashCode();
       return hash;
     }
 
@@ -209,210 +217,18 @@ namespace Protogame.Editor.Grpc.Editor {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      menuItems_.WriteTo(output, _repeated_menuItems_codec);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      size += menuItems_.CalculateSize(_repeated_menuItems_codec);
       return size;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(GetMenuItemsResponse other) {
+    public void MergeFrom(CheckPresenceResponse other) {
       if (other == null) {
         return;
-      }
-      menuItems_.Add(other.menuItems_);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
-          case 10: {
-            menuItems_.AddEntriesFrom(input, _repeated_menuItems_codec);
-            break;
-          }
-        }
-      }
-    }
-
-  }
-
-  public sealed partial class MenuItem : pb::IMessage<MenuItem> {
-    private static readonly pb::MessageParser<MenuItem> _parser = new pb::MessageParser<MenuItem>(() => new MenuItem());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<MenuItem> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.MessageTypes[2]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public MenuItem() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public MenuItem(MenuItem other) : this() {
-      id_ = other.id_;
-      order_ = other.order_;
-      text_ = other.text_;
-      enabled_ = other.enabled_;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public MenuItem Clone() {
-      return new MenuItem(this);
-    }
-
-    /// <summary>Field number for the "id" field.</summary>
-    public const int IdFieldNumber = 1;
-    private long id_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public long Id {
-      get { return id_; }
-      set {
-        id_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "order" field.</summary>
-    public const int OrderFieldNumber = 2;
-    private long order_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public long Order {
-      get { return order_; }
-      set {
-        order_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "text" field.</summary>
-    public const int TextFieldNumber = 3;
-    private string text_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Text {
-      get { return text_; }
-      set {
-        text_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "enabled" field.</summary>
-    public const int EnabledFieldNumber = 4;
-    private bool enabled_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Enabled {
-      get { return enabled_; }
-      set {
-        enabled_ = value;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as MenuItem);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(MenuItem other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (Id != other.Id) return false;
-      if (Order != other.Order) return false;
-      if (Text != other.Text) return false;
-      if (Enabled != other.Enabled) return false;
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (Id != 0L) hash ^= Id.GetHashCode();
-      if (Order != 0L) hash ^= Order.GetHashCode();
-      if (Text.Length != 0) hash ^= Text.GetHashCode();
-      if (Enabled != false) hash ^= Enabled.GetHashCode();
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (Id != 0L) {
-        output.WriteRawTag(8);
-        output.WriteInt64(Id);
-      }
-      if (Order != 0L) {
-        output.WriteRawTag(16);
-        output.WriteInt64(Order);
-      }
-      if (Text.Length != 0) {
-        output.WriteRawTag(26);
-        output.WriteString(Text);
-      }
-      if (Enabled != false) {
-        output.WriteRawTag(32);
-        output.WriteBool(Enabled);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (Id != 0L) {
-        size += 1 + pb::CodedOutputStream.ComputeInt64Size(Id);
-      }
-      if (Order != 0L) {
-        size += 1 + pb::CodedOutputStream.ComputeInt64Size(Order);
-      }
-      if (Text.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Text);
-      }
-      if (Enabled != false) {
-        size += 1 + 1;
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(MenuItem other) {
-      if (other == null) {
-        return;
-      }
-      if (other.Id != 0L) {
-        Id = other.Id;
-      }
-      if (other.Order != 0L) {
-        Order = other.Order;
-      }
-      if (other.Text.Length != 0) {
-        Text = other.Text;
-      }
-      if (other.Enabled != false) {
-        Enabled = other.Enabled;
       }
     }
 
@@ -424,22 +240,6 @@ namespace Protogame.Editor.Grpc.Editor {
           default:
             input.SkipLastField();
             break;
-          case 8: {
-            Id = input.ReadInt64();
-            break;
-          }
-          case 16: {
-            Order = input.ReadInt64();
-            break;
-          }
-          case 26: {
-            Text = input.ReadString();
-            break;
-          }
-          case 32: {
-            Enabled = input.ReadBool();
-            break;
-          }
         }
       }
     }
@@ -453,7 +253,7 @@ namespace Protogame.Editor.Grpc.Editor {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.MessageTypes[3]; }
+      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.MessageTypes[2]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -570,7 +370,7 @@ namespace Protogame.Editor.Grpc.Editor {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.MessageTypes[4]; }
+      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.MessageTypes[3]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -646,6 +446,1171 @@ namespace Protogame.Editor.Grpc.Editor {
           default:
             input.SkipLastField();
             break;
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class GetProjectRequest : pb::IMessage<GetProjectRequest> {
+    private static readonly pb::MessageParser<GetProjectRequest> _parser = new pb::MessageParser<GetProjectRequest>(() => new GetProjectRequest());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<GetProjectRequest> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.MessageTypes[4]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GetProjectRequest() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GetProjectRequest(GetProjectRequest other) : this() {
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GetProjectRequest Clone() {
+      return new GetProjectRequest(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as GetProjectRequest);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(GetProjectRequest other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(GetProjectRequest other) {
+      if (other == null) {
+        return;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class GetProjectResponse : pb::IMessage<GetProjectResponse> {
+    private static readonly pb::MessageParser<GetProjectResponse> _parser = new pb::MessageParser<GetProjectResponse>(() => new GetProjectResponse());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<GetProjectResponse> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.MessageTypes[5]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GetProjectResponse() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GetProjectResponse(GetProjectResponse other) : this() {
+      hasProject_ = other.hasProject_;
+      Project = other.project_ != null ? other.Project.Clone() : null;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GetProjectResponse Clone() {
+      return new GetProjectResponse(this);
+    }
+
+    /// <summary>Field number for the "hasProject" field.</summary>
+    public const int HasProjectFieldNumber = 1;
+    private bool hasProject_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool HasProject {
+      get { return hasProject_; }
+      set {
+        hasProject_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "project" field.</summary>
+    public const int ProjectFieldNumber = 2;
+    private global::Protogame.Editor.Grpc.Editor.Project project_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Protogame.Editor.Grpc.Editor.Project Project {
+      get { return project_; }
+      set {
+        project_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as GetProjectResponse);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(GetProjectResponse other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (HasProject != other.HasProject) return false;
+      if (!object.Equals(Project, other.Project)) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (HasProject != false) hash ^= HasProject.GetHashCode();
+      if (project_ != null) hash ^= Project.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (HasProject != false) {
+        output.WriteRawTag(8);
+        output.WriteBool(HasProject);
+      }
+      if (project_ != null) {
+        output.WriteRawTag(18);
+        output.WriteMessage(Project);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (HasProject != false) {
+        size += 1 + 1;
+      }
+      if (project_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Project);
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(GetProjectResponse other) {
+      if (other == null) {
+        return;
+      }
+      if (other.HasProject != false) {
+        HasProject = other.HasProject;
+      }
+      if (other.project_ != null) {
+        if (project_ == null) {
+          project_ = new global::Protogame.Editor.Grpc.Editor.Project();
+        }
+        Project.MergeFrom(other.Project);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 8: {
+            HasProject = input.ReadBool();
+            break;
+          }
+          case 18: {
+            if (project_ == null) {
+              project_ = new global::Protogame.Editor.Grpc.Editor.Project();
+            }
+            input.ReadMessage(project_);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class GetScannedContentPathsRequest : pb::IMessage<GetScannedContentPathsRequest> {
+    private static readonly pb::MessageParser<GetScannedContentPathsRequest> _parser = new pb::MessageParser<GetScannedContentPathsRequest>(() => new GetScannedContentPathsRequest());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<GetScannedContentPathsRequest> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.MessageTypes[6]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GetScannedContentPathsRequest() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GetScannedContentPathsRequest(GetScannedContentPathsRequest other) : this() {
+      definitionName_ = other.definitionName_;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GetScannedContentPathsRequest Clone() {
+      return new GetScannedContentPathsRequest(this);
+    }
+
+    /// <summary>Field number for the "definitionName" field.</summary>
+    public const int DefinitionNameFieldNumber = 1;
+    private string definitionName_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string DefinitionName {
+      get { return definitionName_; }
+      set {
+        definitionName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as GetScannedContentPathsRequest);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(GetScannedContentPathsRequest other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (DefinitionName != other.DefinitionName) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (DefinitionName.Length != 0) hash ^= DefinitionName.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (DefinitionName.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(DefinitionName);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (DefinitionName.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(DefinitionName);
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(GetScannedContentPathsRequest other) {
+      if (other == null) {
+        return;
+      }
+      if (other.DefinitionName.Length != 0) {
+        DefinitionName = other.DefinitionName;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10: {
+            DefinitionName = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class GetScannedContentPathsResponse : pb::IMessage<GetScannedContentPathsResponse> {
+    private static readonly pb::MessageParser<GetScannedContentPathsResponse> _parser = new pb::MessageParser<GetScannedContentPathsResponse>(() => new GetScannedContentPathsResponse());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<GetScannedContentPathsResponse> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.MessageTypes[7]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GetScannedContentPathsResponse() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GetScannedContentPathsResponse(GetScannedContentPathsResponse other) : this() {
+      filePath_ = other.filePath_.Clone();
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GetScannedContentPathsResponse Clone() {
+      return new GetScannedContentPathsResponse(this);
+    }
+
+    /// <summary>Field number for the "filePath" field.</summary>
+    public const int FilePathFieldNumber = 1;
+    private static readonly pb::FieldCodec<string> _repeated_filePath_codec
+        = pb::FieldCodec.ForString(10);
+    private readonly pbc::RepeatedField<string> filePath_ = new pbc::RepeatedField<string>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<string> FilePath {
+      get { return filePath_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as GetScannedContentPathsResponse);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(GetScannedContentPathsResponse other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if(!filePath_.Equals(other.filePath_)) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      hash ^= filePath_.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      filePath_.WriteTo(output, _repeated_filePath_codec);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      size += filePath_.CalculateSize(_repeated_filePath_codec);
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(GetScannedContentPathsResponse other) {
+      if (other == null) {
+        return;
+      }
+      filePath_.Add(other.filePath_);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10: {
+            filePath_.AddEntriesFrom(input, _repeated_filePath_codec);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class Project : pb::IMessage<Project> {
+    private static readonly pb::MessageParser<Project> _parser = new pb::MessageParser<Project>(() => new Project());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<Project> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.MessageTypes[8]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public Project() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public Project(Project other) : this() {
+      projectPath_ = other.projectPath_;
+      loadingStatus_ = other.loadingStatus_;
+      name_ = other.name_;
+      packages_ = other.packages_.Clone();
+      definitions_ = other.definitions_.Clone();
+      defaultGameDefinitionName_ = other.defaultGameDefinitionName_;
+      solutionFilePath_ = other.solutionFilePath_;
+      defaultGameBinPath_ = other.defaultGameBinPath_;
+      hashCode_ = other.hashCode_;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public Project Clone() {
+      return new Project(this);
+    }
+
+    /// <summary>Field number for the "projectPath" field.</summary>
+    public const int ProjectPathFieldNumber = 1;
+    private string projectPath_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string ProjectPath {
+      get { return projectPath_; }
+      set {
+        projectPath_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "loadingStatus" field.</summary>
+    public const int LoadingStatusFieldNumber = 2;
+    private string loadingStatus_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string LoadingStatus {
+      get { return loadingStatus_; }
+      set {
+        loadingStatus_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "name" field.</summary>
+    public const int NameFieldNumber = 3;
+    private string name_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Name {
+      get { return name_; }
+      set {
+        name_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "packages" field.</summary>
+    public const int PackagesFieldNumber = 4;
+    private static readonly pb::FieldCodec<global::Protogame.Editor.Grpc.Editor.Package> _repeated_packages_codec
+        = pb::FieldCodec.ForMessage(34, global::Protogame.Editor.Grpc.Editor.Package.Parser);
+    private readonly pbc::RepeatedField<global::Protogame.Editor.Grpc.Editor.Package> packages_ = new pbc::RepeatedField<global::Protogame.Editor.Grpc.Editor.Package>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<global::Protogame.Editor.Grpc.Editor.Package> Packages {
+      get { return packages_; }
+    }
+
+    /// <summary>Field number for the "definitions" field.</summary>
+    public const int DefinitionsFieldNumber = 5;
+    private static readonly pb::FieldCodec<global::Protogame.Editor.Grpc.Editor.Definition> _repeated_definitions_codec
+        = pb::FieldCodec.ForMessage(42, global::Protogame.Editor.Grpc.Editor.Definition.Parser);
+    private readonly pbc::RepeatedField<global::Protogame.Editor.Grpc.Editor.Definition> definitions_ = new pbc::RepeatedField<global::Protogame.Editor.Grpc.Editor.Definition>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<global::Protogame.Editor.Grpc.Editor.Definition> Definitions {
+      get { return definitions_; }
+    }
+
+    /// <summary>Field number for the "defaultGameDefinitionName" field.</summary>
+    public const int DefaultGameDefinitionNameFieldNumber = 6;
+    private string defaultGameDefinitionName_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string DefaultGameDefinitionName {
+      get { return defaultGameDefinitionName_; }
+      set {
+        defaultGameDefinitionName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "solutionFilePath" field.</summary>
+    public const int SolutionFilePathFieldNumber = 7;
+    private string solutionFilePath_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string SolutionFilePath {
+      get { return solutionFilePath_; }
+      set {
+        solutionFilePath_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "defaultGameBinPath" field.</summary>
+    public const int DefaultGameBinPathFieldNumber = 8;
+    private string defaultGameBinPath_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string DefaultGameBinPath {
+      get { return defaultGameBinPath_; }
+      set {
+        defaultGameBinPath_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "hashCode" field.</summary>
+    public const int HashCodeFieldNumber = 9;
+    private int hashCode_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int HashCode {
+      get { return hashCode_; }
+      set {
+        hashCode_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as Project);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(Project other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (ProjectPath != other.ProjectPath) return false;
+      if (LoadingStatus != other.LoadingStatus) return false;
+      if (Name != other.Name) return false;
+      if(!packages_.Equals(other.packages_)) return false;
+      if(!definitions_.Equals(other.definitions_)) return false;
+      if (DefaultGameDefinitionName != other.DefaultGameDefinitionName) return false;
+      if (SolutionFilePath != other.SolutionFilePath) return false;
+      if (DefaultGameBinPath != other.DefaultGameBinPath) return false;
+      if (HashCode != other.HashCode) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (ProjectPath.Length != 0) hash ^= ProjectPath.GetHashCode();
+      if (LoadingStatus.Length != 0) hash ^= LoadingStatus.GetHashCode();
+      if (Name.Length != 0) hash ^= Name.GetHashCode();
+      hash ^= packages_.GetHashCode();
+      hash ^= definitions_.GetHashCode();
+      if (DefaultGameDefinitionName.Length != 0) hash ^= DefaultGameDefinitionName.GetHashCode();
+      if (SolutionFilePath.Length != 0) hash ^= SolutionFilePath.GetHashCode();
+      if (DefaultGameBinPath.Length != 0) hash ^= DefaultGameBinPath.GetHashCode();
+      if (HashCode != 0) hash ^= HashCode.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (ProjectPath.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(ProjectPath);
+      }
+      if (LoadingStatus.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(LoadingStatus);
+      }
+      if (Name.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(Name);
+      }
+      packages_.WriteTo(output, _repeated_packages_codec);
+      definitions_.WriteTo(output, _repeated_definitions_codec);
+      if (DefaultGameDefinitionName.Length != 0) {
+        output.WriteRawTag(50);
+        output.WriteString(DefaultGameDefinitionName);
+      }
+      if (SolutionFilePath.Length != 0) {
+        output.WriteRawTag(58);
+        output.WriteString(SolutionFilePath);
+      }
+      if (DefaultGameBinPath.Length != 0) {
+        output.WriteRawTag(66);
+        output.WriteString(DefaultGameBinPath);
+      }
+      if (HashCode != 0) {
+        output.WriteRawTag(72);
+        output.WriteInt32(HashCode);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (ProjectPath.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(ProjectPath);
+      }
+      if (LoadingStatus.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(LoadingStatus);
+      }
+      if (Name.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Name);
+      }
+      size += packages_.CalculateSize(_repeated_packages_codec);
+      size += definitions_.CalculateSize(_repeated_definitions_codec);
+      if (DefaultGameDefinitionName.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(DefaultGameDefinitionName);
+      }
+      if (SolutionFilePath.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(SolutionFilePath);
+      }
+      if (DefaultGameBinPath.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(DefaultGameBinPath);
+      }
+      if (HashCode != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(HashCode);
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(Project other) {
+      if (other == null) {
+        return;
+      }
+      if (other.ProjectPath.Length != 0) {
+        ProjectPath = other.ProjectPath;
+      }
+      if (other.LoadingStatus.Length != 0) {
+        LoadingStatus = other.LoadingStatus;
+      }
+      if (other.Name.Length != 0) {
+        Name = other.Name;
+      }
+      packages_.Add(other.packages_);
+      definitions_.Add(other.definitions_);
+      if (other.DefaultGameDefinitionName.Length != 0) {
+        DefaultGameDefinitionName = other.DefaultGameDefinitionName;
+      }
+      if (other.SolutionFilePath.Length != 0) {
+        SolutionFilePath = other.SolutionFilePath;
+      }
+      if (other.DefaultGameBinPath.Length != 0) {
+        DefaultGameBinPath = other.DefaultGameBinPath;
+      }
+      if (other.HashCode != 0) {
+        HashCode = other.HashCode;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10: {
+            ProjectPath = input.ReadString();
+            break;
+          }
+          case 18: {
+            LoadingStatus = input.ReadString();
+            break;
+          }
+          case 26: {
+            Name = input.ReadString();
+            break;
+          }
+          case 34: {
+            packages_.AddEntriesFrom(input, _repeated_packages_codec);
+            break;
+          }
+          case 42: {
+            definitions_.AddEntriesFrom(input, _repeated_definitions_codec);
+            break;
+          }
+          case 50: {
+            DefaultGameDefinitionName = input.ReadString();
+            break;
+          }
+          case 58: {
+            SolutionFilePath = input.ReadString();
+            break;
+          }
+          case 66: {
+            DefaultGameBinPath = input.ReadString();
+            break;
+          }
+          case 72: {
+            HashCode = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class Package : pb::IMessage<Package> {
+    private static readonly pb::MessageParser<Package> _parser = new pb::MessageParser<Package>(() => new Package());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<Package> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.MessageTypes[9]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public Package() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public Package(Package other) : this() {
+      repository_ = other.repository_;
+      package_ = other.package_;
+      version_ = other.version_;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public Package Clone() {
+      return new Package(this);
+    }
+
+    /// <summary>Field number for the "repository" field.</summary>
+    public const int RepositoryFieldNumber = 1;
+    private string repository_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Repository {
+      get { return repository_; }
+      set {
+        repository_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "package" field.</summary>
+    public const int Package_FieldNumber = 2;
+    private string package_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Package_ {
+      get { return package_; }
+      set {
+        package_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "version" field.</summary>
+    public const int VersionFieldNumber = 3;
+    private string version_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Version {
+      get { return version_; }
+      set {
+        version_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as Package);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(Package other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Repository != other.Repository) return false;
+      if (Package_ != other.Package_) return false;
+      if (Version != other.Version) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Repository.Length != 0) hash ^= Repository.GetHashCode();
+      if (Package_.Length != 0) hash ^= Package_.GetHashCode();
+      if (Version.Length != 0) hash ^= Version.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Repository.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(Repository);
+      }
+      if (Package_.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(Package_);
+      }
+      if (Version.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(Version);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (Repository.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Repository);
+      }
+      if (Package_.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Package_);
+      }
+      if (Version.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Version);
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(Package other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Repository.Length != 0) {
+        Repository = other.Repository;
+      }
+      if (other.Package_.Length != 0) {
+        Package_ = other.Package_;
+      }
+      if (other.Version.Length != 0) {
+        Version = other.Version;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10: {
+            Repository = input.ReadString();
+            break;
+          }
+          case 18: {
+            Package_ = input.ReadString();
+            break;
+          }
+          case 26: {
+            Version = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class Definition : pb::IMessage<Definition> {
+    private static readonly pb::MessageParser<Definition> _parser = new pb::MessageParser<Definition>(() => new Definition());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<Definition> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.MessageTypes[10]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public Definition() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public Definition(Definition other) : this() {
+      name_ = other.name_;
+      type_ = other.type_;
+      role_ = other.role_;
+      xmlDocumentPath_ = other.xmlDocumentPath_;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public Definition Clone() {
+      return new Definition(this);
+    }
+
+    /// <summary>Field number for the "name" field.</summary>
+    public const int NameFieldNumber = 1;
+    private string name_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Name {
+      get { return name_; }
+      set {
+        name_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "type" field.</summary>
+    public const int TypeFieldNumber = 2;
+    private string type_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Type {
+      get { return type_; }
+      set {
+        type_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "role" field.</summary>
+    public const int RoleFieldNumber = 3;
+    private string role_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Role {
+      get { return role_; }
+      set {
+        role_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "xmlDocumentPath" field.</summary>
+    public const int XmlDocumentPathFieldNumber = 4;
+    private string xmlDocumentPath_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string XmlDocumentPath {
+      get { return xmlDocumentPath_; }
+      set {
+        xmlDocumentPath_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as Definition);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(Definition other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Name != other.Name) return false;
+      if (Type != other.Type) return false;
+      if (Role != other.Role) return false;
+      if (XmlDocumentPath != other.XmlDocumentPath) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Name.Length != 0) hash ^= Name.GetHashCode();
+      if (Type.Length != 0) hash ^= Type.GetHashCode();
+      if (Role.Length != 0) hash ^= Role.GetHashCode();
+      if (XmlDocumentPath.Length != 0) hash ^= XmlDocumentPath.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Name.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(Name);
+      }
+      if (Type.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(Type);
+      }
+      if (Role.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(Role);
+      }
+      if (XmlDocumentPath.Length != 0) {
+        output.WriteRawTag(34);
+        output.WriteString(XmlDocumentPath);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (Name.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Name);
+      }
+      if (Type.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Type);
+      }
+      if (Role.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Role);
+      }
+      if (XmlDocumentPath.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(XmlDocumentPath);
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(Definition other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Name.Length != 0) {
+        Name = other.Name;
+      }
+      if (other.Type.Length != 0) {
+        Type = other.Type;
+      }
+      if (other.Role.Length != 0) {
+        Role = other.Role;
+      }
+      if (other.XmlDocumentPath.Length != 0) {
+        XmlDocumentPath = other.XmlDocumentPath;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10: {
+            Name = input.ReadString();
+            break;
+          }
+          case 18: {
+            Type = input.ReadString();
+            break;
+          }
+          case 26: {
+            Role = input.ReadString();
+            break;
+          }
+          case 34: {
+            XmlDocumentPath = input.ReadString();
+            break;
+          }
         }
       }
     }

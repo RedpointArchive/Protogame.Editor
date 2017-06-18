@@ -35,6 +35,13 @@ namespace Protogame
 
         public void Update(IGameContext gameContext, IUpdateContext updateContext)
         {
+            lock (_logLock)
+            {
+                while (_log.Count > 200)
+                {
+                    _log.RemoveAt(0);
+                }
+            }
         }
 
         public void Log(string message)

@@ -22,20 +22,22 @@ namespace Protogame.Editor.Grpc.ExtensionHost {
     static ExtensionHostReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChNFeHRlbnNpb25Ib3N0LnByb3RvIjcKDFN0YXJ0UmVxdWVzdBIUCgxhc3Nl",
-            "bWJseVBhdGgYASABKAkSEQoJZWRpdG9yVXJsGAIgASgJIiUKDVN0YXJ0UmVz",
-            "cG9uc2USFAoMZXh0ZW5zaW9uVXJsGAMgASgJIiwKFk1lbnVJdGVtQ2xpY2tl",
-            "ZFJlcXVlc3QSEgoKbWVudUl0ZW1JZBgBIAEoAyIZChdNZW51SXRlbUNsaWNr",
-            "ZWRSZXNwb25zZTI9ChNFeHRlbnNpb25Ib3N0U2VydmVyEiYKBVN0YXJ0Eg0u",
-            "U3RhcnRSZXF1ZXN0Gg4uU3RhcnRSZXNwb25zZTJUCgxNZW51Q2FsbGJhY2sS",
-            "RAoPTWVudUl0ZW1DbGlja2VkEhcuTWVudUl0ZW1DbGlja2VkUmVxdWVzdBoY",
-            "Lk1lbnVJdGVtQ2xpY2tlZFJlc3BvbnNlQiaqAiNQcm90b2dhbWUuRWRpdG9y",
-            "LkdycGMuRXh0ZW5zaW9uSG9zdGIGcHJvdG8z"));
+            "ChNFeHRlbnNpb25Ib3N0LnByb3RvIhUKE0dldE1lbnVJdGVtc1JlcXVlc3Qi",
+            "NAoUR2V0TWVudUl0ZW1zUmVzcG9uc2USHAoJbWVudUl0ZW1zGAEgAygLMgku",
+            "TWVudUl0ZW0iUgoITWVudUl0ZW0SCgoCaWQYASABKAMSDQoFb3JkZXIYAiAB",
+            "KAMSDAoEdGV4dBgDIAEoCRIPCgdlbmFibGVkGAQgASgIEgwKBHBhdGgYBSAB",
+            "KAkiLAoWTWVudUl0ZW1DbGlja2VkUmVxdWVzdBISCgptZW51SXRlbUlkGAEg",
+            "ASgDIhkKF01lbnVJdGVtQ2xpY2tlZFJlc3BvbnNlMpABCgtNZW51RW50cmll",
+            "cxI7CgxHZXRNZW51SXRlbXMSFC5HZXRNZW51SXRlbXNSZXF1ZXN0GhUuR2V0",
+            "TWVudUl0ZW1zUmVzcG9uc2USRAoPTWVudUl0ZW1DbGlja2VkEhcuTWVudUl0",
+            "ZW1DbGlja2VkUmVxdWVzdBoYLk1lbnVJdGVtQ2xpY2tlZFJlc3BvbnNlQiaq",
+            "AiNQcm90b2dhbWUuRWRpdG9yLkdycGMuRXh0ZW5zaW9uSG9zdGIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.ExtensionHost.StartRequest), global::Protogame.Editor.Grpc.ExtensionHost.StartRequest.Parser, new[]{ "AssemblyPath", "EditorUrl" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.ExtensionHost.StartResponse), global::Protogame.Editor.Grpc.ExtensionHost.StartResponse.Parser, new[]{ "ExtensionUrl" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.ExtensionHost.GetMenuItemsRequest), global::Protogame.Editor.Grpc.ExtensionHost.GetMenuItemsRequest.Parser, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.ExtensionHost.GetMenuItemsResponse), global::Protogame.Editor.Grpc.ExtensionHost.GetMenuItemsResponse.Parser, new[]{ "MenuItems" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.ExtensionHost.MenuItem), global::Protogame.Editor.Grpc.ExtensionHost.MenuItem.Parser, new[]{ "Id", "Order", "Text", "Enabled", "Path" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.ExtensionHost.MenuItemClickedRequest), global::Protogame.Editor.Grpc.ExtensionHost.MenuItemClickedRequest.Parser, new[]{ "MenuItemId" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.ExtensionHost.MenuItemClickedResponse), global::Protogame.Editor.Grpc.ExtensionHost.MenuItemClickedResponse.Parser, null, null, null, null)
           }));
@@ -44,10 +46,10 @@ namespace Protogame.Editor.Grpc.ExtensionHost {
 
   }
   #region Messages
-  public sealed partial class StartRequest : pb::IMessage<StartRequest> {
-    private static readonly pb::MessageParser<StartRequest> _parser = new pb::MessageParser<StartRequest>(() => new StartRequest());
+  public sealed partial class GetMenuItemsRequest : pb::IMessage<GetMenuItemsRequest> {
+    private static readonly pb::MessageParser<GetMenuItemsRequest> _parser = new pb::MessageParser<GetMenuItemsRequest>(() => new GetMenuItemsRequest());
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<StartRequest> Parser { get { return _parser; } }
+    public static pb::MessageParser<GetMenuItemsRequest> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
@@ -60,68 +62,40 @@ namespace Protogame.Editor.Grpc.ExtensionHost {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public StartRequest() {
+    public GetMenuItemsRequest() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public StartRequest(StartRequest other) : this() {
-      assemblyPath_ = other.assemblyPath_;
-      editorUrl_ = other.editorUrl_;
+    public GetMenuItemsRequest(GetMenuItemsRequest other) : this() {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public StartRequest Clone() {
-      return new StartRequest(this);
-    }
-
-    /// <summary>Field number for the "assemblyPath" field.</summary>
-    public const int AssemblyPathFieldNumber = 1;
-    private string assemblyPath_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string AssemblyPath {
-      get { return assemblyPath_; }
-      set {
-        assemblyPath_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "editorUrl" field.</summary>
-    public const int EditorUrlFieldNumber = 2;
-    private string editorUrl_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string EditorUrl {
-      get { return editorUrl_; }
-      set {
-        editorUrl_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
+    public GetMenuItemsRequest Clone() {
+      return new GetMenuItemsRequest(this);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
-      return Equals(other as StartRequest);
+      return Equals(other as GetMenuItemsRequest);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(StartRequest other) {
+    public bool Equals(GetMenuItemsRequest other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (AssemblyPath != other.AssemblyPath) return false;
-      if (EditorUrl != other.EditorUrl) return false;
       return true;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (AssemblyPath.Length != 0) hash ^= AssemblyPath.GetHashCode();
-      if (EditorUrl.Length != 0) hash ^= EditorUrl.GetHashCode();
       return hash;
     }
 
@@ -132,38 +106,18 @@ namespace Protogame.Editor.Grpc.ExtensionHost {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      if (AssemblyPath.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(AssemblyPath);
-      }
-      if (EditorUrl.Length != 0) {
-        output.WriteRawTag(18);
-        output.WriteString(EditorUrl);
-      }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (AssemblyPath.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(AssemblyPath);
-      }
-      if (EditorUrl.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(EditorUrl);
-      }
       return size;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(StartRequest other) {
+    public void MergeFrom(GetMenuItemsRequest other) {
       if (other == null) {
         return;
-      }
-      if (other.AssemblyPath.Length != 0) {
-        AssemblyPath = other.AssemblyPath;
-      }
-      if (other.EditorUrl.Length != 0) {
-        EditorUrl = other.EditorUrl;
       }
     }
 
@@ -175,24 +129,16 @@ namespace Protogame.Editor.Grpc.ExtensionHost {
           default:
             input.SkipLastField();
             break;
-          case 10: {
-            AssemblyPath = input.ReadString();
-            break;
-          }
-          case 18: {
-            EditorUrl = input.ReadString();
-            break;
-          }
         }
       }
     }
 
   }
 
-  public sealed partial class StartResponse : pb::IMessage<StartResponse> {
-    private static readonly pb::MessageParser<StartResponse> _parser = new pb::MessageParser<StartResponse>(() => new StartResponse());
+  public sealed partial class GetMenuItemsResponse : pb::IMessage<GetMenuItemsResponse> {
+    private static readonly pb::MessageParser<GetMenuItemsResponse> _parser = new pb::MessageParser<GetMenuItemsResponse>(() => new GetMenuItemsResponse());
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<StartResponse> Parser { get { return _parser; } }
+    public static pb::MessageParser<GetMenuItemsResponse> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
@@ -205,54 +151,53 @@ namespace Protogame.Editor.Grpc.ExtensionHost {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public StartResponse() {
+    public GetMenuItemsResponse() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public StartResponse(StartResponse other) : this() {
-      extensionUrl_ = other.extensionUrl_;
+    public GetMenuItemsResponse(GetMenuItemsResponse other) : this() {
+      menuItems_ = other.menuItems_.Clone();
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public StartResponse Clone() {
-      return new StartResponse(this);
+    public GetMenuItemsResponse Clone() {
+      return new GetMenuItemsResponse(this);
     }
 
-    /// <summary>Field number for the "extensionUrl" field.</summary>
-    public const int ExtensionUrlFieldNumber = 3;
-    private string extensionUrl_ = "";
+    /// <summary>Field number for the "menuItems" field.</summary>
+    public const int MenuItemsFieldNumber = 1;
+    private static readonly pb::FieldCodec<global::Protogame.Editor.Grpc.ExtensionHost.MenuItem> _repeated_menuItems_codec
+        = pb::FieldCodec.ForMessage(10, global::Protogame.Editor.Grpc.ExtensionHost.MenuItem.Parser);
+    private readonly pbc::RepeatedField<global::Protogame.Editor.Grpc.ExtensionHost.MenuItem> menuItems_ = new pbc::RepeatedField<global::Protogame.Editor.Grpc.ExtensionHost.MenuItem>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string ExtensionUrl {
-      get { return extensionUrl_; }
-      set {
-        extensionUrl_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
+    public pbc::RepeatedField<global::Protogame.Editor.Grpc.ExtensionHost.MenuItem> MenuItems {
+      get { return menuItems_; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
-      return Equals(other as StartResponse);
+      return Equals(other as GetMenuItemsResponse);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(StartResponse other) {
+    public bool Equals(GetMenuItemsResponse other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (ExtensionUrl != other.ExtensionUrl) return false;
+      if(!menuItems_.Equals(other.menuItems_)) return false;
       return true;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (ExtensionUrl.Length != 0) hash ^= ExtensionUrl.GetHashCode();
+      hash ^= menuItems_.GetHashCode();
       return hash;
     }
 
@@ -263,28 +208,234 @@ namespace Protogame.Editor.Grpc.ExtensionHost {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      if (ExtensionUrl.Length != 0) {
+      menuItems_.WriteTo(output, _repeated_menuItems_codec);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      size += menuItems_.CalculateSize(_repeated_menuItems_codec);
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(GetMenuItemsResponse other) {
+      if (other == null) {
+        return;
+      }
+      menuItems_.Add(other.menuItems_);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10: {
+            menuItems_.AddEntriesFrom(input, _repeated_menuItems_codec);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class MenuItem : pb::IMessage<MenuItem> {
+    private static readonly pb::MessageParser<MenuItem> _parser = new pb::MessageParser<MenuItem>(() => new MenuItem());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<MenuItem> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Protogame.Editor.Grpc.ExtensionHost.ExtensionHostReflection.Descriptor.MessageTypes[2]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MenuItem() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MenuItem(MenuItem other) : this() {
+      id_ = other.id_;
+      order_ = other.order_;
+      text_ = other.text_;
+      enabled_ = other.enabled_;
+      path_ = other.path_;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MenuItem Clone() {
+      return new MenuItem(this);
+    }
+
+    /// <summary>Field number for the "id" field.</summary>
+    public const int IdFieldNumber = 1;
+    private long id_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public long Id {
+      get { return id_; }
+      set {
+        id_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "order" field.</summary>
+    public const int OrderFieldNumber = 2;
+    private long order_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public long Order {
+      get { return order_; }
+      set {
+        order_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "text" field.</summary>
+    public const int TextFieldNumber = 3;
+    private string text_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Text {
+      get { return text_; }
+      set {
+        text_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "enabled" field.</summary>
+    public const int EnabledFieldNumber = 4;
+    private bool enabled_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Enabled {
+      get { return enabled_; }
+      set {
+        enabled_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "path" field.</summary>
+    public const int PathFieldNumber = 5;
+    private string path_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Path {
+      get { return path_; }
+      set {
+        path_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as MenuItem);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(MenuItem other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Id != other.Id) return false;
+      if (Order != other.Order) return false;
+      if (Text != other.Text) return false;
+      if (Enabled != other.Enabled) return false;
+      if (Path != other.Path) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Id != 0L) hash ^= Id.GetHashCode();
+      if (Order != 0L) hash ^= Order.GetHashCode();
+      if (Text.Length != 0) hash ^= Text.GetHashCode();
+      if (Enabled != false) hash ^= Enabled.GetHashCode();
+      if (Path.Length != 0) hash ^= Path.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Id != 0L) {
+        output.WriteRawTag(8);
+        output.WriteInt64(Id);
+      }
+      if (Order != 0L) {
+        output.WriteRawTag(16);
+        output.WriteInt64(Order);
+      }
+      if (Text.Length != 0) {
         output.WriteRawTag(26);
-        output.WriteString(ExtensionUrl);
+        output.WriteString(Text);
+      }
+      if (Enabled != false) {
+        output.WriteRawTag(32);
+        output.WriteBool(Enabled);
+      }
+      if (Path.Length != 0) {
+        output.WriteRawTag(42);
+        output.WriteString(Path);
       }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (ExtensionUrl.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(ExtensionUrl);
+      if (Id != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(Id);
+      }
+      if (Order != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(Order);
+      }
+      if (Text.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Text);
+      }
+      if (Enabled != false) {
+        size += 1 + 1;
+      }
+      if (Path.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Path);
       }
       return size;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(StartResponse other) {
+    public void MergeFrom(MenuItem other) {
       if (other == null) {
         return;
       }
-      if (other.ExtensionUrl.Length != 0) {
-        ExtensionUrl = other.ExtensionUrl;
+      if (other.Id != 0L) {
+        Id = other.Id;
+      }
+      if (other.Order != 0L) {
+        Order = other.Order;
+      }
+      if (other.Text.Length != 0) {
+        Text = other.Text;
+      }
+      if (other.Enabled != false) {
+        Enabled = other.Enabled;
+      }
+      if (other.Path.Length != 0) {
+        Path = other.Path;
       }
     }
 
@@ -296,8 +447,24 @@ namespace Protogame.Editor.Grpc.ExtensionHost {
           default:
             input.SkipLastField();
             break;
+          case 8: {
+            Id = input.ReadInt64();
+            break;
+          }
+          case 16: {
+            Order = input.ReadInt64();
+            break;
+          }
           case 26: {
-            ExtensionUrl = input.ReadString();
+            Text = input.ReadString();
+            break;
+          }
+          case 32: {
+            Enabled = input.ReadBool();
+            break;
+          }
+          case 42: {
+            Path = input.ReadString();
             break;
           }
         }
@@ -313,7 +480,7 @@ namespace Protogame.Editor.Grpc.ExtensionHost {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Protogame.Editor.Grpc.ExtensionHost.ExtensionHostReflection.Descriptor.MessageTypes[2]; }
+      get { return global::Protogame.Editor.Grpc.ExtensionHost.ExtensionHostReflection.Descriptor.MessageTypes[3]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -430,7 +597,7 @@ namespace Protogame.Editor.Grpc.ExtensionHost {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Protogame.Editor.Grpc.ExtensionHost.ExtensionHostReflection.Descriptor.MessageTypes[3]; }
+      get { return global::Protogame.Editor.Grpc.ExtensionHost.ExtensionHostReflection.Descriptor.MessageTypes[4]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

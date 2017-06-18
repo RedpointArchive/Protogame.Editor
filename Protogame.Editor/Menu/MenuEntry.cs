@@ -1,7 +1,7 @@
 ﻿using Protogame;
 using System;
 
-namespace Protogame.Editor.Api.Version1.Menu
+namespace Protogame.Editor.Menu
 {
     public class MenuEntry
     {
