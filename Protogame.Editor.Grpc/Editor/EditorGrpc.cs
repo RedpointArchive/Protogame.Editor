@@ -8,6 +8,91 @@ using System.Threading.Tasks;
 using grpc = global::Grpc.Core;
 
 namespace Protogame.Editor.Grpc.Editor {
+  public static partial class Presence
+  {
+    static readonly string __ServiceName = "Presence";
+
+    static readonly grpc::Marshaller<global::Protogame.Editor.Grpc.Editor.CheckPresenceRequest> __Marshaller_CheckPresenceRequest = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Protogame.Editor.Grpc.Editor.CheckPresenceRequest.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Protogame.Editor.Grpc.Editor.CheckPresenceResponse> __Marshaller_CheckPresenceResponse = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Protogame.Editor.Grpc.Editor.CheckPresenceResponse.Parser.ParseFrom);
+
+    static readonly grpc::Method<global::Protogame.Editor.Grpc.Editor.CheckPresenceRequest, global::Protogame.Editor.Grpc.Editor.CheckPresenceResponse> __Method_Check = new grpc::Method<global::Protogame.Editor.Grpc.Editor.CheckPresenceRequest, global::Protogame.Editor.Grpc.Editor.CheckPresenceResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "Check",
+        __Marshaller_CheckPresenceRequest,
+        __Marshaller_CheckPresenceResponse);
+
+    /// <summary>Service descriptor</summary>
+    public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
+    {
+      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.Services[0]; }
+    }
+
+    /// <summary>Base class for server-side implementations of Presence</summary>
+    public abstract partial class PresenceBase
+    {
+      public virtual global::System.Threading.Tasks.Task<global::Protogame.Editor.Grpc.Editor.CheckPresenceResponse> Check(global::Protogame.Editor.Grpc.Editor.CheckPresenceRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+    }
+
+    /// <summary>Client for Presence</summary>
+    public partial class PresenceClient : grpc::ClientBase<PresenceClient>
+    {
+      /// <summary>Creates a new client for Presence</summary>
+      /// <param name="channel">The channel to use to make remote calls.</param>
+      public PresenceClient(grpc::Channel channel) : base(channel)
+      {
+      }
+      /// <summary>Creates a new client for Presence that uses a custom <c>CallInvoker</c>.</summary>
+      /// <param name="callInvoker">The callInvoker to use to make remote calls.</param>
+      public PresenceClient(grpc::CallInvoker callInvoker) : base(callInvoker)
+      {
+      }
+      /// <summary>Protected parameterless constructor to allow creation of test doubles.</summary>
+      protected PresenceClient() : base()
+      {
+      }
+      /// <summary>Protected constructor to allow creation of configured clients.</summary>
+      /// <param name="configuration">The client configuration.</param>
+      protected PresenceClient(ClientBaseConfiguration configuration) : base(configuration)
+      {
+      }
+
+      public virtual global::Protogame.Editor.Grpc.Editor.CheckPresenceResponse Check(global::Protogame.Editor.Grpc.Editor.CheckPresenceRequest request, grpc::Metadata headers = null, DateTime? deadline = null, CancellationToken cancellationToken = default(CancellationToken))
+      {
+        return Check(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      public virtual global::Protogame.Editor.Grpc.Editor.CheckPresenceResponse Check(global::Protogame.Editor.Grpc.Editor.CheckPresenceRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_Check, null, options, request);
+      }
+      public virtual grpc::AsyncUnaryCall<global::Protogame.Editor.Grpc.Editor.CheckPresenceResponse> CheckAsync(global::Protogame.Editor.Grpc.Editor.CheckPresenceRequest request, grpc::Metadata headers = null, DateTime? deadline = null, CancellationToken cancellationToken = default(CancellationToken))
+      {
+        return CheckAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      public virtual grpc::AsyncUnaryCall<global::Protogame.Editor.Grpc.Editor.CheckPresenceResponse> CheckAsync(global::Protogame.Editor.Grpc.Editor.CheckPresenceRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_Check, null, options, request);
+      }
+      /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
+      protected override PresenceClient NewInstance(ClientBaseConfiguration configuration)
+      {
+        return new PresenceClient(configuration);
+      }
+    }
+
+    /// <summary>Creates service definition that can be registered with a server</summary>
+    /// <param name="serviceImpl">An object implementing the server-side handling logic.</param>
+    public static grpc::ServerServiceDefinition BindService(PresenceBase serviceImpl)
+    {
+      return grpc::ServerServiceDefinition.CreateBuilder()
+          .AddMethod(__Method_Check, serviceImpl.Check).Build();
+    }
+
+  }
   public static partial class Console
   {
     static readonly string __ServiceName = "Console";
@@ -46,7 +131,7 @@ namespace Protogame.Editor.Grpc.Editor {
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
     {
-      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.Services[0]; }
+      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.Services[1]; }
     }
 
     /// <summary>Base class for server-side implementations of Console</summary>
@@ -206,7 +291,7 @@ namespace Protogame.Editor.Grpc.Editor {
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
     {
-      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.Services[1]; }
+      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.Services[2]; }
     }
 
     /// <summary>Base class for server-side implementations of ProjectManager</summary>

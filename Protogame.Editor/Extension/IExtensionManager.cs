@@ -5,5 +5,7 @@
         Extension[] Extensions { get; }
 
         void Update();
+
+        void DebugExtension(Extension extension);
     }
 }

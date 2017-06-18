@@ -28,8 +28,9 @@ namespace Protogame.Editor.Server
             resp.HasProject = true;
             resp.Project = new Grpc.Editor.Project();
 
+            resp.Project.HashCode = _projectManager.Project.GetHashCode();
             resp.Project.ProjectPath = _projectManager.Project.ProjectPath.FullName;
-            resp.Project.LoadingStatus = _projectManager.Project.LoadingStatus;
+            resp.Project.LoadingStatus = _projectManager.Project.LoadingStatus ?? "";
             resp.Project.Name = _projectManager.Project.Name;
             resp.Project.DefaultGameDefinitionName = _projectManager.Project.DefaultGame.Name;
             resp.Project.SolutionFilePath = _projectManager.Project.SolutionFile.FullName;

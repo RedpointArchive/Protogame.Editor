@@ -2,6 +2,16 @@
 
 option csharp_namespace = "Protogame.Editor.Grpc.Editor";
 
+service Presence {
+  rpc Check(CheckPresenceRequest) returns (CheckPresenceResponse);
+}
+
+message CheckPresenceRequest {
+}
+
+message CheckPresenceResponse {
+}
+
 service Console {
   rpc LogDebug(LogRequest) returns (LogResponse);
   rpc LogInfo(LogRequest) returns (LogResponse);
@@ -46,6 +56,7 @@ message Project {
   string defaultGameDefinitionName = 6;
   string solutionFilePath = 7;
   string defaultGameBinPath = 8;
+  int32 hashCode = 9;
 }
 
 message Package {

@@ -35,6 +35,18 @@ namespace Protogame.Editor.Extension
 
         public Extension[] Extensions => _publicExtensions;
 
+        public void DebugExtension(Extension extension)
+        {
+            if (!_extensions.ContainsKey(extension.Path))
+            {
+                return;
+            }
+
+            var managedExtension = _extensions[extension.Path];
+            managedExtension.ShouldDebug = true;
+            managedExtension.ShouldRestart = true;
+        }
+
         public void Update()
         {
             if (!_hasLoadedBundledExtensions)
@@ -51,8 +63,7 @@ namespace Protogame.Editor.Extension
                         File = file,
                         Owner = "bundled",
                         ExtensionProcess = null,
-                        ExtensionHostChannel = null,
-                        ExtensionHostServerClient = null
+                        ExtensionChannel = null,
                     });
                     _recomputeExtensions = true;
                 }
@@ -64,28 +75,51 @@ namespace Protogame.Editor.Extension
             {
                 var ext = extension;
                 if (ext.Value.ExtensionProcess == null ||
-                    ext.Value.ExtensionProcess.HasExited)
-                    // TODO: Also check if extension file has changed...
+                    ext.Value.ExtensionProcess.HasExited ||
+                    // TODO: Use file watcher...
+                    ext.Value.File.LastWriteTimeUtc != new FileInfo(ext.Value.File.FullName).LastWriteTimeUtc ||
+                    ext.Value.ShouldDebug != ext.Value.IsDebugging ||
+                    ext.Value.ShouldRestart)
                 {
                     var extHostPath = Path.Combine(new FileInfo(Assembly.GetExecutingAssembly().Location).DirectoryName, "Protogame.Editor.ExtHost.exe");
                     var processStartInfo = new ProcessStartInfo
                     {
                         FileName = extHostPath,
-                        Arguments = "--track " + Process.GetCurrentProcess().Id,
+                        Arguments = 
+                            (ext.Value.ShouldDebug ? "--debug " : "") + 
+                            "--track " + Process.GetCurrentProcess().Id + 
+                            " --editor-url " + _grpcServer.GetServerUrl() + 
+                            " --assembly-path \"" + ext.Value.File.FullName + "\"",
                         WorkingDirectory = ext.Value.File.DirectoryName,
                         UseShellExecute = false,
                         RedirectStandardOutput = true,
                         RedirectStandardError = true,
                         CreateNoWindow = true
                     };
+                    // Update last write time.
+                    ext.Value.File = new FileInfo(ext.Value.File.FullName);
+                    ext.Value.IsDebugging = ext.Value.ShouldDebug;
+                    ext.Value.ShouldRestart = false;
+                    if (ext.Value.ExtensionProcess != null)
+                    {
+                        try
+                        {
+                            ext.Value.ExtensionProcess.EnableRaisingEvents = false;
+                            ext.Value.ExtensionProcess.Kill();
+                        }
+                        catch { }
+                        _consoleHandle.LogDebug("Extension host process was killed for reload: {0}", ext.Value.File.FullName);
+                        ext.Value.ExtensionProcess = null;
+                        ext.Value.ExtensionChannel = null;
+                    }
                     ext.Value.ExtensionProcess = Process.Start(processStartInfo);
                     ext.Value.ExtensionProcess.Exited += (sender, e) =>
                     {
                         _consoleHandle.LogWarning("Extension host process has unexpectedly quit: {0}", ext.Value.File.FullName);
                         _recomputeExtensions = true;
                         ext.Value.ExtensionProcess = null;
-                        ext.Value.ExtensionHostChannel = null;
-                        ext.Value.ExtensionHostServerClient = null;
+                        ext.Value.ExtensionChannel = null;
+                        ext.Value.ShouldDebug = false;
                     };
                     ext.Value.ExtensionProcess.OutputDataReceived += (sender, e) =>
                     {
@@ -93,7 +127,7 @@ namespace Protogame.Editor.Extension
                         {
                             return;
                         }
-                        if (ext.Value.ExtensionHostServerClient != null)
+                        if (ext.Value.ExtensionChannel != null)
                         {
                             _consoleHandle.LogDebug(e.Data);
                             return;
@@ -104,32 +138,9 @@ namespace Protogame.Editor.Extension
 
                         var url = e.Data?.Trim();
                         _consoleHandle.LogDebug("Creating gRPC channel on {0}...", url);
-                        ext.Value.ExtensionHostChannel = new Channel(url, ChannelCredentials.Insecure);
+                        ext.Value.ExtensionChannel = new Channel(url, ChannelCredentials.Insecure);
 
-                        _consoleHandle.LogDebug("Creating extension host client on gRPC channel...");
-                        ext.Value.ExtensionHostServerClient = new Grpc.ExtensionHost.ExtensionHostServer.ExtensionHostServerClient(ext.Value.ExtensionHostChannel);
-                        _consoleHandle.LogDebug("Created extension host client on gRPC channel");
-
-                        _consoleHandle.LogDebug("Requesting extension load of {0}...", ext.Value.File.FullName);
-                        try
-                        {
-                            var startResponse = ext.Value.ExtensionHostServerClient.Start(new Grpc.ExtensionHost.StartRequest
-                            {
-                                AssemblyPath = ext.Value.File.FullName,
-                                EditorUrl = editorGrpcServer
-                            });
-                            _consoleHandle.LogDebug("Extension loaded: {0}", ext.Value.File.FullName);
-
-                            _consoleHandle.LogDebug("Creating gRPC runtime channel on {0}...", startResponse.ExtensionUrl);
-                            ext.Value.ExtensionRuntimeChannel = new Channel(startResponse.ExtensionUrl, ChannelCredentials.Insecure);
-
-                            _recomputeExtensions = true;
-                        }
-                        catch (Exception ex)
-                        {
-                            _consoleHandle.LogError("Unable to load extension: {0}", ext.Value.File.FullName);
-                            _consoleHandle.LogError(ex);
-                        }
+                        _recomputeExtensions = true;
                     };
                     ext.Value.ExtensionProcess.ErrorDataReceived += (sender, e) =>
                     {
@@ -147,8 +158,8 @@ namespace Protogame.Editor.Extension
             if (_recomputeExtensions)
             {
                 _publicExtensions = _extensions.Values
-                    .Where(x => x.ExtensionRuntimeChannel != null)
-                    .Select(x => new Extension(x.ExtensionRuntimeChannel))
+                    .Where(x => x.ExtensionChannel != null)
+                    .Select(x => new Extension(x.File.Name, x.File.FullName, x.ExtensionChannel))
                     .ToArray();
                 _consoleHandle.LogInfo("Recomputed loaded extension list");
                 _recomputeExtensions = false;
@@ -163,11 +174,13 @@ namespace Protogame.Editor.Extension
 
             public Process ExtensionProcess { get; set; }
 
-            public Channel ExtensionHostChannel { get; set; }
+            public Channel ExtensionChannel { get; set; }
 
-            public Protogame.Editor.Grpc.ExtensionHost.ExtensionHostServer.ExtensionHostServerClient ExtensionHostServerClient { get; set; }
+            public bool ShouldDebug { get; set; }
 
-            public Channel ExtensionRuntimeChannel { get; internal set; }
+            public bool IsDebugging { get; set; }
+
+            public bool ShouldRestart { get; set; }
         }
     }
 }

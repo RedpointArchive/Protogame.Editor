@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Protogame.Editor.Api.Game.Version1;
 using Protogame.Editor.Api.Version1;
 using Protogame.Editor.Ext.Inspector.Game;
+using Protoinject;
 
 [assembly: Extension(typeof(InspectorGameHostExtension))]
 
@@ -19,7 +20,7 @@ namespace Protogame.Editor.Ext.Inspector.Game
         private Ray _castingRay;
 
         public InspectorGameHostExtension(
-            IPhysicsEngine physicsEngine,
+            [Optional] IPhysicsEngine physicsEngine,
             IDebugRenderer debugRenderer,
             InspectorRenderPass inspectorRenderPass,
             IConsoleHandle consoleHandle)
@@ -48,7 +49,7 @@ namespace Protogame.Editor.Ext.Inspector.Game
                 _inspectorRenderPass.CaptureMatricesFromCurrentRenderPass(renderContext);
             }
 
-            if (renderContext.IsCurrentRenderPass<InspectorRenderPass>())
+            if (renderContext.IsCurrentRenderPass<InspectorRenderPass>() && _physicsEngine != null)
             {
                 RigidBody rigidBody = null;
                 object owner = null;

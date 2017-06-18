@@ -8,91 +8,6 @@ using System.Threading.Tasks;
 using grpc = global::Grpc.Core;
 
 namespace Protogame.Editor.Grpc.ExtensionHost {
-  public static partial class ExtensionHostServer
-  {
-    static readonly string __ServiceName = "ExtensionHostServer";
-
-    static readonly grpc::Marshaller<global::Protogame.Editor.Grpc.ExtensionHost.StartRequest> __Marshaller_StartRequest = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Protogame.Editor.Grpc.ExtensionHost.StartRequest.Parser.ParseFrom);
-    static readonly grpc::Marshaller<global::Protogame.Editor.Grpc.ExtensionHost.StartResponse> __Marshaller_StartResponse = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Protogame.Editor.Grpc.ExtensionHost.StartResponse.Parser.ParseFrom);
-
-    static readonly grpc::Method<global::Protogame.Editor.Grpc.ExtensionHost.StartRequest, global::Protogame.Editor.Grpc.ExtensionHost.StartResponse> __Method_Start = new grpc::Method<global::Protogame.Editor.Grpc.ExtensionHost.StartRequest, global::Protogame.Editor.Grpc.ExtensionHost.StartResponse>(
-        grpc::MethodType.Unary,
-        __ServiceName,
-        "Start",
-        __Marshaller_StartRequest,
-        __Marshaller_StartResponse);
-
-    /// <summary>Service descriptor</summary>
-    public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
-    {
-      get { return global::Protogame.Editor.Grpc.ExtensionHost.ExtensionHostReflection.Descriptor.Services[0]; }
-    }
-
-    /// <summary>Base class for server-side implementations of ExtensionHostServer</summary>
-    public abstract partial class ExtensionHostServerBase
-    {
-      public virtual global::System.Threading.Tasks.Task<global::Protogame.Editor.Grpc.ExtensionHost.StartResponse> Start(global::Protogame.Editor.Grpc.ExtensionHost.StartRequest request, grpc::ServerCallContext context)
-      {
-        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
-      }
-
-    }
-
-    /// <summary>Client for ExtensionHostServer</summary>
-    public partial class ExtensionHostServerClient : grpc::ClientBase<ExtensionHostServerClient>
-    {
-      /// <summary>Creates a new client for ExtensionHostServer</summary>
-      /// <param name="channel">The channel to use to make remote calls.</param>
-      public ExtensionHostServerClient(grpc::Channel channel) : base(channel)
-      {
-      }
-      /// <summary>Creates a new client for ExtensionHostServer that uses a custom <c>CallInvoker</c>.</summary>
-      /// <param name="callInvoker">The callInvoker to use to make remote calls.</param>
-      public ExtensionHostServerClient(grpc::CallInvoker callInvoker) : base(callInvoker)
-      {
-      }
-      /// <summary>Protected parameterless constructor to allow creation of test doubles.</summary>
-      protected ExtensionHostServerClient() : base()
-      {
-      }
-      /// <summary>Protected constructor to allow creation of configured clients.</summary>
-      /// <param name="configuration">The client configuration.</param>
-      protected ExtensionHostServerClient(ClientBaseConfiguration configuration) : base(configuration)
-      {
-      }
-
-      public virtual global::Protogame.Editor.Grpc.ExtensionHost.StartResponse Start(global::Protogame.Editor.Grpc.ExtensionHost.StartRequest request, grpc::Metadata headers = null, DateTime? deadline = null, CancellationToken cancellationToken = default(CancellationToken))
-      {
-        return Start(request, new grpc::CallOptions(headers, deadline, cancellationToken));
-      }
-      public virtual global::Protogame.Editor.Grpc.ExtensionHost.StartResponse Start(global::Protogame.Editor.Grpc.ExtensionHost.StartRequest request, grpc::CallOptions options)
-      {
-        return CallInvoker.BlockingUnaryCall(__Method_Start, null, options, request);
-      }
-      public virtual grpc::AsyncUnaryCall<global::Protogame.Editor.Grpc.ExtensionHost.StartResponse> StartAsync(global::Protogame.Editor.Grpc.ExtensionHost.StartRequest request, grpc::Metadata headers = null, DateTime? deadline = null, CancellationToken cancellationToken = default(CancellationToken))
-      {
-        return StartAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
-      }
-      public virtual grpc::AsyncUnaryCall<global::Protogame.Editor.Grpc.ExtensionHost.StartResponse> StartAsync(global::Protogame.Editor.Grpc.ExtensionHost.StartRequest request, grpc::CallOptions options)
-      {
-        return CallInvoker.AsyncUnaryCall(__Method_Start, null, options, request);
-      }
-      /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
-      protected override ExtensionHostServerClient NewInstance(ClientBaseConfiguration configuration)
-      {
-        return new ExtensionHostServerClient(configuration);
-      }
-    }
-
-    /// <summary>Creates service definition that can be registered with a server</summary>
-    /// <param name="serviceImpl">An object implementing the server-side handling logic.</param>
-    public static grpc::ServerServiceDefinition BindService(ExtensionHostServerBase serviceImpl)
-    {
-      return grpc::ServerServiceDefinition.CreateBuilder()
-          .AddMethod(__Method_Start, serviceImpl.Start).Build();
-    }
-
-  }
   public static partial class MenuEntries
   {
     static readonly string __ServiceName = "MenuEntries";
@@ -119,7 +34,7 @@ namespace Protogame.Editor.Grpc.ExtensionHost {
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
     {
-      get { return global::Protogame.Editor.Grpc.ExtensionHost.ExtensionHostReflection.Descriptor.Services[1]; }
+      get { return global::Protogame.Editor.Grpc.ExtensionHost.ExtensionHostReflection.Descriptor.Services[0]; }
     }
 
     /// <summary>Base class for server-side implementations of MenuEntries</summary>

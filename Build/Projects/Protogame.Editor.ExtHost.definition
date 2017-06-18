@@ -21,12 +21,10 @@
   <Files>
     <Compile Include="ConsoleHandle.cs" />
     <Compile Include="EditorClientProvider.cs" />
-    <Compile Include="ExtensionHost.cs" />
-    <Compile Include="ExtensionHostServerImpl.cs" />
-    <Compile Include="GrpcServer.cs" />
+    <Compile Include="GrpcLogger.cs" />
     <Compile Include="IEditorClientProvider.cs" />
-    <Compile Include="IGrpcServer.cs" />
     <Compile Include="MenuEntriesImpl.cs" />
+    <Compile Include="PresenceChecker.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectManager.cs" />
     <Compile Include="ProjectManagerUpdateSignal.cs" />

@@ -2,20 +2,6 @@
 
 option csharp_namespace = "Protogame.Editor.Grpc.ExtensionHost";
 
-service ExtensionHostServer {
-  rpc Start(StartRequest) returns (StartResponse);
-}
-
-message StartRequest {
-  string assemblyPath = 1;
-  string editorUrl = 2;
-}
-
-message StartResponse {
-  string extensionUrl = 3;
-}
-
-
 service MenuEntries {
   rpc GetMenuItems(GetMenuItemsRequest) returns (GetMenuItemsResponse);
   rpc MenuItemClicked(MenuItemClickedRequest) returns (MenuItemClickedResponse);

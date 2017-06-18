@@ -22,25 +22,19 @@ namespace Protogame.Editor.Grpc.ExtensionHost {
     static ExtensionHostReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChNFeHRlbnNpb25Ib3N0LnByb3RvIjcKDFN0YXJ0UmVxdWVzdBIUCgxhc3Nl",
-            "bWJseVBhdGgYASABKAkSEQoJZWRpdG9yVXJsGAIgASgJIiUKDVN0YXJ0UmVz",
-            "cG9uc2USFAoMZXh0ZW5zaW9uVXJsGAMgASgJIhUKE0dldE1lbnVJdGVtc1Jl",
-            "cXVlc3QiNAoUR2V0TWVudUl0ZW1zUmVzcG9uc2USHAoJbWVudUl0ZW1zGAEg",
-            "AygLMgkuTWVudUl0ZW0iUgoITWVudUl0ZW0SCgoCaWQYASABKAMSDQoFb3Jk",
-            "ZXIYAiABKAMSDAoEdGV4dBgDIAEoCRIPCgdlbmFibGVkGAQgASgIEgwKBHBh",
-            "dGgYBSABKAkiLAoWTWVudUl0ZW1DbGlja2VkUmVxdWVzdBISCgptZW51SXRl",
-            "bUlkGAEgASgDIhkKF01lbnVJdGVtQ2xpY2tlZFJlc3BvbnNlMj0KE0V4dGVu",
-            "c2lvbkhvc3RTZXJ2ZXISJgoFU3RhcnQSDS5TdGFydFJlcXVlc3QaDi5TdGFy",
-            "dFJlc3BvbnNlMpABCgtNZW51RW50cmllcxI7CgxHZXRNZW51SXRlbXMSFC5H",
-            "ZXRNZW51SXRlbXNSZXF1ZXN0GhUuR2V0TWVudUl0ZW1zUmVzcG9uc2USRAoP",
-            "TWVudUl0ZW1DbGlja2VkEhcuTWVudUl0ZW1DbGlja2VkUmVxdWVzdBoYLk1l",
-            "bnVJdGVtQ2xpY2tlZFJlc3BvbnNlQiaqAiNQcm90b2dhbWUuRWRpdG9yLkdy",
-            "cGMuRXh0ZW5zaW9uSG9zdGIGcHJvdG8z"));
+            "ChNFeHRlbnNpb25Ib3N0LnByb3RvIhUKE0dldE1lbnVJdGVtc1JlcXVlc3Qi",
+            "NAoUR2V0TWVudUl0ZW1zUmVzcG9uc2USHAoJbWVudUl0ZW1zGAEgAygLMgku",
+            "TWVudUl0ZW0iUgoITWVudUl0ZW0SCgoCaWQYASABKAMSDQoFb3JkZXIYAiAB",
+            "KAMSDAoEdGV4dBgDIAEoCRIPCgdlbmFibGVkGAQgASgIEgwKBHBhdGgYBSAB",
+            "KAkiLAoWTWVudUl0ZW1DbGlja2VkUmVxdWVzdBISCgptZW51SXRlbUlkGAEg",
+            "ASgDIhkKF01lbnVJdGVtQ2xpY2tlZFJlc3BvbnNlMpABCgtNZW51RW50cmll",
+            "cxI7CgxHZXRNZW51SXRlbXMSFC5HZXRNZW51SXRlbXNSZXF1ZXN0GhUuR2V0",
+            "TWVudUl0ZW1zUmVzcG9uc2USRAoPTWVudUl0ZW1DbGlja2VkEhcuTWVudUl0",
+            "ZW1DbGlja2VkUmVxdWVzdBoYLk1lbnVJdGVtQ2xpY2tlZFJlc3BvbnNlQiaq",
+            "AiNQcm90b2dhbWUuRWRpdG9yLkdycGMuRXh0ZW5zaW9uSG9zdGIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.ExtensionHost.StartRequest), global::Protogame.Editor.Grpc.ExtensionHost.StartRequest.Parser, new[]{ "AssemblyPath", "EditorUrl" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.ExtensionHost.StartResponse), global::Protogame.Editor.Grpc.ExtensionHost.StartResponse.Parser, new[]{ "ExtensionUrl" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.ExtensionHost.GetMenuItemsRequest), global::Protogame.Editor.Grpc.ExtensionHost.GetMenuItemsRequest.Parser, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.ExtensionHost.GetMenuItemsResponse), global::Protogame.Editor.Grpc.ExtensionHost.GetMenuItemsResponse.Parser, new[]{ "MenuItems" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.ExtensionHost.MenuItem), global::Protogame.Editor.Grpc.ExtensionHost.MenuItem.Parser, new[]{ "Id", "Order", "Text", "Enabled", "Path" }, null, null, null),
@@ -52,268 +46,6 @@ namespace Protogame.Editor.Grpc.ExtensionHost {
 
   }
   #region Messages
-  public sealed partial class StartRequest : pb::IMessage<StartRequest> {
-    private static readonly pb::MessageParser<StartRequest> _parser = new pb::MessageParser<StartRequest>(() => new StartRequest());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<StartRequest> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Protogame.Editor.Grpc.ExtensionHost.ExtensionHostReflection.Descriptor.MessageTypes[0]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public StartRequest() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public StartRequest(StartRequest other) : this() {
-      assemblyPath_ = other.assemblyPath_;
-      editorUrl_ = other.editorUrl_;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public StartRequest Clone() {
-      return new StartRequest(this);
-    }
-
-    /// <summary>Field number for the "assemblyPath" field.</summary>
-    public const int AssemblyPathFieldNumber = 1;
-    private string assemblyPath_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string AssemblyPath {
-      get { return assemblyPath_; }
-      set {
-        assemblyPath_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "editorUrl" field.</summary>
-    public const int EditorUrlFieldNumber = 2;
-    private string editorUrl_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string EditorUrl {
-      get { return editorUrl_; }
-      set {
-        editorUrl_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as StartRequest);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(StartRequest other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (AssemblyPath != other.AssemblyPath) return false;
-      if (EditorUrl != other.EditorUrl) return false;
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (AssemblyPath.Length != 0) hash ^= AssemblyPath.GetHashCode();
-      if (EditorUrl.Length != 0) hash ^= EditorUrl.GetHashCode();
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (AssemblyPath.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(AssemblyPath);
-      }
-      if (EditorUrl.Length != 0) {
-        output.WriteRawTag(18);
-        output.WriteString(EditorUrl);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (AssemblyPath.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(AssemblyPath);
-      }
-      if (EditorUrl.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(EditorUrl);
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(StartRequest other) {
-      if (other == null) {
-        return;
-      }
-      if (other.AssemblyPath.Length != 0) {
-        AssemblyPath = other.AssemblyPath;
-      }
-      if (other.EditorUrl.Length != 0) {
-        EditorUrl = other.EditorUrl;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
-          case 10: {
-            AssemblyPath = input.ReadString();
-            break;
-          }
-          case 18: {
-            EditorUrl = input.ReadString();
-            break;
-          }
-        }
-      }
-    }
-
-  }
-
-  public sealed partial class StartResponse : pb::IMessage<StartResponse> {
-    private static readonly pb::MessageParser<StartResponse> _parser = new pb::MessageParser<StartResponse>(() => new StartResponse());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<StartResponse> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Protogame.Editor.Grpc.ExtensionHost.ExtensionHostReflection.Descriptor.MessageTypes[1]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public StartResponse() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public StartResponse(StartResponse other) : this() {
-      extensionUrl_ = other.extensionUrl_;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public StartResponse Clone() {
-      return new StartResponse(this);
-    }
-
-    /// <summary>Field number for the "extensionUrl" field.</summary>
-    public const int ExtensionUrlFieldNumber = 3;
-    private string extensionUrl_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string ExtensionUrl {
-      get { return extensionUrl_; }
-      set {
-        extensionUrl_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as StartResponse);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(StartResponse other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (ExtensionUrl != other.ExtensionUrl) return false;
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (ExtensionUrl.Length != 0) hash ^= ExtensionUrl.GetHashCode();
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (ExtensionUrl.Length != 0) {
-        output.WriteRawTag(26);
-        output.WriteString(ExtensionUrl);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (ExtensionUrl.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(ExtensionUrl);
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(StartResponse other) {
-      if (other == null) {
-        return;
-      }
-      if (other.ExtensionUrl.Length != 0) {
-        ExtensionUrl = other.ExtensionUrl;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
-          case 26: {
-            ExtensionUrl = input.ReadString();
-            break;
-          }
-        }
-      }
-    }
-
-  }
-
   public sealed partial class GetMenuItemsRequest : pb::IMessage<GetMenuItemsRequest> {
     private static readonly pb::MessageParser<GetMenuItemsRequest> _parser = new pb::MessageParser<GetMenuItemsRequest>(() => new GetMenuItemsRequest());
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -321,7 +53,7 @@ namespace Protogame.Editor.Grpc.ExtensionHost {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Protogame.Editor.Grpc.ExtensionHost.ExtensionHostReflection.Descriptor.MessageTypes[2]; }
+      get { return global::Protogame.Editor.Grpc.ExtensionHost.ExtensionHostReflection.Descriptor.MessageTypes[0]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -410,7 +142,7 @@ namespace Protogame.Editor.Grpc.ExtensionHost {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Protogame.Editor.Grpc.ExtensionHost.ExtensionHostReflection.Descriptor.MessageTypes[3]; }
+      get { return global::Protogame.Editor.Grpc.ExtensionHost.ExtensionHostReflection.Descriptor.MessageTypes[1]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -519,7 +251,7 @@ namespace Protogame.Editor.Grpc.ExtensionHost {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Protogame.Editor.Grpc.ExtensionHost.ExtensionHostReflection.Descriptor.MessageTypes[4]; }
+      get { return global::Protogame.Editor.Grpc.ExtensionHost.ExtensionHostReflection.Descriptor.MessageTypes[2]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -748,7 +480,7 @@ namespace Protogame.Editor.Grpc.ExtensionHost {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Protogame.Editor.Grpc.ExtensionHost.ExtensionHostReflection.Descriptor.MessageTypes[5]; }
+      get { return global::Protogame.Editor.Grpc.ExtensionHost.ExtensionHostReflection.Descriptor.MessageTypes[3]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -865,7 +597,7 @@ namespace Protogame.Editor.Grpc.ExtensionHost {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Protogame.Editor.Grpc.ExtensionHost.ExtensionHostReflection.Descriptor.MessageTypes[6]; }
+      get { return global::Protogame.Editor.Grpc.ExtensionHost.ExtensionHostReflection.Descriptor.MessageTypes[4]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

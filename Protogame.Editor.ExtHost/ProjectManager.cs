@@ -15,6 +15,7 @@ namespace Protogame.Editor.ExtHost
     {
         private readonly IEditorClientProvider _editorClientProvider;
         private IProject _cachedProject;
+        private int _cachedHashCode;
         private Task _projectUpdateTask;
 
         public ProjectManager(IEditorClientProvider editorClientProvider)
@@ -34,7 +35,15 @@ namespace Protogame.Editor.ExtHost
                     var project = await client.GetProjectAsync(new Grpc.Editor.GetProjectRequest(), deadline: DateTime.UtcNow.AddSeconds(1));
                     if (project.HasProject)
                     {
-                        var projectInstance = new ProjectImpl();
+                        ProjectImpl projectInstance;
+                        if (_cachedProject == null || project.Project.HashCode != _cachedHashCode)
+                        {
+                            projectInstance = new ProjectImpl();
+                        }
+                        else
+                        {
+                            projectInstance = (ProjectImpl)_cachedProject;
+                        }
                         projectInstance.ProjectPath = new DirectoryInfo(project.Project.ProjectPath);
                         projectInstance.Name = project.Project.Name;
                         projectInstance.LoadingStatus = project.Project.LoadingStatus;
@@ -64,6 +73,7 @@ namespace Protogame.Editor.ExtHost
                         projectInstance.SolutionFile = new FileInfo(project.Project.SolutionFilePath);
                         projectInstance.DefaultGameBinPath = new FileInfo(project.Project.DefaultGameBinPath);
                         _cachedProject = projectInstance;
+                        _cachedHashCode = project.Project.HashCode;
                     }
                     else
                     {

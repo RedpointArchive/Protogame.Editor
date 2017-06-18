@@ -37,6 +37,7 @@ namespace Protogame.Editor
         {
             pipeline.AddFixedRenderPass(kernel.Get<ICanvasRenderPass>());
 
+            /*
             var ProfilerRenderPass = kernel.Get<IProfilerRenderPass>();
             ProfilerRenderPass.Position = ProfilerPosition.TopRight;
             ProfilerRenderPass.Visualisers.Add(kernel.Get<IGraphicsMetricsProfilerVisualiser>());
@@ -44,6 +45,7 @@ namespace Protogame.Editor
             ProfilerRenderPass.Visualisers.Add(kernel.Get<IKernelMetricsProfilerVisualiser>());
             ProfilerRenderPass.Visualisers.Add(kernel.Get<IOperationCostProfilerVisualiser>());
             pipeline.AddFixedRenderPass(ProfilerRenderPass);
+            */
         }
 
         public override void Draw(GameTime gameTime)

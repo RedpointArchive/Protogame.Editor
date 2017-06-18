@@ -13,6 +13,7 @@ using Protogame.Editor.ProjectManagement;
 using Protogame.Editor.LoadedGame;
 using System;
 using Protogame.Editor.Extension;
+using System.Diagnostics;
 
 namespace Protogame.Editor
 {
@@ -37,6 +38,7 @@ namespace Protogame.Editor
         private readonly IRecentProjects _recentProjects;
         private readonly IThumbnailSampler _thumbnailSampler;
         private readonly IExtensionManager _extensionManager;
+        private readonly IWindowManagement _windowManagement;
 
         public ProtogameEditorWorld(
             INode worldNode,
@@ -50,7 +52,8 @@ namespace Protogame.Editor
             ILoadedGame loadedGame,
             IRecentProjects recentProjects,
             IThumbnailSampler thumbnailSampler,
-            IExtensionManager extensionManager)
+            IExtensionManager extensionManager,
+            IWindowManagement windowManagement)
         {
             _skinLayout = skinLayout;
             _skinDelegator = skinDelegator;
@@ -62,6 +65,7 @@ namespace Protogame.Editor
             _recentProjects = recentProjects;
             _thumbnailSampler = thumbnailSampler;
             _extensionManager = extensionManager;
+            _windowManagement = windowManagement;
 
             SetupCanvas();
 
@@ -131,6 +135,8 @@ namespace Protogame.Editor
             verticalContainer.AddChild(dockableLayoutContainer, "*");
 
             _canvas.SetChild(verticalContainer);
+
+            _windowManagement.SetMainDocumentContainer(_workspaceContainer);
         }
 
         private Button CreatePlayButton(string texture)

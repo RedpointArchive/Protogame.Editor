@@ -58,7 +58,8 @@ namespace Protogame.Editor.Menu
                         RepeatedField<Grpc.ExtensionHost.MenuItem> rawItems;
                         try
                         {
-                            rawItems = (await client.GetMenuItemsAsync(new Grpc.ExtensionHost.GetMenuItemsRequest(), new CallOptions(deadline: DateTime.UtcNow.AddMilliseconds(250))).ResponseAsync.ConfigureAwait(false)).MenuItems;
+                            var result = await client.GetMenuItemsAsync(new Grpc.ExtensionHost.GetMenuItemsRequest());
+                            rawItems = result.MenuItems;
                         }
                         catch (Exception ex)
                         {

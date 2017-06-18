@@ -8,12 +8,18 @@ namespace Protogame.Editor.Extension
     {
         private Dictionary<Type, object> _clients = new Dictionary<Type, object>();
 
-        public Extension(Channel channel)
+        public Extension(string name, string path, Channel channel)
         {
+            Name = name;
+            Path = path;
             Channel = channel;
         }
 
         public Channel Channel { get; }
+
+        public string Name { get; }
+
+        public string Path { get; }
 
         public T GetClient<T>()
         {

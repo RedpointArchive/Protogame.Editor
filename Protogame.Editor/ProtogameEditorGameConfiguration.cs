@@ -13,6 +13,7 @@ namespace Protogame.Editor
             kernel.Load<ProtogameEventsModule>();
             kernel.Load<ProtogameUserInterfaceModule>();
             kernel.Load<ProtogameProfilingModule>();
+            kernel.Load<ProtogameDebugModule>();
             kernel.Load<ProtogameEditorModule>();
         }
         

@@ -22,20 +22,23 @@ namespace Protogame.Editor.Grpc.Editor {
     static EditorReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "CgxFZGl0b3IucHJvdG8iHQoKTG9nUmVxdWVzdBIPCgdtZXNzYWdlGAEgASgJ",
-            "Ig0KC0xvZ1Jlc3BvbnNlIhMKEUdldFByb2plY3RSZXF1ZXN0IkMKEkdldFBy",
-            "b2plY3RSZXNwb25zZRISCgpoYXNQcm9qZWN0GAEgASgIEhkKB3Byb2plY3QY",
-            "AiABKAsyCC5Qcm9qZWN0IjcKHUdldFNjYW5uZWRDb250ZW50UGF0aHNSZXF1",
-            "ZXN0EhYKDmRlZmluaXRpb25OYW1lGAEgASgJIjIKHkdldFNjYW5uZWRDb250",
-            "ZW50UGF0aHNSZXNwb25zZRIQCghmaWxlUGF0aBgBIAMoCSLaAQoHUHJvamVj",
-            "dBITCgtwcm9qZWN0UGF0aBgBIAEoCRIVCg1sb2FkaW5nU3RhdHVzGAIgASgJ",
-            "EgwKBG5hbWUYAyABKAkSGgoIcGFja2FnZXMYBCADKAsyCC5QYWNrYWdlEiAK",
-            "C2RlZmluaXRpb25zGAUgAygLMgsuRGVmaW5pdGlvbhIhChlkZWZhdWx0R2Ft",
-            "ZURlZmluaXRpb25OYW1lGAYgASgJEhgKEHNvbHV0aW9uRmlsZVBhdGgYByAB",
-            "KAkSGgoSZGVmYXVsdEdhbWVCaW5QYXRoGAggASgJIj8KB1BhY2thZ2USEgoK",
-            "cmVwb3NpdG9yeRgBIAEoCRIPCgdwYWNrYWdlGAIgASgJEg8KB3ZlcnNpb24Y",
-            "AyABKAkiTwoKRGVmaW5pdGlvbhIMCgRuYW1lGAEgASgJEgwKBHR5cGUYAiAB",
-            "KAkSDAoEcm9sZRgDIAEoCRIXCg94bWxEb2N1bWVudFBhdGgYBCABKAkyowEK",
+            "CgxFZGl0b3IucHJvdG8iFgoUQ2hlY2tQcmVzZW5jZVJlcXVlc3QiFwoVQ2hl",
+            "Y2tQcmVzZW5jZVJlc3BvbnNlIh0KCkxvZ1JlcXVlc3QSDwoHbWVzc2FnZRgB",
+            "IAEoCSINCgtMb2dSZXNwb25zZSITChFHZXRQcm9qZWN0UmVxdWVzdCJDChJH",
+            "ZXRQcm9qZWN0UmVzcG9uc2USEgoKaGFzUHJvamVjdBgBIAEoCBIZCgdwcm9q",
+            "ZWN0GAIgASgLMgguUHJvamVjdCI3Ch1HZXRTY2FubmVkQ29udGVudFBhdGhz",
+            "UmVxdWVzdBIWCg5kZWZpbml0aW9uTmFtZRgBIAEoCSIyCh5HZXRTY2FubmVk",
+            "Q29udGVudFBhdGhzUmVzcG9uc2USEAoIZmlsZVBhdGgYASADKAki7AEKB1By",
+            "b2plY3QSEwoLcHJvamVjdFBhdGgYASABKAkSFQoNbG9hZGluZ1N0YXR1cxgC",
+            "IAEoCRIMCgRuYW1lGAMgASgJEhoKCHBhY2thZ2VzGAQgAygLMgguUGFja2Fn",
+            "ZRIgCgtkZWZpbml0aW9ucxgFIAMoCzILLkRlZmluaXRpb24SIQoZZGVmYXVs",
+            "dEdhbWVEZWZpbml0aW9uTmFtZRgGIAEoCRIYChBzb2x1dGlvbkZpbGVQYXRo",
+            "GAcgASgJEhoKEmRlZmF1bHRHYW1lQmluUGF0aBgIIAEoCRIQCghoYXNoQ29k",
+            "ZRgJIAEoBSI/CgdQYWNrYWdlEhIKCnJlcG9zaXRvcnkYASABKAkSDwoHcGFj",
+            "a2FnZRgCIAEoCRIPCgd2ZXJzaW9uGAMgASgJIk8KCkRlZmluaXRpb24SDAoE",
+            "bmFtZRgBIAEoCRIMCgR0eXBlGAIgASgJEgwKBHJvbGUYAyABKAkSFwoPeG1s",
+            "RG9jdW1lbnRQYXRoGAQgASgJMkIKCFByZXNlbmNlEjYKBUNoZWNrEhUuQ2hl",
+            "Y2tQcmVzZW5jZVJlcXVlc3QaFi5DaGVja1ByZXNlbmNlUmVzcG9uc2UyowEK",
             "B0NvbnNvbGUSJQoITG9nRGVidWcSCy5Mb2dSZXF1ZXN0GgwuTG9nUmVzcG9u",
             "c2USJAoHTG9nSW5mbxILLkxvZ1JlcXVlc3QaDC5Mb2dSZXNwb25zZRIkCgdM",
             "b2dXYXJuEgsuTG9nUmVxdWVzdBoMLkxvZ1Jlc3BvbnNlEiUKCExvZ0Vycm9y",
@@ -48,13 +51,15 @@ namespace Protogame.Editor.Grpc.Editor {
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.CheckPresenceRequest), global::Protogame.Editor.Grpc.Editor.CheckPresenceRequest.Parser, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.CheckPresenceResponse), global::Protogame.Editor.Grpc.Editor.CheckPresenceResponse.Parser, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.LogRequest), global::Protogame.Editor.Grpc.Editor.LogRequest.Parser, new[]{ "Message" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.LogResponse), global::Protogame.Editor.Grpc.Editor.LogResponse.Parser, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.GetProjectRequest), global::Protogame.Editor.Grpc.Editor.GetProjectRequest.Parser, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.GetProjectResponse), global::Protogame.Editor.Grpc.Editor.GetProjectResponse.Parser, new[]{ "HasProject", "Project" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.GetScannedContentPathsRequest), global::Protogame.Editor.Grpc.Editor.GetScannedContentPathsRequest.Parser, new[]{ "DefinitionName" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.GetScannedContentPathsResponse), global::Protogame.Editor.Grpc.Editor.GetScannedContentPathsResponse.Parser, new[]{ "FilePath" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.Project), global::Protogame.Editor.Grpc.Editor.Project.Parser, new[]{ "ProjectPath", "LoadingStatus", "Name", "Packages", "Definitions", "DefaultGameDefinitionName", "SolutionFilePath", "DefaultGameBinPath" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.Project), global::Protogame.Editor.Grpc.Editor.Project.Parser, new[]{ "ProjectPath", "LoadingStatus", "Name", "Packages", "Definitions", "DefaultGameDefinitionName", "SolutionFilePath", "DefaultGameBinPath", "HashCode" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.Package), global::Protogame.Editor.Grpc.Editor.Package.Parser, new[]{ "Repository", "Package_", "Version" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.Definition), global::Protogame.Editor.Grpc.Editor.Definition.Parser, new[]{ "Name", "Type", "Role", "XmlDocumentPath" }, null, null, null)
           }));
@@ -63,6 +68,184 @@ namespace Protogame.Editor.Grpc.Editor {
 
   }
   #region Messages
+  public sealed partial class CheckPresenceRequest : pb::IMessage<CheckPresenceRequest> {
+    private static readonly pb::MessageParser<CheckPresenceRequest> _parser = new pb::MessageParser<CheckPresenceRequest>(() => new CheckPresenceRequest());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<CheckPresenceRequest> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.MessageTypes[0]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public CheckPresenceRequest() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public CheckPresenceRequest(CheckPresenceRequest other) : this() {
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public CheckPresenceRequest Clone() {
+      return new CheckPresenceRequest(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as CheckPresenceRequest);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(CheckPresenceRequest other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(CheckPresenceRequest other) {
+      if (other == null) {
+        return;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class CheckPresenceResponse : pb::IMessage<CheckPresenceResponse> {
+    private static readonly pb::MessageParser<CheckPresenceResponse> _parser = new pb::MessageParser<CheckPresenceResponse>(() => new CheckPresenceResponse());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<CheckPresenceResponse> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.MessageTypes[1]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public CheckPresenceResponse() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public CheckPresenceResponse(CheckPresenceResponse other) : this() {
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public CheckPresenceResponse Clone() {
+      return new CheckPresenceResponse(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as CheckPresenceResponse);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(CheckPresenceResponse other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(CheckPresenceResponse other) {
+      if (other == null) {
+        return;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+        }
+      }
+    }
+
+  }
+
   public sealed partial class LogRequest : pb::IMessage<LogRequest> {
     private static readonly pb::MessageParser<LogRequest> _parser = new pb::MessageParser<LogRequest>(() => new LogRequest());
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -70,7 +253,7 @@ namespace Protogame.Editor.Grpc.Editor {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.MessageTypes[0]; }
+      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.MessageTypes[2]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -187,7 +370,7 @@ namespace Protogame.Editor.Grpc.Editor {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.MessageTypes[1]; }
+      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.MessageTypes[3]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -276,7 +459,7 @@ namespace Protogame.Editor.Grpc.Editor {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.MessageTypes[2]; }
+      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.MessageTypes[4]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -365,7 +548,7 @@ namespace Protogame.Editor.Grpc.Editor {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.MessageTypes[3]; }
+      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.MessageTypes[5]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -516,7 +699,7 @@ namespace Protogame.Editor.Grpc.Editor {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.MessageTypes[4]; }
+      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.MessageTypes[6]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -633,7 +816,7 @@ namespace Protogame.Editor.Grpc.Editor {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.MessageTypes[5]; }
+      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.MessageTypes[7]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -742,7 +925,7 @@ namespace Protogame.Editor.Grpc.Editor {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.MessageTypes[6]; }
+      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.MessageTypes[8]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -767,6 +950,7 @@ namespace Protogame.Editor.Grpc.Editor {
       defaultGameDefinitionName_ = other.defaultGameDefinitionName_;
       solutionFilePath_ = other.solutionFilePath_;
       defaultGameBinPath_ = other.defaultGameBinPath_;
+      hashCode_ = other.hashCode_;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -860,6 +1044,17 @@ namespace Protogame.Editor.Grpc.Editor {
       }
     }
 
+    /// <summary>Field number for the "hashCode" field.</summary>
+    public const int HashCodeFieldNumber = 9;
+    private int hashCode_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int HashCode {
+      get { return hashCode_; }
+      set {
+        hashCode_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as Project);
@@ -881,6 +1076,7 @@ namespace Protogame.Editor.Grpc.Editor {
       if (DefaultGameDefinitionName != other.DefaultGameDefinitionName) return false;
       if (SolutionFilePath != other.SolutionFilePath) return false;
       if (DefaultGameBinPath != other.DefaultGameBinPath) return false;
+      if (HashCode != other.HashCode) return false;
       return true;
     }
 
@@ -895,6 +1091,7 @@ namespace Protogame.Editor.Grpc.Editor {
       if (DefaultGameDefinitionName.Length != 0) hash ^= DefaultGameDefinitionName.GetHashCode();
       if (SolutionFilePath.Length != 0) hash ^= SolutionFilePath.GetHashCode();
       if (DefaultGameBinPath.Length != 0) hash ^= DefaultGameBinPath.GetHashCode();
+      if (HashCode != 0) hash ^= HashCode.GetHashCode();
       return hash;
     }
 
@@ -931,6 +1128,10 @@ namespace Protogame.Editor.Grpc.Editor {
         output.WriteRawTag(66);
         output.WriteString(DefaultGameBinPath);
       }
+      if (HashCode != 0) {
+        output.WriteRawTag(72);
+        output.WriteInt32(HashCode);
+      }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -955,6 +1156,9 @@ namespace Protogame.Editor.Grpc.Editor {
       }
       if (DefaultGameBinPath.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(DefaultGameBinPath);
+      }
+      if (HashCode != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(HashCode);
       }
       return size;
     }
@@ -983,6 +1187,9 @@ namespace Protogame.Editor.Grpc.Editor {
       }
       if (other.DefaultGameBinPath.Length != 0) {
         DefaultGameBinPath = other.DefaultGameBinPath;
+      }
+      if (other.HashCode != 0) {
+        HashCode = other.HashCode;
       }
     }
 
@@ -1026,6 +1233,10 @@ namespace Protogame.Editor.Grpc.Editor {
             DefaultGameBinPath = input.ReadString();
             break;
           }
+          case 72: {
+            HashCode = input.ReadInt32();
+            break;
+          }
         }
       }
     }
@@ -1039,7 +1250,7 @@ namespace Protogame.Editor.Grpc.Editor {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.MessageTypes[7]; }
+      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.MessageTypes[9]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1212,7 +1423,7 @@ namespace Protogame.Editor.Grpc.Editor {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.MessageTypes[8]; }
+      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.MessageTypes[10]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

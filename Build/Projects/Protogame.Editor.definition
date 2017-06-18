@@ -43,11 +43,14 @@
     <Compile Include="EditorHotKeyListener.cs" />
     <Compile Include="EditorUserDataPathProvider.cs" />
     <Compile Include="EditorWindow\ConsoleEditorWindow.cs" />
+    <Compile Include="EditorWindow\DefaultWindowManagement.cs" />
     <Compile Include="EditorWindow\EditorWindow.cs" />
+    <Compile Include="EditorWindow\ExtensionManagerEditorWindow.cs" />
     <Compile Include="EditorWindow\GameEditorWindow.cs" />
     <Compile Include="EditorWindow\HierarchyEditorWindow.cs" />
     <Compile Include="EditorWindow\IEditorWindowFactory.cs" />
     <Compile Include="EditorWindow\InspectorEditorWindow.cs" />
+    <Compile Include="EditorWindow\IWindowManagement.cs" />
     <Compile Include="EditorWindow\ProfilerEditorWindow.cs" />
     <Compile Include="EditorWindow\ProjectEditorWindow.cs" />
     <Compile Include="EditorWindow\StartEditorWindow.cs" />
@@ -71,7 +74,9 @@
     <Compile Include="LoadedGame\ILoadedGame.cs" />
     <Compile Include="LoadedGame\LoadedGameState.cs" />
     <Compile Include="Menu\ActionManagerMenuProvider.cs" />
+    <Compile Include="Menu\EnumerableExtensions.cs" />
     <Compile Include="Menu\ExtensionBasedMenuProvider.cs" />
+    <Compile Include="Menu\ExtensionManagerMenuProvider.cs" />
     <Compile Include="Menu\IMainMenuController.cs" />
     <Compile Include="Menu\IMenuProvider.cs" />
     <Compile Include="Menu\MenuEntry.cs" />
@@ -115,6 +120,7 @@
     <Compile Include="Server\ConsoleImpl.cs" />
     <Compile Include="Server\GrpcServer.cs" />
     <Compile Include="Server\IGrpcServer.cs" />
+    <Compile Include="Server\PresenceImpl.cs" />
     <Compile Include="Server\ProjectManagerImpl.cs" />
     <Content Include="Properties\AndroidManifest.xml">
       <Platforms>Android,Ouya</Platforms>

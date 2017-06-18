@@ -3,6 +3,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace Protogame.Editor.Menu
 {
@@ -10,6 +11,14 @@ namespace Protogame.Editor.Menu
     {
         private IGameContext _gameContext;
         private readonly IMenuProvider[] _menuProviders;
+        private static string[] _preferredCategoryOrder = new[]
+        {
+            "File",
+            "Edit",
+            "Project",
+            null,
+            "Help"
+        };
 
         public WindowsMainMenuController(IMenuProvider[] menuProviders)
         {
@@ -141,26 +150,57 @@ namespace Protogame.Editor.Menu
             var mii = new System.Windows.Forms.MenuItem();
             mii.Tag = new MenuItemTag { Text = components[0], Order = null };
             mii.Text = components[0];
-
-            if (components.Length == 1 && lastOrder.HasValue)
+            
+            var orderedMenuItems = menuStrip.MenuItems.OfType<System.Windows.Forms.MenuItem>().ToArray();
+            var targetIndex = Array.IndexOf(_preferredCategoryOrder, components[0]);
+            if (targetIndex == -1)
             {
-                var targetIndex = -1;
-                var orderedMenuItems = menuStrip.MenuItems.OfType<System.Windows.Forms.MenuItem>().OrderBy(x => ((MenuItemTag)x.Tag).Order ?? 100000).ToArray();
-                for (var i = 0; i < orderedMenuItems.Length; i++)
-                {
-                    var tag = (MenuItemTag)orderedMenuItems[i].Tag;
+                targetIndex = Array.IndexOf(_preferredCategoryOrder, null);
+            }
+            var previousIndex = targetIndex - 1;
+            var nextIndex = targetIndex + 1;
 
-                    if (tag.Order != null && tag.Order.Value < lastOrder.Value)
-                    {
-                        targetIndex = i;
-                    }
+            if (previousIndex != -1)
+            {
+                var previousText = _preferredCategoryOrder[previousIndex];
+                if (previousText != null)
+                {
+                    previousIndex = orderedMenuItems.IndexOf(x => x.Text == previousText);
                 }
-                
-                menuStrip.MenuItems.Add(targetIndex + 1, mii);
+                else
+                {
+                    previousIndex = -1;
+                }
+            }
+
+            if (nextIndex != -1 && nextIndex != _preferredCategoryOrder.Length)
+            {
+                var nextText = _preferredCategoryOrder[nextIndex];
+                if (nextText != null)
+                {
+                    nextIndex = orderedMenuItems.IndexOf(x => x.Text == nextText);
+                }
+                else
+                {
+                    nextIndex = -1;
+                }
             }
             else
             {
+                nextIndex = -1;
+            }
+
+            if (previousIndex == -1 && nextIndex == -1)
+            {
                 menuStrip.MenuItems.Add(mii);
+            }
+            else if (nextIndex != -1)
+            {
+                menuStrip.MenuItems.Add(nextIndex, mii);
+            }
+            else if (previousIndex != -1)
+            {
+                menuStrip.MenuItems.Add(previousIndex + 1, mii);
             }
 
             return BuildMenuItemPath(mii, components.Skip(1).ToArray(), lastOrder);
