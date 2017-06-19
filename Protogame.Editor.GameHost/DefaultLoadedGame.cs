@@ -1,19 +1,14 @@
-﻿using Protogame.Editor.GameHost;
-using Protogame.Editor.ProjectManagement;
-using System;
+﻿using System;
 using System.IO;
-using System.Reflection;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
-using System.Collections;
-using Protogame.Editor.Override;
 using System.Threading;
 using System.Diagnostics;
 using Microsoft.Xna.Framework.Input;
+using Protogame.Editor.Api.Version1.ProjectManagement;
 
-namespace Protogame.Editor.LoadedGame
+namespace Protogame.Editor.GameHost
 {
     public class DefaultLoadedGame : ILoadedGame
     {
@@ -23,7 +18,6 @@ namespace Protogame.Editor.LoadedGame
         private readonly IRenderTargetBackBufferUtilities _renderTargetBackBufferUtilities;
         private DateTime? _lastModified;
         private string _lastPath;
-        private AppDomain _appDomain;
         private RenderTarget2D[] _renderTargets;
         private IntPtr[] _renderTargetSharedHandles;
         private int _currentWriteTargetIndex;
@@ -188,8 +182,7 @@ namespace Protogame.Editor.LoadedGame
 
                 // If we have already loaded the app domain, and the last modified date of
                 // the DLL is the same, then no need to reload.
-                if (_appDomain != null && 
-                    _lastModified == _projectManager.Project.DefaultGameBinPath.LastWriteTimeUtc && 
+                if (_lastModified == _projectManager.Project.DefaultGameBinPath.LastWriteTimeUtc && 
                     _lastPath == _projectManager.Project.DefaultGameBinPath.FullName &&
                     _gameThread != null &&
                      _gameThread.ThreadState != System.Threading.ThreadState.Stopped &&

@@ -9,6 +9,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MonoGame.Framework" />
     <Reference Include="Protogame.Editor.Grpc" />
+    <Reference Include="Protogame.Editor.CommonHost" />
     <Reference Include="Grpc" />
     <Reference Include="Grpc.Native" />
     <Reference Include="System.Interactive.Async" />
@@ -24,7 +25,7 @@
     <DebugSymbolsOnRelease>full</DebugSymbolsOnRelease>
   </Properties>
   <Files>
-    <Compile Include="BackBufferDimensionsProxy.cs" />
+    <Compile Include="DefaultLoadedGame.cs" />
     <Compile Include="EditorEventEngineHook.cs" />
     <Compile Include="EditorGameWindow.cs" />
     <Compile Include="EditorGraphicsDeviceService.cs" />
@@ -32,10 +33,13 @@
     <Compile Include="ExtensionEngineHook.cs" />
     <Compile Include="GameLoader.cs" />
     <Compile Include="GameLoaderContext.cs" />
+    <Compile Include="GrpcLogger.cs" />
     <Compile Include="Other\DomainGate.cs" />
     <Compile Include="Other\HostGameProxy.cs" />
     <Compile Include="Other\ObjectAddress.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="ProjectManager.cs" />
+    <Compile Include="ProjectManagerUpdateSignal.cs" />
     <Compile Include="RenderTargetBufferConfiguration.cs" />
   </Files>
 </Project>

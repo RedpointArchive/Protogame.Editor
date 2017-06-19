@@ -69,7 +69,6 @@
     <Compile Include="Layout\SingleTabbedContainer.cs" />
     <Compile Include="Layout\ToolbarButton.cs" />
     <Compile Include="Layout\ToolbarContainer.cs" />
-    <Compile Include="LoadedGame\DefaultLoadedGame.cs" />
     <Compile Include="LoadedGame\EditorCanvasRenderPass.cs" />
     <Compile Include="LoadedGame\ILoadedGame.cs" />
     <Compile Include="LoadedGame\LoadedGameState.cs" />

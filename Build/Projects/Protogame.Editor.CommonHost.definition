@@ -1,30 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Name="Protogame.Editor.ExtHost" Path="Protogame.Editor.ExtHost" Type="Console">
+<Project Name="Protogame.Editor.CommonHost" Path="Protogame.Editor.CommonHost" Type="Console">
   <References>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Runtime.Remoting" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Protogame.Editor.Api" />
+    <Reference Include="MonoGame.Framework" />
     <Reference Include="Protogame.Editor.Grpc" />
+    <Reference Include="Protogame.Editor.Api" />
     <Reference Include="Grpc" />
     <Reference Include="Grpc.Native" />
     <Reference Include="System.Interactive.Async" />
     <Reference Include="Google.Protobuf" />
-    <Reference Include="Protoinject" />
   </References>
   <Properties>
     <DebugSymbolsOnRelease>full</DebugSymbolsOnRelease>
   </Properties>
   <Files>
-    <Compile Include="ConsoleHandle.cs" />
-    <Compile Include="GrpcLogger.cs" />
-    <Compile Include="MenuEntriesImpl.cs" />
-    <Compile Include="PresenceChecker.cs" />
-    <Compile Include="Program.cs" />
-    <Compile Include="ProjectManager.cs" />
-    <Compile Include="ProjectManagerUpdateSignal.cs" />
+    <Compile Include="EditorClientProvider.cs" />
+    <Compile Include="IEditorClientProvider.cs" />
   </Files>
 </Project>

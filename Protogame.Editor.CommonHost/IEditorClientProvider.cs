@@ -1,4 +1,4 @@
-﻿namespace Protogame.Editor.ExtHost
+﻿namespace Protogame.Editor.CommonHost
 {
     public interface IEditorClientProvider
     {

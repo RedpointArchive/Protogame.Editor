@@ -2,6 +2,7 @@
 using Protogame.Editor.Api.Version1;
 using Protogame.Editor.Api.Version1.Core;
 using Protogame.Editor.Api.Version1.ProjectManagement;
+using Protogame.Editor.CommonHost;
 using Protogame.Editor.Grpc.ExtensionHost;
 using Protoinject;
 using System;

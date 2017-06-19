@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace Protogame.Editor.GameHost
 {
-    public class GameLoader : MarshalByRefObject
+    public class GameLoader
     {
         private ICoreGame _game;
         private IntPtr _sharedResourceHandle;
@@ -22,10 +22,6 @@ namespace Protogame.Editor.GameHost
             IBackBufferDimensions backBufferDimensions,
             string gameAssembly)
         {
-            // Wrap the backbuffer dimensions service in a proxy, since GraphicsDevice can not
-            // cross the AppDomain boundary.
-            backBufferDimensions = new BackBufferDimensionsProxy(backBufferDimensions);
-
             // Load the target assembly.
             consoleHandle.LogDebug("Loading game assembly from " + gameAssembly + "...");
             var assembly = Assembly.LoadFrom(gameAssembly);

@@ -9,7 +9,7 @@ using static Protogame.Editor.Grpc.Editor.ProjectManager;
 using Protogame.Editor.Grpc.Editor;
 using System.Linq;
 
-namespace Protogame.Editor.ExtHost
+namespace Protogame.Editor.CommonHost
 {
     public class ProjectManager : IProjectManager
     {

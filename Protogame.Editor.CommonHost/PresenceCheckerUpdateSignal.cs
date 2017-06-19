@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using static Protogame.Editor.Grpc.Editor.Presence;
 using Protogame.Editor.Grpc.Editor;
 
-namespace Protogame.Editor.ExtHost
+namespace Protogame.Editor.CommonHost
 {
     public class PresenceCheckerUpdateSignal : IWantsUpdateSignal
     {

@@ -1,4 +1,4 @@
-﻿namespace Protogame.Editor.LoadedGame
+﻿namespace Protogame.Editor.GameHost
 {
     public enum LoadedGameState
     {
