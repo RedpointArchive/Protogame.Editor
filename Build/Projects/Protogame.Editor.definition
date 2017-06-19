@@ -69,9 +69,9 @@
     <Compile Include="Layout\SingleTabbedContainer.cs" />
     <Compile Include="Layout\ToolbarButton.cs" />
     <Compile Include="Layout\ToolbarContainer.cs" />
+    <Compile Include="LoadedGame\DefaultLoadedGame.cs" />
     <Compile Include="LoadedGame\EditorCanvasRenderPass.cs" />
     <Compile Include="LoadedGame\ILoadedGame.cs" />
-    <Compile Include="LoadedGame\LoadedGameState.cs" />
     <Compile Include="Menu\ActionManagerMenuProvider.cs" />
     <Compile Include="Menu\EnumerableExtensions.cs" />
     <Compile Include="Menu\ExtensionBasedMenuProvider.cs" />
@@ -117,6 +117,7 @@
     <Compile Include="ProtogameEditorModule.cs" />
     <Compile Include="ProtogameEditorWorld.cs" />
     <Compile Include="Server\ConsoleImpl.cs" />
+    <Compile Include="Server\GameHosterImpl.cs" />
     <Compile Include="Server\GrpcServer.cs" />
     <Compile Include="Server\IGrpcServer.cs" />
     <Compile Include="Server\PresenceImpl.cs" />

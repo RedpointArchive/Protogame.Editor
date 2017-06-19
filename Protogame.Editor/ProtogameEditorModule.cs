@@ -59,6 +59,8 @@ namespace Protogame.Editor
             kernel.Bind<IRecentProjects>().To<RecentProjects>().InSingletonScope();
             kernel.Bind<IThumbnailSampler>().To<ThumbnailSampler>().InSingletonScope();
 
+            kernel.Bind<ILoadedGame>().To<DefaultLoadedGame>().InSingletonScope();
+
             //kernel.Bind<IServiceRegistration>().To<ExtensionServiceRegistration>().InSingletonScope();
             kernel.Bind<IExtensionManager>().To<ExtensionManager>().InSingletonScope();
             kernel.Bind<IDynamicServiceProvider>().To<ExtensionDynamicServiceProvider>().InSingletonScope();

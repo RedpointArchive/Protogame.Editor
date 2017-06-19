@@ -113,7 +113,11 @@ namespace Protogame.Editor.GameHost
             kernel.Bind<Api.Version1.Core.IConsoleHandle>().To<ConsoleHandle>().InSingletonScope();
             kernel.Bind<IGameRunner>().To<HostedGameRunner>().InSingletonScope();
             kernel.Bind<HostedEventEngineHook>().To<HostedEventEngineHook>().InSingletonScope();
-            
+
+            System.Console.Error.WriteLine("Configuring editor client provider with URL: {0}", editorUrl);
+            var editorClientProvider = kernel.Get<IEditorClientProvider>();
+            editorClientProvider.CreateChannel(editorUrl);
+
             // Load the target assembly.
             System.Console.Error.WriteLine("Loading game assembly from " + assemblyFile + "...");
             var assembly = Assembly.LoadFrom(assemblyFile);
@@ -213,10 +217,6 @@ namespace Protogame.Editor.GameHost
             }
 
             var runner = kernel.Get<IGameRunner>(new NamedConstructorArgument("game", game));
-
-            System.Console.Error.WriteLine("Configuring editor client provider with URL: {0}", editorUrl);
-            var editorClientProvider = kernel.Get<IEditorClientProvider>();
-            editorClientProvider.CreateChannel(editorUrl);
 
             System.Console.Error.WriteLine("Configuring gRPC logging...");
             GrpcEnvironment.SetLogger(new GrpcLogger());

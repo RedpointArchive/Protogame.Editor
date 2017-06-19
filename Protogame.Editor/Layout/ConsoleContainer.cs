@@ -60,11 +60,11 @@ namespace Protogame.Editor.Layout
             var scrollableContainer = this.Parent as ScrollableContainer;
             if (scrollableContainer != null)
             {
-                if (_lastEntryCount != Console.EntryCount)
+                /*if (_lastEntryCount != Console.EntryCount)
                 {
                     scrollableContainer.ScrollY = 1f;
                     _lastEntryCount = Console.EntryCount;
-                }
+                }*/
             }
         }
     }

@@ -23,6 +23,7 @@ namespace Protogame.Editor.LoadedGame
         private bool _shouldRestart;
         private Process _process;
         private Channel _channel;
+        private string _baseDirectory;
 
         private bool _mustDestroyRenderTargets;
         private int _currentWriteTargetIndex;
@@ -49,6 +50,11 @@ namespace Protogame.Editor.LoadedGame
             _projectManager = projectManager;
             _grpcServer = grpcServer;
             _renderTargetBackBufferUtilities = renderTargetBackBufferUtilities;
+            _renderTargetSize = new Point(640, 480);
+            _renderTargets = new RenderTarget2D[RTBufferSize];
+            _renderTargetSharedHandles = new IntPtr[RTBufferSize];
+            _currentWriteTargetIndex = RTBufferSize >= 2 ? 1 : 0;
+            _currentReadTargetIndex = 0;
         }
 
         public void SetPositionOffset(Point offset)
@@ -135,12 +141,23 @@ namespace Protogame.Editor.LoadedGame
 
         public void Update(IGameContext gameContext, IUpdateContext updateContext)
         {
+            if (_projectManager.Project == null ||
+                _projectManager.Project.DefaultGameBinPath == null)
+            {
+                return;
+            }
+
             if (!_projectManager.Project.DefaultGameBinPath.Exists)
             {
                 return;
             }
 
-            if (true)
+            if (_process == null ||
+                _process.HasExited ||
+                // TODO: Use file watcher...
+                (_executingFile != null && _executingFile.LastWriteTimeUtc != new FileInfo(_executingFile.FullName).LastWriteTimeUtc) ||
+                _shouldDebug != _isDebugging ||
+                _shouldRestart)
             {
                 var extHostPath = Path.Combine(new FileInfo(Assembly.GetExecutingAssembly().Location).DirectoryName, "Protogame.Editor.GameHost.exe");
                 var processStartInfo = new ProcessStartInfo
@@ -158,6 +175,7 @@ namespace Protogame.Editor.LoadedGame
                     CreateNoWindow = true
                 };
                 // Update last write time.
+                _baseDirectory = _projectManager.Project.DefaultGameBinPath.DirectoryName;
                 _executingFile = new FileInfo(_projectManager.Project.DefaultGameBinPath.FullName);
                 _isDebugging = _shouldDebug;
                 _shouldRestart = false;
@@ -211,6 +229,11 @@ namespace Protogame.Editor.LoadedGame
                 _process.BeginErrorReadLine();
                 _process.BeginOutputReadLine();
             }
+        }
+
+        public string GetBaseDirectory()
+        {
+            return _baseDirectory;
         }
     }
 }

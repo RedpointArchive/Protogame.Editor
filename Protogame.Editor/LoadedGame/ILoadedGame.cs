@@ -22,6 +22,8 @@ namespace Protogame.Editor.LoadedGame
 
         void QueueEvent(Event @event);
 
+        string GetBaseDirectory();
+
         /*
         LoadedGameState State { get; }
 

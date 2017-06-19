@@ -15,17 +15,20 @@ namespace Protogame.Editor.Server
         private readonly IConsoleHandle _consoleHandle;
         private readonly ProjectManagerImpl _projectManagerImpl;
         private readonly PresenceImpl _presenceImpl;
+        private readonly GameHosterImpl _gameHosterImpl;
 
         public GrpcServer(
             IConsoleHandle consoleHandle,
             ConsoleImpl consoleImpl,
             ProjectManagerImpl projectManagerImpl,
-            PresenceImpl presenceImpl)
+            PresenceImpl presenceImpl,
+            GameHosterImpl gameHosterImpl)
         {
             _consoleHandle = consoleHandle;
             _consoleImpl = consoleImpl;
             _projectManagerImpl = projectManagerImpl;
             _presenceImpl = presenceImpl;
+            _gameHosterImpl = gameHosterImpl;
         }
 
         public string GetServerUrl()
@@ -51,6 +54,7 @@ namespace Protogame.Editor.Server
                     Grpc.Editor.Console.BindService(_consoleImpl),
                     Grpc.Editor.ProjectManager.BindService(_projectManagerImpl),
                     Grpc.Editor.Presence.BindService(_presenceImpl),
+                    Grpc.Editor.GameHoster.BindService(_gameHosterImpl),
                 },
                 Ports = { new ServerPort("localhost", 0, ServerCredentials.Insecure) }
             };
