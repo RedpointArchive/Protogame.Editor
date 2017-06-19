@@ -26,20 +26,21 @@
   </Properties>
   <Files>
     <Compile Include="DefaultLoadedGame.cs" />
-    <Compile Include="EditorEventEngineHook.cs" />
     <Compile Include="EditorGameWindow.cs" />
     <Compile Include="EditorGraphicsDeviceService.cs" />
     <Compile Include="EditorHostGame.cs" />
     <Compile Include="ExtensionEngineHook.cs" />
-    <Compile Include="GameLoader.cs" />
-    <Compile Include="GameLoaderContext.cs" />
-    <Compile Include="GrpcLogger.cs" />
+    <Compile Include="GameHostServerImpl.cs" />
+    <Compile Include="HostedBackBufferDimensions.cs" />
+    <Compile Include="HostedBaseDirectory.cs" />
+    <Compile Include="HostedEventEngineHook.cs" />
+    <Compile Include="HostedGameRunner.cs" />
+    <Compile Include="IGameRunner.cs" />
+    <Compile Include="LoadedGameState.cs" />
     <Compile Include="Other\DomainGate.cs" />
     <Compile Include="Other\HostGameProxy.cs" />
     <Compile Include="Other\ObjectAddress.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="ProjectManager.cs" />
-    <Compile Include="ProjectManagerUpdateSignal.cs" />
     <Compile Include="RenderTargetBufferConfiguration.cs" />
   </Files>
 </Project>

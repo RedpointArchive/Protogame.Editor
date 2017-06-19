@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Name="Protogame.Editor.CommonHost" Path="Protogame.Editor.CommonHost" Type="Console">
+<Project Name="Protogame.Editor.CommonHost" Path="Protogame.Editor.CommonHost" Type="Library">
   <References>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
@@ -18,7 +18,12 @@
     <DebugSymbolsOnRelease>full</DebugSymbolsOnRelease>
   </Properties>
   <Files>
+    <Compile Include="ConsoleHandle.cs" />
     <Compile Include="EditorClientProvider.cs" />
+    <Compile Include="GrpcLogger.cs" />
     <Compile Include="IEditorClientProvider.cs" />
+    <Compile Include="PresenceCheckerUpdateSignal.cs" />
+    <Compile Include="ProjectManager.cs" />
+    <Compile Include="ProjectManagerUpdateSignal.cs" />
   </Files>
 </Project>

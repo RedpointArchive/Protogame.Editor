@@ -381,5 +381,121 @@ namespace Protogame.Editor.Grpc.Editor {
     }
 
   }
+  public static partial class GameHoster
+  {
+    static readonly string __ServiceName = "GameHoster";
+
+    static readonly grpc::Marshaller<global::Protogame.Editor.Grpc.Editor.GetBackBufferDimensionsRequest> __Marshaller_GetBackBufferDimensionsRequest = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Protogame.Editor.Grpc.Editor.GetBackBufferDimensionsRequest.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Protogame.Editor.Grpc.Editor.GetBackBufferDimensionsResponse> __Marshaller_GetBackBufferDimensionsResponse = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Protogame.Editor.Grpc.Editor.GetBackBufferDimensionsResponse.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Protogame.Editor.Grpc.Editor.GetBaseDirectoryRequest> __Marshaller_GetBaseDirectoryRequest = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Protogame.Editor.Grpc.Editor.GetBaseDirectoryRequest.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Protogame.Editor.Grpc.Editor.GetBaseDirectoryResponse> __Marshaller_GetBaseDirectoryResponse = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Protogame.Editor.Grpc.Editor.GetBaseDirectoryResponse.Parser.ParseFrom);
+
+    static readonly grpc::Method<global::Protogame.Editor.Grpc.Editor.GetBackBufferDimensionsRequest, global::Protogame.Editor.Grpc.Editor.GetBackBufferDimensionsResponse> __Method_GetBackBufferDimensions = new grpc::Method<global::Protogame.Editor.Grpc.Editor.GetBackBufferDimensionsRequest, global::Protogame.Editor.Grpc.Editor.GetBackBufferDimensionsResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "GetBackBufferDimensions",
+        __Marshaller_GetBackBufferDimensionsRequest,
+        __Marshaller_GetBackBufferDimensionsResponse);
+
+    static readonly grpc::Method<global::Protogame.Editor.Grpc.Editor.GetBaseDirectoryRequest, global::Protogame.Editor.Grpc.Editor.GetBaseDirectoryResponse> __Method_GetBaseDirectory = new grpc::Method<global::Protogame.Editor.Grpc.Editor.GetBaseDirectoryRequest, global::Protogame.Editor.Grpc.Editor.GetBaseDirectoryResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "GetBaseDirectory",
+        __Marshaller_GetBaseDirectoryRequest,
+        __Marshaller_GetBaseDirectoryResponse);
+
+    /// <summary>Service descriptor</summary>
+    public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
+    {
+      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.Services[3]; }
+    }
+
+    /// <summary>Base class for server-side implementations of GameHoster</summary>
+    public abstract partial class GameHosterBase
+    {
+      public virtual global::System.Threading.Tasks.Task<global::Protogame.Editor.Grpc.Editor.GetBackBufferDimensionsResponse> GetBackBufferDimensions(global::Protogame.Editor.Grpc.Editor.GetBackBufferDimensionsRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      public virtual global::System.Threading.Tasks.Task<global::Protogame.Editor.Grpc.Editor.GetBaseDirectoryResponse> GetBaseDirectory(global::Protogame.Editor.Grpc.Editor.GetBaseDirectoryRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+    }
+
+    /// <summary>Client for GameHoster</summary>
+    public partial class GameHosterClient : grpc::ClientBase<GameHosterClient>
+    {
+      /// <summary>Creates a new client for GameHoster</summary>
+      /// <param name="channel">The channel to use to make remote calls.</param>
+      public GameHosterClient(grpc::Channel channel) : base(channel)
+      {
+      }
+      /// <summary>Creates a new client for GameHoster that uses a custom <c>CallInvoker</c>.</summary>
+      /// <param name="callInvoker">The callInvoker to use to make remote calls.</param>
+      public GameHosterClient(grpc::CallInvoker callInvoker) : base(callInvoker)
+      {
+      }
+      /// <summary>Protected parameterless constructor to allow creation of test doubles.</summary>
+      protected GameHosterClient() : base()
+      {
+      }
+      /// <summary>Protected constructor to allow creation of configured clients.</summary>
+      /// <param name="configuration">The client configuration.</param>
+      protected GameHosterClient(ClientBaseConfiguration configuration) : base(configuration)
+      {
+      }
+
+      public virtual global::Protogame.Editor.Grpc.Editor.GetBackBufferDimensionsResponse GetBackBufferDimensions(global::Protogame.Editor.Grpc.Editor.GetBackBufferDimensionsRequest request, grpc::Metadata headers = null, DateTime? deadline = null, CancellationToken cancellationToken = default(CancellationToken))
+      {
+        return GetBackBufferDimensions(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      public virtual global::Protogame.Editor.Grpc.Editor.GetBackBufferDimensionsResponse GetBackBufferDimensions(global::Protogame.Editor.Grpc.Editor.GetBackBufferDimensionsRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_GetBackBufferDimensions, null, options, request);
+      }
+      public virtual grpc::AsyncUnaryCall<global::Protogame.Editor.Grpc.Editor.GetBackBufferDimensionsResponse> GetBackBufferDimensionsAsync(global::Protogame.Editor.Grpc.Editor.GetBackBufferDimensionsRequest request, grpc::Metadata headers = null, DateTime? deadline = null, CancellationToken cancellationToken = default(CancellationToken))
+      {
+        return GetBackBufferDimensionsAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      public virtual grpc::AsyncUnaryCall<global::Protogame.Editor.Grpc.Editor.GetBackBufferDimensionsResponse> GetBackBufferDimensionsAsync(global::Protogame.Editor.Grpc.Editor.GetBackBufferDimensionsRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_GetBackBufferDimensions, null, options, request);
+      }
+      public virtual global::Protogame.Editor.Grpc.Editor.GetBaseDirectoryResponse GetBaseDirectory(global::Protogame.Editor.Grpc.Editor.GetBaseDirectoryRequest request, grpc::Metadata headers = null, DateTime? deadline = null, CancellationToken cancellationToken = default(CancellationToken))
+      {
+        return GetBaseDirectory(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      public virtual global::Protogame.Editor.Grpc.Editor.GetBaseDirectoryResponse GetBaseDirectory(global::Protogame.Editor.Grpc.Editor.GetBaseDirectoryRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_GetBaseDirectory, null, options, request);
+      }
+      public virtual grpc::AsyncUnaryCall<global::Protogame.Editor.Grpc.Editor.GetBaseDirectoryResponse> GetBaseDirectoryAsync(global::Protogame.Editor.Grpc.Editor.GetBaseDirectoryRequest request, grpc::Metadata headers = null, DateTime? deadline = null, CancellationToken cancellationToken = default(CancellationToken))
+      {
+        return GetBaseDirectoryAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      public virtual grpc::AsyncUnaryCall<global::Protogame.Editor.Grpc.Editor.GetBaseDirectoryResponse> GetBaseDirectoryAsync(global::Protogame.Editor.Grpc.Editor.GetBaseDirectoryRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_GetBaseDirectory, null, options, request);
+      }
+      /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
+      protected override GameHosterClient NewInstance(ClientBaseConfiguration configuration)
+      {
+        return new GameHosterClient(configuration);
+      }
+    }
+
+    /// <summary>Creates service definition that can be registered with a server</summary>
+    /// <param name="serviceImpl">An object implementing the server-side handling logic.</param>
+    public static grpc::ServerServiceDefinition BindService(GameHosterBase serviceImpl)
+    {
+      return grpc::ServerServiceDefinition.CreateBuilder()
+          .AddMethod(__Method_GetBackBufferDimensions, serviceImpl.GetBackBufferDimensions)
+          .AddMethod(__Method_GetBaseDirectory, serviceImpl.GetBaseDirectory).Build();
+    }
+
+  }
 }
 #endregion

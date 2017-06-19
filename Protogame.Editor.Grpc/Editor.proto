@@ -71,3 +71,23 @@ message Definition {
   string role = 3;
   string xmlDocumentPath = 4;
 }
+
+service GameHoster {
+  rpc GetBackBufferDimensions(GetBackBufferDimensionsRequest) returns (GetBackBufferDimensionsResponse);
+  rpc GetBaseDirectory(GetBaseDirectoryRequest) returns (GetBaseDirectoryResponse);
+}
+
+message GetBackBufferDimensionsRequest {
+}
+
+message GetBackBufferDimensionsResponse {
+  int32 width = 1;
+  int32 height = 2;
+}
+
+message GetBaseDirectoryRequest {
+}
+
+message GetBaseDirectoryResponse {
+  string baseDirectory = 1;
+}

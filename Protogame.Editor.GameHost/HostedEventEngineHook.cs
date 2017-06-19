@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace Protogame.Editor.GameHost
 {
-    public class EditorEventEngineHook : IEngineHook
+    public class HostedEventEngineHook : IEngineHook
     {
         private readonly ConcurrentQueue<Event> _queuedEvents;
         private readonly IEventEngine<IGameContext> _eventEngine;
 
-        public EditorEventEngineHook(IEventEngine<IGameContext> eventEngine)
+        public HostedEventEngineHook(IEventEngine<IGameContext> eventEngine)
         {
             _queuedEvents = new ConcurrentQueue<Event>();
             _eventEngine = eventEngine;

@@ -147,9 +147,9 @@ namespace Protogame.Editor
             };
             button.Click += (sender, e) =>
             {
-                _loadedGame.Playing = true;
+                /*_loadedGame.Playing = true;
                 button.Toggled = true;
-                _workspaceContainer.ActivateWhere(x => x is GameEditorWindow);
+                _workspaceContainer.ActivateWhere(x => x is GameEditorWindow);*/
             };
             return button;
         }
@@ -162,7 +162,7 @@ namespace Protogame.Editor
             };
             button.Click += (sender, e) =>
             {
-                if (_loadedGame.State == LoadedGameState.Playing)
+                /*if (_loadedGame.State == LoadedGameState.Playing)
                 {
                     _loadedGame.Playing = false;
                     button.Toggled = true;
@@ -171,7 +171,7 @@ namespace Protogame.Editor
                 {
                     _loadedGame.Playing = true;
                     button.Toggled = false;
-                }
+                }*/
             };
             return button;
         }
@@ -184,12 +184,12 @@ namespace Protogame.Editor
             };
             button.Click += (sender, e) =>
             {
-                if (_loadedGame.State == LoadedGameState.Playing ||
+                /*if (_loadedGame.State == LoadedGameState.Playing ||
                     _loadedGame.State == LoadedGameState.Paused)
                 {
                     _loadedGame.Restart();
                     _workspaceContainer.ActivateWhere(x => x is WorldEditorWindow);
-                }
+                }*/
             };
             return button;
         }
@@ -233,12 +233,12 @@ namespace Protogame.Editor
         {
             _mainMenuController.Update(gameContext, updateContext);
 
-            _playButton.Toggled = _loadedGame.State == LoadedGameState.Playing || _loadedGame.State == LoadedGameState.Paused;
+            /*_playButton.Toggled = _loadedGame.State == LoadedGameState.Playing || _loadedGame.State == LoadedGameState.Paused;
             _pauseButton.Toggled = _loadedGame.State == LoadedGameState.Paused;
 
             _playButton.Enabled = _projectManager.Project != null && _loadedGame.State != LoadedGameState.Loading;
             _pauseButton.Enabled = _loadedGame.State == LoadedGameState.Playing || _loadedGame.State == LoadedGameState.Paused;
-            _stopButton.Enabled = _loadedGame.State == LoadedGameState.Playing || _loadedGame.State == LoadedGameState.Paused;
+            _stopButton.Enabled = _loadedGame.State == LoadedGameState.Playing || _loadedGame.State == LoadedGameState.Paused;*/
 
             foreach (var t in _toolButtons)
             {

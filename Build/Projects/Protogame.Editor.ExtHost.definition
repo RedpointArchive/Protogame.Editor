@@ -9,6 +9,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Protogame.Editor.Api" />
     <Reference Include="Protogame.Editor.Grpc" />
+    <Reference Include="Protogame.Editor.CommonHost" />
     <Reference Include="Grpc" />
     <Reference Include="Grpc.Native" />
     <Reference Include="System.Interactive.Async" />
@@ -19,12 +20,7 @@
     <DebugSymbolsOnRelease>full</DebugSymbolsOnRelease>
   </Properties>
   <Files>
-    <Compile Include="ConsoleHandle.cs" />
-    <Compile Include="GrpcLogger.cs" />
     <Compile Include="MenuEntriesImpl.cs" />
-    <Compile Include="PresenceChecker.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="ProjectManager.cs" />
-    <Compile Include="ProjectManagerUpdateSignal.cs" />
   </Files>
 </Project>

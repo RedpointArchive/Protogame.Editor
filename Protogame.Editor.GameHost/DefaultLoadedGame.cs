@@ -8,6 +8,8 @@ using System.Diagnostics;
 using Microsoft.Xna.Framework.Input;
 using Protogame.Editor.Api.Version1.ProjectManagement;
 
+#if FALSE
+
 namespace Protogame.Editor.GameHost
 {
     public class DefaultLoadedGame : ILoadedGame
@@ -25,7 +27,6 @@ namespace Protogame.Editor.GameHost
         private Point? _renderTargetSize;
         private GameLoader _gameLoader;
         private bool _hasRunGameUpdate;
-        private bool _hasAssignedGame;
         private bool _isReadyForMainThread;
         private bool _mustRestart;
         private bool _mustDestroyRenderTargets;
@@ -35,8 +36,6 @@ namespace Protogame.Editor.GameHost
         private bool _didReadStall;
         private bool _didWriteStall;
         private static object _incrementLock = new object();
-        private TimeSpan _playingFor = TimeSpan.Zero;
-        private DateTime? _playingStartTime = null;
 
         public DefaultLoadedGame(
             IProjectManager projectManager,
@@ -56,23 +55,6 @@ namespace Protogame.Editor.GameHost
             _renderTargetSharedHandles = new IntPtr[RenderTargetBufferConfiguration.RTBufferSize];
             _currentWriteTargetIndex = RenderTargetBufferConfiguration.RTBufferSize >= 2 ? 1 : 0;
             _currentReadTargetIndex = 0;
-
-            State = LoadedGameState.Loading;
-            Playing = false;
-        }
-
-        public LoadedGameState State
-        {
-            get;
-            private set;
-        }
-
-        public TimeSpan PlayingFor => _playingFor;
-
-        public bool Playing
-        {
-            get;
-            set;
         }
 
         public void Restart()
@@ -131,21 +113,6 @@ namespace Protogame.Editor.GameHost
 
         public void Update(IGameContext gameContext, IUpdateContext updateContext)
         {
-            if (Playing)
-            {
-                if (State == LoadedGameState.Paused ||
-                    State == LoadedGameState.Loaded)
-                {
-                    State = LoadedGameState.Playing;
-                }
-            }
-            else
-            {
-                if (State == LoadedGameState.Playing)
-                {
-                    State = LoadedGameState.Paused;
-                }
-            }
             
             foreach (var act in _mainThreadTasks)
             {
@@ -257,6 +224,7 @@ namespace Protogame.Editor.GameHost
             _mainThreadTasks.Add(act);
         }
 
+        /*
         private void GameThreadRun()
         {
             QueueAction(() => _consoleHandle.LogDebug("Starting load of game appdomain"));
@@ -305,227 +273,8 @@ namespace Protogame.Editor.GameHost
             State = LoadedGameState.Loaded;
 
             // Now run the main game loop.
-            try
-            {
-                _gameTimer = Stopwatch.StartNew();
-
-                while (true)
-                {
-                    try
-                    {
-                        Tick();
-                    }
-                    catch (ThreadAbortException ex)
-                    {
-                        QueueAction(() => _consoleHandle.LogDebug("Game has been requested to close..."));
-                        break;
-                    }
-                    catch (Exception ex)
-                    {
-                        _consoleHandle.LogError(ex);
-                        Playing = false;
-                    }
-                }
-            }
-            catch (ThreadAbortException ex)
-            {
-                QueueAction(() => _consoleHandle.LogDebug("Game has been requested to close..."));
-            }
-            finally
-            {
-
-            }
         }
-
-        private TimeSpan _accumulatedElapsedTime;
-        private readonly GameTime _gameTime = new GameTime();
-        private Stopwatch _gameTimer;
-        private long _previousTicks = 0;
-        private int _updateFrameLag;
-        private TimeSpan _maxElapsedTime = TimeSpan.FromMilliseconds(500);
-        private TimeSpan _targetElapsedTime = TimeSpan.FromTicks(166667);
-        private bool IsFixedTimeStep = true;
-        private bool _shouldExit = false;
-        private bool _suppressDraw = false;
-
-        public void Tick()
-        {
-            // NOTE: This code is very sensitive and can break very badly
-            // with even what looks like a safe change.  Be sure to test 
-            // any change fully in both the fixed and variable timestep 
-            // modes across multiple devices and platforms.
-
-            RetryTick:
-
-            // Advance the accumulated elapsed time.
-            var currentTicks = _gameTimer.Elapsed.Ticks;
-            _accumulatedElapsedTime += TimeSpan.FromTicks(currentTicks - _previousTicks);
-            _previousTicks = currentTicks;
-
-            // If we're in the fixed timestep mode and not enough time has elapsed
-            // to perform an update we sleep off the the remaining time to save battery
-            // life and/or release CPU time to other threads and processes.
-            if (IsFixedTimeStep && _accumulatedElapsedTime < _targetElapsedTime)
-            {
-                var sleepTime = (int)(_targetElapsedTime - _accumulatedElapsedTime).TotalMilliseconds;
-
-                // NOTE: While sleep can be inaccurate in general it is 
-                // accurate enough for frame limiting purposes if some
-                // fluctuation is an acceptable result.
-                if (false/* && graphicsDeviceManager.SynchronizeWithVerticalRetrace*/)
-                {
-                    // NOTE: While sleep can be inaccurate in general it is 
-                    // accurate enough for frame limiting purposes if some
-                    // fluctuation is an acceptable result.
-#if WINRT
-                    Task.Delay(sleepTime).Wait();
-#else
-                    System.Threading.Thread.Sleep(sleepTime);
-#endif
-                    goto RetryTick;
-                }
-                else
-                {
-                    // Draw until we have used up our time.
-                    DoDraw(_gameTime);
-
-                    goto RetryTick;
-                }
-            }
-
-            // Do not allow any update to take longer than our maximum.
-            if (_accumulatedElapsedTime > _maxElapsedTime)
-                _accumulatedElapsedTime = _maxElapsedTime;
-
-            if (IsFixedTimeStep)
-            {
-                _gameTime.ElapsedGameTime = _targetElapsedTime;
-                var stepCount = 0;
-
-                // Perform as many full fixed length time steps as we can.
-                while (_accumulatedElapsedTime >= _targetElapsedTime && !_shouldExit)
-                {
-                    _gameTime.TotalGameTime += _targetElapsedTime;
-                    _accumulatedElapsedTime -= _targetElapsedTime;
-                    ++stepCount;
-
-                    DoUpdate(_gameTime);
-                }
-
-                //Every update after the first accumulates lag
-                _updateFrameLag += Math.Max(0, stepCount - 1);
-
-                //If we think we are running slowly, wait until the lag clears before resetting it
-                if (_gameTime.IsRunningSlowly)
-                {
-                    if (_updateFrameLag == 0)
-                        _gameTime.IsRunningSlowly = false;
-                }
-                else if (_updateFrameLag >= 5)
-                {
-                    //If we lag more than 5 frames, start thinking we are running slowly
-                    _gameTime.IsRunningSlowly = true;
-                }
-
-                //Every time we just do one update and one draw, then we are not running slowly, so decrease the lag
-                if (stepCount == 1 && _updateFrameLag > 0)
-                    _updateFrameLag--;
-
-                // Draw needs to know the total elapsed time
-                // that occured for the fixed length updates.
-                _gameTime.ElapsedGameTime = TimeSpan.FromTicks(_targetElapsedTime.Ticks * stepCount);
-            }
-            else
-            {
-                // Perform a single variable length update.
-                _gameTime.ElapsedGameTime = _accumulatedElapsedTime;
-                _gameTime.TotalGameTime += _accumulatedElapsedTime;
-                _accumulatedElapsedTime = TimeSpan.Zero;
-
-                DoUpdate(_gameTime);
-            }
-
-            // Draw unless the update suppressed it.
-            if (_suppressDraw)
-                _suppressDraw = false;
-            else
-            {
-                DoDraw(_gameTime);
-            }
-
-            //if (_shouldExit)
-            //    Platform.Exit();
-        }
-
-        private void DoUpdate(GameTime gameTime)
-        {
-            if (!_isReadyForMainThread || _gameLoader == null)
-            {
-                return;
-            }
-            
-            if (!_hasAssignedGame)
-            {
-                QueueAction(() => _consoleHandle.LogDebug("Assigning host instance to game"));
-                _gameLoader.CreateHost();
-                QueueAction(() => _consoleHandle.LogDebug("Assigned host instance to game"));
-                _hasAssignedGame = true;
-            }
-
-            if (State == LoadedGameState.Playing)
-            {
-                _gameLoader.Update(gameTime.ElapsedGameTime, gameTime.TotalGameTime);
-            }
-            else
-            {
-                _gameLoader.UpdateForLoadContentOnly(gameTime.ElapsedGameTime, gameTime.TotalGameTime);
-                Thread.Sleep(0);
-            }
-
-            _hasRunGameUpdate = true;
-        }
-
-        private void DoDraw(GameTime gameTime)
-        {
-            if (_gameLoader == null || _renderTargetSize == null || !_hasRunGameUpdate)
-            {
-                return;
-            }
-
-            if (State != LoadedGameState.Playing)
-            {
-                return;
-            }
-            
-            _gameLoader.SetRenderTargetPointers(_renderTargetSharedHandles, _currentWriteTargetIndex);
-
-            _gameLoader.Render(gameTime.ElapsedGameTime, gameTime.TotalGameTime);
-
-            lock (_incrementLock)
-            {
-                var nextIndex = _currentWriteTargetIndex + 1;
-                if (nextIndex == RenderTargetBufferConfiguration.RTBufferSize) { nextIndex = 0; }
-
-                if (nextIndex != _currentReadTargetIndex)
-                {
-                    // Only move the write index if the one we want is not the one
-                    // we're currently reading from.
-                    _currentWriteTargetIndex = nextIndex;
-                    _didWriteStall = false;
-                }
-                else
-                {
-                    _didWriteStall = true;
-                }
-            }
-
-            if (_playingStartTime == null)
-            {
-                _playingStartTime = DateTime.Now;
-            }
-
-            _playingFor = DateTime.Now - _playingStartTime.Value;
-        }
+        */
         
         public void QueueEvent(Event @event)
         {
@@ -601,3 +350,5 @@ namespace Protogame.Editor.GameHost
         }
     }
 }
+
+#endif
