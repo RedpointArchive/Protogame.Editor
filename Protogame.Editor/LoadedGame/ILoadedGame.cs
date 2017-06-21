@@ -32,6 +32,8 @@ namespace Protogame.Editor.LoadedGame
 
         void RequestRestart();
 
+        DateTime? GetPlayingStartTime();
+
         /*
         LoadedGameState State { get; }
 

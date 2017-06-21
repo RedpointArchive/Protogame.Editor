@@ -37,6 +37,7 @@ namespace Protogame.Editor.LoadedGame
         private GameHostServerClient _gameHostClient;
         private string _baseDirectory;
         private LoadedGameState? _loadedGameState;
+        private DateTime? _playingStartTime;
 
         private Point _offset;
         private bool _requiresDelaySync;
@@ -286,11 +287,27 @@ namespace Protogame.Editor.LoadedGame
                     _loadedGameState = LoadedGameState.Paused;
                     break;
             }
+
+            if (changedRequest.StartTime == null)
+            {
+                _playingStartTime = null;
+            }
+            else
+            {
+                var dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+                dtDateTime = dtDateTime.AddSeconds(changedRequest.StartTime.UnixTimestamp);
+                _playingStartTime = dtDateTime;
+            }
         }
 
         public void RequestRestart()
         {
             _shouldRestart = true;
+        }
+
+        public DateTime? GetPlayingStartTime()
+        {
+            return _playingStartTime;
         }
     }
 }

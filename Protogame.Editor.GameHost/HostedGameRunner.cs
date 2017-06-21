@@ -334,7 +334,7 @@ namespace Protogame.Editor.GameHost
 
             if (_playingStartTime == null)
             {
-                _playingStartTime = DateTime.Now;
+                _playingStartTime = DateTime.UtcNow;
 
                 SyncPlaybackStateToEditor();
             }
@@ -392,7 +392,7 @@ namespace Protogame.Editor.GameHost
             {
                 timestamp = new Grpc.Editor.Timestamp
                 {
-                    UnixTimestamp = (UInt64)(_playingStartTime.Value.Subtract(new DateTime(1970, 1, 1))).TotalSeconds
+                    UnixTimestamp = (UInt64)(_playingStartTime.Value.Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc))).TotalSeconds
                 };
             }
 
