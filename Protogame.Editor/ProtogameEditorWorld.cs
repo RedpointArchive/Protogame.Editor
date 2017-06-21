@@ -14,6 +14,8 @@ using Protogame.Editor.LoadedGame;
 using System;
 using Protogame.Editor.Extension;
 using System.Diagnostics;
+using Protogame.Editor.Toolbar;
+using System.Linq;
 
 namespace Protogame.Editor
 {
@@ -24,17 +26,17 @@ namespace Protogame.Editor
         private ISkinLayout _skinLayout;
         private ISkinDelegator _skinDelegator;
         private IAssetManager _assetManager;
-        private List<Button> _toolButtons = new List<Button>();
+        //private List<Button> _toolButtons = new List<Button>();
         private readonly IMainMenuController _mainMenuController;
         private readonly IEditorWindowFactory _editorWindowFactory;
         private readonly IProjectManager _projectManager;
         private readonly ILoadedGame _loadedGame;
-        private Button _vsButton;
+        /*private Button _vsButton;
         private Button _debugButton;
         private Button _debugGpuButton;
         private Button _playButton;
         private Button _pauseButton;
-        private Button _stopButton;
+        private Button _stopButton;*/
         private DockableLayoutContainer _workspaceContainer;
         private WorldEditorWindow _worldEditorWindow;
         private GameEditorWindow _gameEditorWindow;
@@ -42,6 +44,9 @@ namespace Protogame.Editor
         private readonly IThumbnailSampler _thumbnailSampler;
         private readonly IExtensionManager _extensionManager;
         private readonly IWindowManagement _windowManagement;
+        private RelativeContainer _gameControlContainer;
+        private readonly IToolbarProvider[] _toolbarProviders;
+        private HorizontalContainer _horizontalContainer;
 
         public ProtogameEditorWorld(
             INode worldNode,
@@ -56,7 +61,8 @@ namespace Protogame.Editor
             IRecentProjects recentProjects,
             IThumbnailSampler thumbnailSampler,
             IExtensionManager extensionManager,
-            IWindowManagement windowManagement)
+            IWindowManagement windowManagement,
+            IToolbarProvider[] toolbarProviders)
         {
             _skinLayout = skinLayout;
             _skinDelegator = skinDelegator;
@@ -69,6 +75,7 @@ namespace Protogame.Editor
             _thumbnailSampler = thumbnailSampler;
             _extensionManager = extensionManager;
             _windowManagement = windowManagement;
+            _toolbarProviders = toolbarProviders;
 
             SetupCanvas();
 
@@ -111,33 +118,27 @@ namespace Protogame.Editor
             _workspaceContainer.AddInnerRegion(_worldEditorWindow = _editorWindowFactory.CreateWorldEditorWindow());
             _workspaceContainer.AddInnerRegion(_gameEditorWindow = _editorWindowFactory.CreateGameEditorWindow());
 
-            var panButton = CreateToolButton("texture.IconToolPan", "pan");
+            var toolContainer = new RelativeContainer();
+            /*var panButton = CreateToolButton("texture.IconToolPan", "pan");
             panButton.Toggled = true;
 
-            var toolContainer = new RelativeContainer();
             toolContainer.AddChild(panButton, new Rectangle(16, 8, 28, 28));
             toolContainer.AddChild(CreateToolButton("texture.IconToolMove", "move"), new Rectangle(16 + 30 * 1, 8, 28, 28));
             toolContainer.AddChild(CreateToolButton("texture.IconToolRotate", "rotate"), new Rectangle(16 + 30 * 2, 8, 28, 28));
             toolContainer.AddChild(CreateToolButton("texture.IconToolResize", "resize"), new Rectangle(16 + 30 * 3, 8, 28, 28));
-            toolContainer.AddChild(CreateToolButton("texture.IconToolSelect", "select"), new Rectangle(16 + 30 * 4, 8, 28, 28));
+            toolContainer.AddChild(CreateToolButton("texture.IconToolSelect", "select"), new Rectangle(16 + 30 * 4, 8, 28, 28));*/
 
-            var gameControlContainer = new RelativeContainer();
-            gameControlContainer.AddChild(_vsButton = CreateVisualStudioButton("texture.IconVisualStudio"), new Rectangle(30 * 0, 8, 28, 28));
-            gameControlContainer.AddChild(_debugButton = CreateDebugButton("texture.IconDebug"), new Rectangle(30 * 2, 8, 28, 28));
-            gameControlContainer.AddChild(_debugGpuButton = CreateDebugGpuButton("texture.IconDebugGpu"), new Rectangle(30 * 3, 8, 28, 28));
-            gameControlContainer.AddChild(_playButton = CreatePlayButton("texture.IconPlay"), new Rectangle(30 * 5, 8, 28, 28));
-            gameControlContainer.AddChild(_pauseButton = CreatePauseButton("texture.IconPause"), new Rectangle(30 * 6, 8, 28, 28));
-            gameControlContainer.AddChild(_stopButton = CreateStopButton("texture.IconStop"), new Rectangle(30 * 7, 8, 28, 28));
+            _gameControlContainer = new RelativeContainer();
 
             var unusedContainer = new RelativeContainer();
 
-            var horizontalContainer = new HorizontalContainer();
-            horizontalContainer.AddChild(toolContainer, "*");
-            horizontalContainer.AddChild(gameControlContainer, ((30 * 8) - 2).ToString());
-            horizontalContainer.AddChild(unusedContainer, "*");
+            _horizontalContainer = new HorizontalContainer();
+            _horizontalContainer.AddChild(toolContainer, "*");
+            _horizontalContainer.AddChild(_gameControlContainer, "0");
+            _horizontalContainer.AddChild(unusedContainer, "*");
 
             var verticalContainer = new VerticalContainer();
-            verticalContainer.AddChild(horizontalContainer, "40");
+            verticalContainer.AddChild(_horizontalContainer, "40");
             verticalContainer.AddChild(dockableLayoutContainer, "*");
 
             _canvas.SetChild(verticalContainer);
@@ -145,6 +146,7 @@ namespace Protogame.Editor
             _windowManagement.SetMainDocumentContainer(_workspaceContainer);
         }
 
+        /*
         private Button CreateVisualStudioButton(string texture)
         {
             var button = new Button
@@ -168,8 +170,6 @@ namespace Protogame.Editor
             };
             button.Click += (sender, e) =>
             {
-                _loadedGame.RunInDebug();
-                _workspaceContainer.ActivateWhere(x => x is GameEditorWindow);
             };
             return button;
         }
@@ -261,6 +261,7 @@ namespace Protogame.Editor
             _toolButtons.Add(button);
             return button;
         }
+        */
 
         public void Dispose()
         {
@@ -282,7 +283,9 @@ namespace Protogame.Editor
         {
             _mainMenuController.Update(gameContext, updateContext);
 
-            var state = _loadedGame.GetPlaybackState();
+            UpdateToolbar();
+
+           /* var state = _loadedGame.GetPlaybackState();
 
             _playButton.Toggled = state == LoadedGameState.Playing || state == LoadedGameState.Paused;
             _pauseButton.Toggled = state == LoadedGameState.Paused;
@@ -293,12 +296,12 @@ namespace Protogame.Editor
 
             _vsButton.Enabled = _projectManager.Project != null;
             _debugButton.Enabled = _projectManager.Project != null && state == LoadedGameState.Loaded;
-            _debugGpuButton.Enabled = _projectManager.Project != null && state == LoadedGameState.Loaded;
+            _debugGpuButton.Enabled = _projectManager.Project != null && state == LoadedGameState.Loaded;*/
 
-            foreach (var t in _toolButtons)
+            /*foreach (var t in _toolButtons)
             {
                 t.Enabled = _projectManager.Project != null;
-            }
+            }*/
 
             if (_projectManager.Project != null)
             {
@@ -308,6 +311,84 @@ namespace Protogame.Editor
             gameContext.Window.Title = "Protogame 7.0.0 (" + (_projectManager?.Project?.Name ?? "<No Project>") + "; Build c510ef6)";
 
             _extensionManager.Update();
+        }
+
+        private void UpdateToolbar()
+        {
+            var recreateButtons = false;
+            var existingButtons = _gameControlContainer.Children.OfType<Button>().ToList();
+            var toolbarItems = _toolbarProviders.SelectMany(x => x.GetToolbarItems());
+            foreach (var te in toolbarItems)
+            {
+                if (!existingButtons.Any(x => (long)x.Userdata == te.Id))
+                {
+                    // Button doesn't exist, need to recreate.
+                    recreateButtons = true;
+                    break;
+                }
+            }
+            foreach (var eb in existingButtons)
+            {
+                if (!toolbarItems.Any(x => x.Id == (long)eb.Userdata))
+                {
+                    // Button doesn't exist, need to recreate.
+                    recreateButtons = true;
+                    break;
+                }
+            }
+
+            if (!recreateButtons)
+            {
+                // Just sync properties.
+                foreach (var eb in existingButtons)
+                {
+                    var toolbarItem = toolbarItems.First(x => x.Id == (long)eb.Userdata);
+                    eb.Icon = _assetManager.Get<TextureAsset>(toolbarItem.Icon);
+                    eb.Enabled = toolbarItem.Enabled;
+                    eb.Toggled = toolbarItem.Toggled;
+                }
+            }
+            else
+            {
+                // TODO: Optimize this to only change controls that need to be changed.
+                foreach (var c in _gameControlContainer.Children.ToArray())
+                {
+                    _gameControlContainer.RemoveChild(c);
+                }
+
+                var size = 0;
+                foreach (var tp in _toolbarProviders)
+                {
+                    if (size > 0)
+                    {
+                        size += 30;
+                    }
+
+                    foreach (var te in tp.GetToolbarItems())
+                    {
+                        var button = new Button
+                        {
+                            Icon = _assetManager.Get<TextureAsset>(te.Icon),
+                            Enabled = te.Enabled,
+                            Toggled = te.Toggled,
+                            Userdata = te.Id
+                        };
+                        button.Click += (sender, e) =>
+                        {
+                            te.Handler?.Invoke(te);
+                        };
+                        _gameControlContainer.AddChild(button, new Rectangle(size, 8, 28, 28));
+                        size += 30;
+                    }
+                }
+
+                _horizontalContainer.SetChildSize(_gameControlContainer, (size - 2).ToString());
+            }
+        }
+
+        private class ToolbarButtonUserdata
+        {
+            IToolbarProvider _toolbarProvider;
         }
 
         public IEnumerable<KeyValuePair<Canvas, Rectangle>> Canvases { get; }

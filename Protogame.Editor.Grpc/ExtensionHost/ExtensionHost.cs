@@ -27,11 +27,21 @@ namespace Protogame.Editor.Grpc.ExtensionHost {
             "TWVudUl0ZW0iUgoITWVudUl0ZW0SCgoCaWQYASABKAMSDQoFb3JkZXIYAiAB",
             "KAMSDAoEdGV4dBgDIAEoCRIPCgdlbmFibGVkGAQgASgIEgwKBHBhdGgYBSAB",
             "KAkiLAoWTWVudUl0ZW1DbGlja2VkUmVxdWVzdBISCgptZW51SXRlbUlkGAEg",
-            "ASgDIhkKF01lbnVJdGVtQ2xpY2tlZFJlc3BvbnNlMpABCgtNZW51RW50cmll",
-            "cxI7CgxHZXRNZW51SXRlbXMSFC5HZXRNZW51SXRlbXNSZXF1ZXN0GhUuR2V0",
-            "TWVudUl0ZW1zUmVzcG9uc2USRAoPTWVudUl0ZW1DbGlja2VkEhcuTWVudUl0",
-            "ZW1DbGlja2VkUmVxdWVzdBoYLk1lbnVJdGVtQ2xpY2tlZFJlc3BvbnNlQiaq",
-            "AiNQcm90b2dhbWUuRWRpdG9yLkdycGMuRXh0ZW5zaW9uSG9zdGIGcHJvdG8z"));
+            "ASgDIhkKF01lbnVJdGVtQ2xpY2tlZFJlc3BvbnNlIhgKFkdldFRvb2xiYXJJ",
+            "dGVtc1JlcXVlc3QiRAoXR2V0VG9vbGJhckl0ZW1zUmVzcG9uc2USKQoMdG9v",
+            "bGJhckl0ZW1zGAEgAygLMhMuR2VuZXJpY1Rvb2xiYXJJdGVtIlAKEkdlbmVy",
+            "aWNUb29sYmFySXRlbRIKCgJpZBgBIAEoAxIMCgRpY29uGAIgASgJEg8KB3Rv",
+            "Z2dsZWQYAyABKAgSDwoHZW5hYmxlZBgEIAEoCCIuChlUb29sYmFySXRlbUNs",
+            "aWNrZWRSZXF1ZXN0EhEKCXRvb2xiYXJJZBgBIAEoAyIcChpUb29sYmFySXRl",
+            "bUNsaWNrZWRSZXNwb25zZTKQAQoLTWVudUVudHJpZXMSOwoMR2V0TWVudUl0",
+            "ZW1zEhQuR2V0TWVudUl0ZW1zUmVxdWVzdBoVLkdldE1lbnVJdGVtc1Jlc3Bv",
+            "bnNlEkQKD01lbnVJdGVtQ2xpY2tlZBIXLk1lbnVJdGVtQ2xpY2tlZFJlcXVl",
+            "c3QaGC5NZW51SXRlbUNsaWNrZWRSZXNwb25zZTKlAQoOVG9vbGJhckVudHJp",
+            "ZXMSRAoPR2V0VG9vbGJhckl0ZW1zEhcuR2V0VG9vbGJhckl0ZW1zUmVxdWVz",
+            "dBoYLkdldFRvb2xiYXJJdGVtc1Jlc3BvbnNlEk0KElRvb2xiYXJJdGVtQ2xp",
+            "Y2tlZBIaLlRvb2xiYXJJdGVtQ2xpY2tlZFJlcXVlc3QaGy5Ub29sYmFySXRl",
+            "bUNsaWNrZWRSZXNwb25zZUImqgIjUHJvdG9nYW1lLkVkaXRvci5HcnBjLkV4",
+            "dGVuc2lvbkhvc3RiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -39,7 +49,12 @@ namespace Protogame.Editor.Grpc.ExtensionHost {
             new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.ExtensionHost.GetMenuItemsResponse), global::Protogame.Editor.Grpc.ExtensionHost.GetMenuItemsResponse.Parser, new[]{ "MenuItems" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.ExtensionHost.MenuItem), global::Protogame.Editor.Grpc.ExtensionHost.MenuItem.Parser, new[]{ "Id", "Order", "Text", "Enabled", "Path" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.ExtensionHost.MenuItemClickedRequest), global::Protogame.Editor.Grpc.ExtensionHost.MenuItemClickedRequest.Parser, new[]{ "MenuItemId" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.ExtensionHost.MenuItemClickedResponse), global::Protogame.Editor.Grpc.ExtensionHost.MenuItemClickedResponse.Parser, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.ExtensionHost.MenuItemClickedResponse), global::Protogame.Editor.Grpc.ExtensionHost.MenuItemClickedResponse.Parser, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.ExtensionHost.GetToolbarItemsRequest), global::Protogame.Editor.Grpc.ExtensionHost.GetToolbarItemsRequest.Parser, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.ExtensionHost.GetToolbarItemsResponse), global::Protogame.Editor.Grpc.ExtensionHost.GetToolbarItemsResponse.Parser, new[]{ "ToolbarItems" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.ExtensionHost.GenericToolbarItem), global::Protogame.Editor.Grpc.ExtensionHost.GenericToolbarItem.Parser, new[]{ "Id", "Icon", "Toggled", "Enabled" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.ExtensionHost.ToolbarItemClickedRequest), global::Protogame.Editor.Grpc.ExtensionHost.ToolbarItemClickedRequest.Parser, new[]{ "ToolbarId" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.ExtensionHost.ToolbarItemClickedResponse), global::Protogame.Editor.Grpc.ExtensionHost.ToolbarItemClickedResponse.Parser, null, null, null, null)
           }));
     }
     #endregion
@@ -660,6 +675,611 @@ namespace Protogame.Editor.Grpc.ExtensionHost {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(MenuItemClickedResponse other) {
+      if (other == null) {
+        return;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class GetToolbarItemsRequest : pb::IMessage<GetToolbarItemsRequest> {
+    private static readonly pb::MessageParser<GetToolbarItemsRequest> _parser = new pb::MessageParser<GetToolbarItemsRequest>(() => new GetToolbarItemsRequest());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<GetToolbarItemsRequest> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Protogame.Editor.Grpc.ExtensionHost.ExtensionHostReflection.Descriptor.MessageTypes[5]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GetToolbarItemsRequest() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GetToolbarItemsRequest(GetToolbarItemsRequest other) : this() {
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GetToolbarItemsRequest Clone() {
+      return new GetToolbarItemsRequest(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as GetToolbarItemsRequest);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(GetToolbarItemsRequest other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(GetToolbarItemsRequest other) {
+      if (other == null) {
+        return;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class GetToolbarItemsResponse : pb::IMessage<GetToolbarItemsResponse> {
+    private static readonly pb::MessageParser<GetToolbarItemsResponse> _parser = new pb::MessageParser<GetToolbarItemsResponse>(() => new GetToolbarItemsResponse());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<GetToolbarItemsResponse> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Protogame.Editor.Grpc.ExtensionHost.ExtensionHostReflection.Descriptor.MessageTypes[6]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GetToolbarItemsResponse() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GetToolbarItemsResponse(GetToolbarItemsResponse other) : this() {
+      toolbarItems_ = other.toolbarItems_.Clone();
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GetToolbarItemsResponse Clone() {
+      return new GetToolbarItemsResponse(this);
+    }
+
+    /// <summary>Field number for the "toolbarItems" field.</summary>
+    public const int ToolbarItemsFieldNumber = 1;
+    private static readonly pb::FieldCodec<global::Protogame.Editor.Grpc.ExtensionHost.GenericToolbarItem> _repeated_toolbarItems_codec
+        = pb::FieldCodec.ForMessage(10, global::Protogame.Editor.Grpc.ExtensionHost.GenericToolbarItem.Parser);
+    private readonly pbc::RepeatedField<global::Protogame.Editor.Grpc.ExtensionHost.GenericToolbarItem> toolbarItems_ = new pbc::RepeatedField<global::Protogame.Editor.Grpc.ExtensionHost.GenericToolbarItem>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<global::Protogame.Editor.Grpc.ExtensionHost.GenericToolbarItem> ToolbarItems {
+      get { return toolbarItems_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as GetToolbarItemsResponse);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(GetToolbarItemsResponse other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if(!toolbarItems_.Equals(other.toolbarItems_)) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      hash ^= toolbarItems_.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      toolbarItems_.WriteTo(output, _repeated_toolbarItems_codec);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      size += toolbarItems_.CalculateSize(_repeated_toolbarItems_codec);
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(GetToolbarItemsResponse other) {
+      if (other == null) {
+        return;
+      }
+      toolbarItems_.Add(other.toolbarItems_);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10: {
+            toolbarItems_.AddEntriesFrom(input, _repeated_toolbarItems_codec);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class GenericToolbarItem : pb::IMessage<GenericToolbarItem> {
+    private static readonly pb::MessageParser<GenericToolbarItem> _parser = new pb::MessageParser<GenericToolbarItem>(() => new GenericToolbarItem());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<GenericToolbarItem> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Protogame.Editor.Grpc.ExtensionHost.ExtensionHostReflection.Descriptor.MessageTypes[7]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GenericToolbarItem() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GenericToolbarItem(GenericToolbarItem other) : this() {
+      id_ = other.id_;
+      icon_ = other.icon_;
+      toggled_ = other.toggled_;
+      enabled_ = other.enabled_;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GenericToolbarItem Clone() {
+      return new GenericToolbarItem(this);
+    }
+
+    /// <summary>Field number for the "id" field.</summary>
+    public const int IdFieldNumber = 1;
+    private long id_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public long Id {
+      get { return id_; }
+      set {
+        id_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "icon" field.</summary>
+    public const int IconFieldNumber = 2;
+    private string icon_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Icon {
+      get { return icon_; }
+      set {
+        icon_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "toggled" field.</summary>
+    public const int ToggledFieldNumber = 3;
+    private bool toggled_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Toggled {
+      get { return toggled_; }
+      set {
+        toggled_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "enabled" field.</summary>
+    public const int EnabledFieldNumber = 4;
+    private bool enabled_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Enabled {
+      get { return enabled_; }
+      set {
+        enabled_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as GenericToolbarItem);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(GenericToolbarItem other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Id != other.Id) return false;
+      if (Icon != other.Icon) return false;
+      if (Toggled != other.Toggled) return false;
+      if (Enabled != other.Enabled) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Id != 0L) hash ^= Id.GetHashCode();
+      if (Icon.Length != 0) hash ^= Icon.GetHashCode();
+      if (Toggled != false) hash ^= Toggled.GetHashCode();
+      if (Enabled != false) hash ^= Enabled.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Id != 0L) {
+        output.WriteRawTag(8);
+        output.WriteInt64(Id);
+      }
+      if (Icon.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(Icon);
+      }
+      if (Toggled != false) {
+        output.WriteRawTag(24);
+        output.WriteBool(Toggled);
+      }
+      if (Enabled != false) {
+        output.WriteRawTag(32);
+        output.WriteBool(Enabled);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (Id != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(Id);
+      }
+      if (Icon.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Icon);
+      }
+      if (Toggled != false) {
+        size += 1 + 1;
+      }
+      if (Enabled != false) {
+        size += 1 + 1;
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(GenericToolbarItem other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Id != 0L) {
+        Id = other.Id;
+      }
+      if (other.Icon.Length != 0) {
+        Icon = other.Icon;
+      }
+      if (other.Toggled != false) {
+        Toggled = other.Toggled;
+      }
+      if (other.Enabled != false) {
+        Enabled = other.Enabled;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 8: {
+            Id = input.ReadInt64();
+            break;
+          }
+          case 18: {
+            Icon = input.ReadString();
+            break;
+          }
+          case 24: {
+            Toggled = input.ReadBool();
+            break;
+          }
+          case 32: {
+            Enabled = input.ReadBool();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class ToolbarItemClickedRequest : pb::IMessage<ToolbarItemClickedRequest> {
+    private static readonly pb::MessageParser<ToolbarItemClickedRequest> _parser = new pb::MessageParser<ToolbarItemClickedRequest>(() => new ToolbarItemClickedRequest());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<ToolbarItemClickedRequest> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Protogame.Editor.Grpc.ExtensionHost.ExtensionHostReflection.Descriptor.MessageTypes[8]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ToolbarItemClickedRequest() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ToolbarItemClickedRequest(ToolbarItemClickedRequest other) : this() {
+      toolbarId_ = other.toolbarId_;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ToolbarItemClickedRequest Clone() {
+      return new ToolbarItemClickedRequest(this);
+    }
+
+    /// <summary>Field number for the "toolbarId" field.</summary>
+    public const int ToolbarIdFieldNumber = 1;
+    private long toolbarId_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public long ToolbarId {
+      get { return toolbarId_; }
+      set {
+        toolbarId_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as ToolbarItemClickedRequest);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(ToolbarItemClickedRequest other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (ToolbarId != other.ToolbarId) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (ToolbarId != 0L) hash ^= ToolbarId.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (ToolbarId != 0L) {
+        output.WriteRawTag(8);
+        output.WriteInt64(ToolbarId);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (ToolbarId != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(ToolbarId);
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(ToolbarItemClickedRequest other) {
+      if (other == null) {
+        return;
+      }
+      if (other.ToolbarId != 0L) {
+        ToolbarId = other.ToolbarId;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 8: {
+            ToolbarId = input.ReadInt64();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class ToolbarItemClickedResponse : pb::IMessage<ToolbarItemClickedResponse> {
+    private static readonly pb::MessageParser<ToolbarItemClickedResponse> _parser = new pb::MessageParser<ToolbarItemClickedResponse>(() => new ToolbarItemClickedResponse());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<ToolbarItemClickedResponse> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Protogame.Editor.Grpc.ExtensionHost.ExtensionHostReflection.Descriptor.MessageTypes[9]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ToolbarItemClickedResponse() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ToolbarItemClickedResponse(ToolbarItemClickedResponse other) : this() {
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ToolbarItemClickedResponse Clone() {
+      return new ToolbarItemClickedResponse(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as ToolbarItemClickedResponse);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(ToolbarItemClickedResponse other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(ToolbarItemClickedResponse other) {
       if (other == null) {
         return;
       }

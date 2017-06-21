@@ -42,6 +42,21 @@ namespace Protogame.Editor.ExtHost
 
         public override async Task<MenuItemClickedResponse> MenuItemClicked(MenuItemClickedRequest request, ServerCallContext context)
         {
+            if (_menuProvider != null)
+            {
+                foreach (var mp in _menuProvider)
+                {
+                    foreach (var me in mp.GetMenuItems())
+                    {
+                        if (request.MenuItemId == me.Path.GetHashCode())
+                        {
+                            me.Handler?.Invoke(me);
+                            return new MenuItemClickedResponse();
+                        }
+                    }
+                }
+            }
+
             return new MenuItemClickedResponse();
         }
     }

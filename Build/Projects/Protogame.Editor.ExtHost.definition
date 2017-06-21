@@ -29,5 +29,6 @@
   <Files>
     <Compile Include="MenuEntriesImpl.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="ToolbarEntriesImpl.cs" />
   </Files>
 </Project>

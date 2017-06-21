@@ -144,7 +144,8 @@ namespace Protogame.Editor.ExtHost
             {
                 Services =
                 {
-                    MenuEntries.BindService(kernel.Get<MenuEntriesImpl>())
+                    MenuEntries.BindService(kernel.Get<MenuEntriesImpl>()),
+                    ToolbarEntries.BindService(kernel.Get<ToolbarEntriesImpl>())
                 },
                 Ports = { new ServerPort("localhost", 0, ServerCredentials.Insecure) }
             };
