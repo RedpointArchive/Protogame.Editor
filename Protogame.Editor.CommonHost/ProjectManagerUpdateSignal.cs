@@ -2,7 +2,7 @@
 using Protogame.Editor.Api.Version1.Core;
 using Protogame.Editor.Api.Version1.ProjectManagement;
 
-namespace Protogame.Editor.ExtHost
+namespace Protogame.Editor.CommonHost
 {
     public class ProjectManagerUpdateSignal : IWantsUpdateSignal
     {

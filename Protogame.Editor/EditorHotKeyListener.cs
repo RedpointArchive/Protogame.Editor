@@ -14,11 +14,12 @@ namespace Protogame.Editor
 
         public bool Handle(IGameContext context, IEventEngine<IGameContext> eventEngine, Event @event)
         {
-            if (_loadedGame.State == LoadedGameState.Paused ||
+            // TODO FIX
+            /*if (_loadedGame.State == LoadedGameState.Paused ||
                 _loadedGame.State == LoadedGameState.Playing)
             {
                 _loadedGame.Playing = !_loadedGame.Playing;
-            }
+            }*/
 
             return true;
         }

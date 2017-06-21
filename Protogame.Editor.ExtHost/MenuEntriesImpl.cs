@@ -27,7 +27,7 @@ namespace Protogame.Editor.ExtHost
 
             foreach (var mp in _menuProvider)
             {
-                resp.MenuItems.AddRange(mp.GetMenuItems().Select(x => new MenuItem
+                resp.MenuItems.AddRange(mp.GetMenuItems().Select(x => new Grpc.ExtensionHost.MenuItem
                 {
                     Id = x.Path.GetHashCode(),
                     Path = x.Path,

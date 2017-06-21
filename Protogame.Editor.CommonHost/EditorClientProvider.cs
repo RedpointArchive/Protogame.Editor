@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Protogame.Editor.ExtHost
+namespace Protogame.Editor.CommonHost
 {
     public class EditorClientProvider : IEditorClientProvider
     {

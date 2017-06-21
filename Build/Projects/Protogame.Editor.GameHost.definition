@@ -7,31 +7,39 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Runtime.Remoting" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="MonoGame.Framework" />
-    <Reference Include="Protogame.Editor.Grpc" />
     <Reference Include="Grpc" />
     <Reference Include="Grpc.Native" />
     <Reference Include="System.Interactive.Async" />
     <Reference Include="Google.Protobuf" />
     <Reference Include="Protoinject" />
-    <Reference Include="Protogame" />
+    <Reference Include="Protogame.Editor.Grpc" />
     <Reference Include="Protogame.Editor.Api" />
-    <Reference Include="Protogame.Editor.Api.Game" />
+    <Reference Include="Protogame.Editor.CommonHost" />
+    <Reference Include="protobuf-net" />
+    <Reference Include="Protoinject" />
+    <Reference Include="Mono.Cecil" />
+    <Reference Include="MonoGame.Framework" />
+    <Reference Include="Protogame" />
+    <Reference Include="Protogame.ThirdParty" />
+    <Reference Include="Jitter" />
     <Reference Include="Protogame.Editor.Ext.Inspector" />
-    <Reference Include="Protogame.Editor.Ext.Inspector.Game" />
   </References>
   <Properties>
     <DebugSymbolsOnRelease>full</DebugSymbolsOnRelease>
   </Properties>
   <Files>
-    <Compile Include="BackBufferDimensionsProxy.cs" />
-    <Compile Include="EditorEventEngineHook.cs" />
+    <Compile Include="DefaultLoadedGame.cs" />
     <Compile Include="EditorGameWindow.cs" />
     <Compile Include="EditorGraphicsDeviceService.cs" />
     <Compile Include="EditorHostGame.cs" />
     <Compile Include="ExtensionEngineHook.cs" />
-    <Compile Include="GameLoader.cs" />
-    <Compile Include="GameLoaderContext.cs" />
+    <Compile Include="GameHostServerImpl.cs" />
+    <Compile Include="HostedBackBufferDimensions.cs" />
+    <Compile Include="HostedBaseDirectory.cs" />
+    <Compile Include="HostedEventEngineHook.cs" />
+    <Compile Include="HostedGameRunner.cs" />
+    <Compile Include="IGameRunner.cs" />
+    <Compile Include="LoadedGameState.cs" />
     <Compile Include="Other\DomainGate.cs" />
     <Compile Include="Other\HostGameProxy.cs" />
     <Compile Include="Other\ObjectAddress.cs" />

@@ -41,7 +41,9 @@ namespace Protogame.Editor.ProjectManagement
 
             var thumbnailFile = new FileInfo(Path.Combine(editorPath, "Thumbnail.png"));
 
-            if (_loadedGame.PlayingFor.TotalMinutes >= 1)
+            var startTime = _loadedGame.GetPlayingStartTime();
+
+            if (startTime != null && (DateTime.UtcNow - startTime.Value).TotalMinutes >= 1)
             {
                 if (!thumbnailFile.Exists || thumbnailFile.LastWriteTimeUtc < DateTime.UtcNow.AddHours(-4))
                 {

@@ -1,11 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Name="Protogame.Editor.ExtHost" Path="Protogame.Editor.ExtHost" Type="Console">
+<Project Name="Protogame.Editor.CommonHost" Path="Protogame.Editor.CommonHost" Type="Library">
   <References>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Runtime.Remoting" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Grpc" />
     <Reference Include="Grpc.Native" />
@@ -14,7 +13,6 @@
     <Reference Include="Protoinject" />
     <Reference Include="Protogame.Editor.Grpc" />
     <Reference Include="Protogame.Editor.Api" />
-    <Reference Include="Protogame.Editor.CommonHost" />
     <Reference Include="protobuf-net" />
     <Reference Include="Protoinject" />
     <Reference Include="Mono.Cecil" />
@@ -27,7 +25,14 @@
     <DebugSymbolsOnRelease>full</DebugSymbolsOnRelease>
   </Properties>
   <Files>
-    <Compile Include="MenuEntriesImpl.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="ConsoleHandle.cs" />
+    <Compile Include="EditorClientProvider.cs" />
+    <Compile Include="GrpcLogger.cs" />
+    <Compile Include="IEditorClientProvider.cs" />
+    <Compile Include="PresenceCheckerUpdateSignal.cs" />
+    <Compile Include="ProjectManager.cs" />
+    <Compile Include="ProjectManagerUpdateSignal.cs" />
+    <Compile Include="SharedRendering\ISharedRendererClientFactory.cs" />
+    <Compile Include="SharedRendering\SharedRendererClient.cs" />
   </Files>
 </Project>

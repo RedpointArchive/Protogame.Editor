@@ -7,6 +7,7 @@ using Protogame.Editor.EditorWindow;
 using Protogame.Editor.LoadedGame;
 using Protogame.Editor.Extension;
 using Protogame.Editor.Server;
+using Protogame.Editor.SharedRendering;
 
 namespace Protogame.Editor
 {
@@ -49,8 +50,6 @@ namespace Protogame.Editor
 
             kernel.Rebind<IConsole>().To<EditorConsole>().InSingletonScope();
 
-            kernel.Bind<ILoadedGame>().To<DefaultLoadedGame>().InSingletonScope();
-
             kernel.Rebind<ICanvasRenderPass>().To<EditorCanvasRenderPass>().DiscardNodeOnResolve();
 
             kernel.Bind<IEventBinder<IGameContext>>().To<EditorHotKeyBinder>();
@@ -61,6 +60,8 @@ namespace Protogame.Editor
             kernel.Bind<IRecentProjects>().To<RecentProjects>().InSingletonScope();
             kernel.Bind<IThumbnailSampler>().To<ThumbnailSampler>().InSingletonScope();
 
+            kernel.Bind<ILoadedGame>().To<DefaultLoadedGame>().InSingletonScope();
+
             //kernel.Bind<IServiceRegistration>().To<ExtensionServiceRegistration>().InSingletonScope();
             kernel.Bind<IExtensionManager>().To<ExtensionManager>().InSingletonScope();
             kernel.Bind<IDynamicServiceProvider>().To<ExtensionDynamicServiceProvider>().InSingletonScope();
@@ -68,6 +69,8 @@ namespace Protogame.Editor
             kernel.Bind<IGrpcServer>().To<GrpcServer>().InSingletonScope();
 
             kernel.Bind<IWindowManagement>().To<DefaultWindowManagement>().InSingletonScope();
+
+            kernel.Bind<ISharedRendererHostFactory>().ToFactory();
 
             //kernel.Bind<Protogame.Editor.Api.Version1.Core.IConsoleHandle>().To<ExtensionConsoleHandle>().InSingletonScope();
         }

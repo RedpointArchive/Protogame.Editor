@@ -37,20 +37,35 @@ namespace Protogame.Editor.Grpc.Editor {
             "ZRgJIAEoBSI/CgdQYWNrYWdlEhIKCnJlcG9zaXRvcnkYASABKAkSDwoHcGFj",
             "a2FnZRgCIAEoCRIPCgd2ZXJzaW9uGAMgASgJIk8KCkRlZmluaXRpb24SDAoE",
             "bmFtZRgBIAEoCRIMCgR0eXBlGAIgASgJEgwKBHJvbGUYAyABKAkSFwoPeG1s",
-            "RG9jdW1lbnRQYXRoGAQgASgJMkIKCFByZXNlbmNlEjYKBUNoZWNrEhUuQ2hl",
-            "Y2tQcmVzZW5jZVJlcXVlc3QaFi5DaGVja1ByZXNlbmNlUmVzcG9uc2UyowEK",
-            "B0NvbnNvbGUSJQoITG9nRGVidWcSCy5Mb2dSZXF1ZXN0GgwuTG9nUmVzcG9u",
-            "c2USJAoHTG9nSW5mbxILLkxvZ1JlcXVlc3QaDC5Mb2dSZXNwb25zZRIkCgdM",
-            "b2dXYXJuEgsuTG9nUmVxdWVzdBoMLkxvZ1Jlc3BvbnNlEiUKCExvZ0Vycm9y",
-            "EgsuTG9nUmVxdWVzdBoMLkxvZ1Jlc3BvbnNlMqIBCg5Qcm9qZWN0TWFuYWdl",
-            "chI1CgpHZXRQcm9qZWN0EhIuR2V0UHJvamVjdFJlcXVlc3QaEy5HZXRQcm9q",
-            "ZWN0UmVzcG9uc2USWQoWR2V0U2Nhbm5lZENvbnRlbnRQYXRocxIeLkdldFNj",
-            "YW5uZWRDb250ZW50UGF0aHNSZXF1ZXN0Gh8uR2V0U2Nhbm5lZENvbnRlbnRQ",
-            "YXRoc1Jlc3BvbnNlQh+qAhxQcm90b2dhbWUuRWRpdG9yLkdycGMuRWRpdG9y",
-            "YgZwcm90bzM="));
+            "RG9jdW1lbnRQYXRoGAQgASgJIiAKHkdldEJhY2tCdWZmZXJEaW1lbnNpb25z",
+            "UmVxdWVzdCJACh9HZXRCYWNrQnVmZmVyRGltZW5zaW9uc1Jlc3BvbnNlEg0K",
+            "BXdpZHRoGAEgASgFEg4KBmhlaWdodBgCIAEoBSIZChdHZXRCYXNlRGlyZWN0",
+            "b3J5UmVxdWVzdCIxChhHZXRCYXNlRGlyZWN0b3J5UmVzcG9uc2USFQoNYmFz",
+            "ZURpcmVjdG9yeRgBIAEoCSJbChtQbGF5YmFja1N0YXRlQ2hhbmdlZFJlcXVl",
+            "c3QSHQoFc3RhdGUYASABKA4yDi5QbGF5YmFja1N0YXRlEh0KCXN0YXJ0VGlt",
+            "ZRgCIAEoCzIKLlRpbWVzdGFtcCIeChxQbGF5YmFja1N0YXRlQ2hhbmdlZFJl",
+            "c3BvbnNlIiIKCVRpbWVzdGFtcBIVCg11bml4VGltZXN0YW1wGAEgASgEKkEK",
+            "DVBsYXliYWNrU3RhdGUSCwoHTG9hZGluZxAAEgoKBkxvYWRlZBABEgsKB1Bs",
+            "YXlpbmcQAhIKCgZQYXVzZWQQAzJCCghQcmVzZW5jZRI2CgVDaGVjaxIVLkNo",
+            "ZWNrUHJlc2VuY2VSZXF1ZXN0GhYuQ2hlY2tQcmVzZW5jZVJlc3BvbnNlMqMB",
+            "CgdDb25zb2xlEiUKCExvZ0RlYnVnEgsuTG9nUmVxdWVzdBoMLkxvZ1Jlc3Bv",
+            "bnNlEiQKB0xvZ0luZm8SCy5Mb2dSZXF1ZXN0GgwuTG9nUmVzcG9uc2USJAoH",
+            "TG9nV2FybhILLkxvZ1JlcXVlc3QaDC5Mb2dSZXNwb25zZRIlCghMb2dFcnJv",
+            "chILLkxvZ1JlcXVlc3QaDC5Mb2dSZXNwb25zZTKiAQoOUHJvamVjdE1hbmFn",
+            "ZXISNQoKR2V0UHJvamVjdBISLkdldFByb2plY3RSZXF1ZXN0GhMuR2V0UHJv",
+            "amVjdFJlc3BvbnNlElkKFkdldFNjYW5uZWRDb250ZW50UGF0aHMSHi5HZXRT",
+            "Y2FubmVkQ29udGVudFBhdGhzUmVxdWVzdBofLkdldFNjYW5uZWRDb250ZW50",
+            "UGF0aHNSZXNwb25zZTKIAgoKR2FtZUhvc3RlchJcChdHZXRCYWNrQnVmZmVy",
+            "RGltZW5zaW9ucxIfLkdldEJhY2tCdWZmZXJEaW1lbnNpb25zUmVxdWVzdBog",
+            "LkdldEJhY2tCdWZmZXJEaW1lbnNpb25zUmVzcG9uc2USRwoQR2V0QmFzZURp",
+            "cmVjdG9yeRIYLkdldEJhc2VEaXJlY3RvcnlSZXF1ZXN0GhkuR2V0QmFzZURp",
+            "cmVjdG9yeVJlc3BvbnNlElMKFFBsYXliYWNrU3RhdGVDaGFuZ2VkEhwuUGxh",
+            "eWJhY2tTdGF0ZUNoYW5nZWRSZXF1ZXN0Gh0uUGxheWJhY2tTdGF0ZUNoYW5n",
+            "ZWRSZXNwb25zZUIfqgIcUHJvdG9nYW1lLkVkaXRvci5HcnBjLkVkaXRvcmIG",
+            "cHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
-          new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Protogame.Editor.Grpc.Editor.PlaybackState), }, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.CheckPresenceRequest), global::Protogame.Editor.Grpc.Editor.CheckPresenceRequest.Parser, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.CheckPresenceResponse), global::Protogame.Editor.Grpc.Editor.CheckPresenceResponse.Parser, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.LogRequest), global::Protogame.Editor.Grpc.Editor.LogRequest.Parser, new[]{ "Message" }, null, null, null),
@@ -61,12 +76,29 @@ namespace Protogame.Editor.Grpc.Editor {
             new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.GetScannedContentPathsResponse), global::Protogame.Editor.Grpc.Editor.GetScannedContentPathsResponse.Parser, new[]{ "FilePath" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.Project), global::Protogame.Editor.Grpc.Editor.Project.Parser, new[]{ "ProjectPath", "LoadingStatus", "Name", "Packages", "Definitions", "DefaultGameDefinitionName", "SolutionFilePath", "DefaultGameBinPath", "HashCode" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.Package), global::Protogame.Editor.Grpc.Editor.Package.Parser, new[]{ "Repository", "Package_", "Version" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.Definition), global::Protogame.Editor.Grpc.Editor.Definition.Parser, new[]{ "Name", "Type", "Role", "XmlDocumentPath" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.Definition), global::Protogame.Editor.Grpc.Editor.Definition.Parser, new[]{ "Name", "Type", "Role", "XmlDocumentPath" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.GetBackBufferDimensionsRequest), global::Protogame.Editor.Grpc.Editor.GetBackBufferDimensionsRequest.Parser, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.GetBackBufferDimensionsResponse), global::Protogame.Editor.Grpc.Editor.GetBackBufferDimensionsResponse.Parser, new[]{ "Width", "Height" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.GetBaseDirectoryRequest), global::Protogame.Editor.Grpc.Editor.GetBaseDirectoryRequest.Parser, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.GetBaseDirectoryResponse), global::Protogame.Editor.Grpc.Editor.GetBaseDirectoryResponse.Parser, new[]{ "BaseDirectory" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.PlaybackStateChangedRequest), global::Protogame.Editor.Grpc.Editor.PlaybackStateChangedRequest.Parser, new[]{ "State", "StartTime" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.PlaybackStateChangedResponse), global::Protogame.Editor.Grpc.Editor.PlaybackStateChangedResponse.Parser, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.Editor.Timestamp), global::Protogame.Editor.Grpc.Editor.Timestamp.Parser, new[]{ "UnixTimestamp" }, null, null, null)
           }));
     }
     #endregion
 
   }
+  #region Enums
+  public enum PlaybackState {
+    [pbr::OriginalName("Loading")] Loading = 0,
+    [pbr::OriginalName("Loaded")] Loaded = 1,
+    [pbr::OriginalName("Playing")] Playing = 2,
+    [pbr::OriginalName("Paused")] Paused = 3,
+  }
+
+  #endregion
+
   #region Messages
   public sealed partial class CheckPresenceRequest : pb::IMessage<CheckPresenceRequest> {
     private static readonly pb::MessageParser<CheckPresenceRequest> _parser = new pb::MessageParser<CheckPresenceRequest>(() => new CheckPresenceRequest());
@@ -1609,6 +1641,803 @@ namespace Protogame.Editor.Grpc.Editor {
           }
           case 34: {
             XmlDocumentPath = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class GetBackBufferDimensionsRequest : pb::IMessage<GetBackBufferDimensionsRequest> {
+    private static readonly pb::MessageParser<GetBackBufferDimensionsRequest> _parser = new pb::MessageParser<GetBackBufferDimensionsRequest>(() => new GetBackBufferDimensionsRequest());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<GetBackBufferDimensionsRequest> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.MessageTypes[11]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GetBackBufferDimensionsRequest() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GetBackBufferDimensionsRequest(GetBackBufferDimensionsRequest other) : this() {
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GetBackBufferDimensionsRequest Clone() {
+      return new GetBackBufferDimensionsRequest(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as GetBackBufferDimensionsRequest);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(GetBackBufferDimensionsRequest other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(GetBackBufferDimensionsRequest other) {
+      if (other == null) {
+        return;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class GetBackBufferDimensionsResponse : pb::IMessage<GetBackBufferDimensionsResponse> {
+    private static readonly pb::MessageParser<GetBackBufferDimensionsResponse> _parser = new pb::MessageParser<GetBackBufferDimensionsResponse>(() => new GetBackBufferDimensionsResponse());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<GetBackBufferDimensionsResponse> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.MessageTypes[12]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GetBackBufferDimensionsResponse() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GetBackBufferDimensionsResponse(GetBackBufferDimensionsResponse other) : this() {
+      width_ = other.width_;
+      height_ = other.height_;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GetBackBufferDimensionsResponse Clone() {
+      return new GetBackBufferDimensionsResponse(this);
+    }
+
+    /// <summary>Field number for the "width" field.</summary>
+    public const int WidthFieldNumber = 1;
+    private int width_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int Width {
+      get { return width_; }
+      set {
+        width_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "height" field.</summary>
+    public const int HeightFieldNumber = 2;
+    private int height_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int Height {
+      get { return height_; }
+      set {
+        height_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as GetBackBufferDimensionsResponse);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(GetBackBufferDimensionsResponse other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Width != other.Width) return false;
+      if (Height != other.Height) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Width != 0) hash ^= Width.GetHashCode();
+      if (Height != 0) hash ^= Height.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Width != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(Width);
+      }
+      if (Height != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(Height);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (Width != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Width);
+      }
+      if (Height != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Height);
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(GetBackBufferDimensionsResponse other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Width != 0) {
+        Width = other.Width;
+      }
+      if (other.Height != 0) {
+        Height = other.Height;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 8: {
+            Width = input.ReadInt32();
+            break;
+          }
+          case 16: {
+            Height = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class GetBaseDirectoryRequest : pb::IMessage<GetBaseDirectoryRequest> {
+    private static readonly pb::MessageParser<GetBaseDirectoryRequest> _parser = new pb::MessageParser<GetBaseDirectoryRequest>(() => new GetBaseDirectoryRequest());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<GetBaseDirectoryRequest> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.MessageTypes[13]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GetBaseDirectoryRequest() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GetBaseDirectoryRequest(GetBaseDirectoryRequest other) : this() {
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GetBaseDirectoryRequest Clone() {
+      return new GetBaseDirectoryRequest(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as GetBaseDirectoryRequest);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(GetBaseDirectoryRequest other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(GetBaseDirectoryRequest other) {
+      if (other == null) {
+        return;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class GetBaseDirectoryResponse : pb::IMessage<GetBaseDirectoryResponse> {
+    private static readonly pb::MessageParser<GetBaseDirectoryResponse> _parser = new pb::MessageParser<GetBaseDirectoryResponse>(() => new GetBaseDirectoryResponse());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<GetBaseDirectoryResponse> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.MessageTypes[14]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GetBaseDirectoryResponse() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GetBaseDirectoryResponse(GetBaseDirectoryResponse other) : this() {
+      baseDirectory_ = other.baseDirectory_;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GetBaseDirectoryResponse Clone() {
+      return new GetBaseDirectoryResponse(this);
+    }
+
+    /// <summary>Field number for the "baseDirectory" field.</summary>
+    public const int BaseDirectoryFieldNumber = 1;
+    private string baseDirectory_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string BaseDirectory {
+      get { return baseDirectory_; }
+      set {
+        baseDirectory_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as GetBaseDirectoryResponse);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(GetBaseDirectoryResponse other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (BaseDirectory != other.BaseDirectory) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (BaseDirectory.Length != 0) hash ^= BaseDirectory.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (BaseDirectory.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(BaseDirectory);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (BaseDirectory.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(BaseDirectory);
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(GetBaseDirectoryResponse other) {
+      if (other == null) {
+        return;
+      }
+      if (other.BaseDirectory.Length != 0) {
+        BaseDirectory = other.BaseDirectory;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10: {
+            BaseDirectory = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class PlaybackStateChangedRequest : pb::IMessage<PlaybackStateChangedRequest> {
+    private static readonly pb::MessageParser<PlaybackStateChangedRequest> _parser = new pb::MessageParser<PlaybackStateChangedRequest>(() => new PlaybackStateChangedRequest());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<PlaybackStateChangedRequest> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.MessageTypes[15]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public PlaybackStateChangedRequest() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public PlaybackStateChangedRequest(PlaybackStateChangedRequest other) : this() {
+      state_ = other.state_;
+      StartTime = other.startTime_ != null ? other.StartTime.Clone() : null;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public PlaybackStateChangedRequest Clone() {
+      return new PlaybackStateChangedRequest(this);
+    }
+
+    /// <summary>Field number for the "state" field.</summary>
+    public const int StateFieldNumber = 1;
+    private global::Protogame.Editor.Grpc.Editor.PlaybackState state_ = 0;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Protogame.Editor.Grpc.Editor.PlaybackState State {
+      get { return state_; }
+      set {
+        state_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "startTime" field.</summary>
+    public const int StartTimeFieldNumber = 2;
+    private global::Protogame.Editor.Grpc.Editor.Timestamp startTime_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Protogame.Editor.Grpc.Editor.Timestamp StartTime {
+      get { return startTime_; }
+      set {
+        startTime_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as PlaybackStateChangedRequest);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(PlaybackStateChangedRequest other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (State != other.State) return false;
+      if (!object.Equals(StartTime, other.StartTime)) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (State != 0) hash ^= State.GetHashCode();
+      if (startTime_ != null) hash ^= StartTime.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (State != 0) {
+        output.WriteRawTag(8);
+        output.WriteEnum((int) State);
+      }
+      if (startTime_ != null) {
+        output.WriteRawTag(18);
+        output.WriteMessage(StartTime);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (State != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) State);
+      }
+      if (startTime_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(StartTime);
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(PlaybackStateChangedRequest other) {
+      if (other == null) {
+        return;
+      }
+      if (other.State != 0) {
+        State = other.State;
+      }
+      if (other.startTime_ != null) {
+        if (startTime_ == null) {
+          startTime_ = new global::Protogame.Editor.Grpc.Editor.Timestamp();
+        }
+        StartTime.MergeFrom(other.StartTime);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 8: {
+            state_ = (global::Protogame.Editor.Grpc.Editor.PlaybackState) input.ReadEnum();
+            break;
+          }
+          case 18: {
+            if (startTime_ == null) {
+              startTime_ = new global::Protogame.Editor.Grpc.Editor.Timestamp();
+            }
+            input.ReadMessage(startTime_);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class PlaybackStateChangedResponse : pb::IMessage<PlaybackStateChangedResponse> {
+    private static readonly pb::MessageParser<PlaybackStateChangedResponse> _parser = new pb::MessageParser<PlaybackStateChangedResponse>(() => new PlaybackStateChangedResponse());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<PlaybackStateChangedResponse> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.MessageTypes[16]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public PlaybackStateChangedResponse() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public PlaybackStateChangedResponse(PlaybackStateChangedResponse other) : this() {
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public PlaybackStateChangedResponse Clone() {
+      return new PlaybackStateChangedResponse(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as PlaybackStateChangedResponse);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(PlaybackStateChangedResponse other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(PlaybackStateChangedResponse other) {
+      if (other == null) {
+        return;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class Timestamp : pb::IMessage<Timestamp> {
+    private static readonly pb::MessageParser<Timestamp> _parser = new pb::MessageParser<Timestamp>(() => new Timestamp());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<Timestamp> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Protogame.Editor.Grpc.Editor.EditorReflection.Descriptor.MessageTypes[17]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public Timestamp() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public Timestamp(Timestamp other) : this() {
+      unixTimestamp_ = other.unixTimestamp_;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public Timestamp Clone() {
+      return new Timestamp(this);
+    }
+
+    /// <summary>Field number for the "unixTimestamp" field.</summary>
+    public const int UnixTimestampFieldNumber = 1;
+    private ulong unixTimestamp_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ulong UnixTimestamp {
+      get { return unixTimestamp_; }
+      set {
+        unixTimestamp_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as Timestamp);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(Timestamp other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (UnixTimestamp != other.UnixTimestamp) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (UnixTimestamp != 0UL) hash ^= UnixTimestamp.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (UnixTimestamp != 0UL) {
+        output.WriteRawTag(8);
+        output.WriteUInt64(UnixTimestamp);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (UnixTimestamp != 0UL) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(UnixTimestamp);
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(Timestamp other) {
+      if (other == null) {
+        return;
+      }
+      if (other.UnixTimestamp != 0UL) {
+        UnixTimestamp = other.UnixTimestamp;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 8: {
+            UnixTimestamp = input.ReadUInt64();
             break;
           }
         }

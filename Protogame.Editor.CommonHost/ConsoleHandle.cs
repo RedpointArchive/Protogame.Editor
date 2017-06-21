@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using static Protogame.Editor.Grpc.Editor.Console;
 using Protogame.Editor.Grpc.Editor;
 
-namespace Protogame.Editor.ExtHost
+namespace Protogame.Editor.CommonHost
 {
-    public class ConsoleHandle : IConsoleHandle
+    public class ConsoleHandle : Editor.Api.Version1.Core.IConsoleHandle
     {
         private readonly ConsoleClient _consoleHandle;
 

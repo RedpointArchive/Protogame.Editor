@@ -39,7 +39,7 @@ namespace Protogame.Editor.EditorWindow
         {
             get
             {
-                return _projectManager.Project != null && _loadedGame.Playing;
+                return _projectManager.Project != null/* && _loadedGame.Playing*/;
             }
             set { }
         }
@@ -48,13 +48,13 @@ namespace Protogame.Editor.EditorWindow
         {
             base.Update(skinLayout, layout, gameTime, ref stealFocus);
 
-            var t = _loadedGame.GetStallState();
+            /*var t = _loadedGame.GetStallState();
             _readStallLabel.Text = "Read Stall: " + (t.Item1 ? "Yes" : "No");
             _readStallLabel.TextColor = t.Item1 ? Color.Red : Color.Black;
             _readStallLabel.HorizontalAlignment = HorizontalAlignment.Left;
             _writeStallLabel.Text = "Write Stall: " + (t.Item2 ? "Yes" : "No");
             _writeStallLabel.TextColor = t.Item2 ? Color.Red : Color.Black;
-            _writeStallLabel.HorizontalAlignment = HorizontalAlignment.Left;
+            _writeStallLabel.HorizontalAlignment = HorizontalAlignment.Left;*/
         }
     }
 }

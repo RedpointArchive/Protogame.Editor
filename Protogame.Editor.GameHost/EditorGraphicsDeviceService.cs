@@ -1,26 +1,23 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Protogame.Editor.CommonHost.SharedRendering;
 using System;
 
 namespace Protogame.Editor.GameHost
 {
     public class EditorGraphicsDeviceService : IGraphicsDeviceService
     {
-        private IntPtr[] _sharedResourceHandles;
-        private RenderTarget2D[] _renderTargets;
-        private int _currentWriteIndex;
+        private SharedRendererClient _sharedRendererClient;
 
-        public EditorGraphicsDeviceService()
+        public EditorGraphicsDeviceService(ISharedRendererClientFactory sharedRendererClientFactory)
         {
-            _sharedResourceHandles = new IntPtr[RenderTargetBufferConfiguration.RTBufferSize];
-            _renderTargets = new RenderTarget2D[RenderTargetBufferConfiguration.RTBufferSize];
-            _currentWriteIndex = 0;
+            _sharedRendererClient = sharedRendererClientFactory.CreateSharedRendererClient();
         }
 
-        public void UpdateHandles(IntPtr[] sharedResourceHandles, int currentWriteIndex)
+        public void UpdateHandles(IntPtr[] sharedResourceHandles, string sharedMmapName)
         {
-            _currentWriteIndex = currentWriteIndex;
+            _sharedRendererClient.SetHandles(sharedResourceHandles, sharedMmapName);
 
-            if (GraphicsDevice == null && sharedResourceHandles[_currentWriteIndex] != IntPtr.Zero)
+            if (GraphicsDevice == null && _sharedRendererClient.GraphicsDeviceExpected)
             {
                 // We have been requested to create a graphics device.
                 var parameters = new PresentationParameters();
@@ -41,37 +38,23 @@ namespace Protogame.Editor.GameHost
                 DeviceCreated?.Invoke(this, EventArgs.Empty);
             }
 
-            if (GraphicsDevice != null && sharedResourceHandles[_currentWriteIndex] == IntPtr.Zero)
+            if (GraphicsDevice != null && !_sharedRendererClient.GraphicsDeviceExpected)
             {
                 DeviceDisposing?.Invoke(this, EventArgs.Empty);
 
                 GraphicsDevice.Dispose();
                 GraphicsDevice = null;
             }
-
-            if (_sharedResourceHandles[_currentWriteIndex] != sharedResourceHandles[_currentWriteIndex])
-            {
-                for (var i = 0; i < RenderTargetBufferConfiguration.RTBufferSize; i++)
-                {
-                    _renderTargets[i]?.Dispose();
-                    _renderTargets[i] = null;
-                }
-                
-                for (var i = 0; i < RenderTargetBufferConfiguration.RTBufferSize; i++)
-                {
-                    if (GraphicsDevice != null)
-                    {
-                        _renderTargets[i] = RenderTarget2D.FromSharedResourceHandle(
-                            GraphicsDevice,
-                            sharedResourceHandles[i]);
-                    }
-                }
-
-                _sharedResourceHandles = sharedResourceHandles;
-            }
+            
+            _sharedRendererClient.UpdateTextures(GraphicsDevice);
         }
 
-        public RenderTarget2D RenderTarget => _renderTargets[_currentWriteIndex];
+        public void IncrementWritableTextureIfPossible()
+        {
+            _sharedRendererClient.IncrementWritableTextureIfPossible();
+        }
+
+        public RenderTarget2D RenderTarget => _sharedRendererClient.WritableTexture;
 
         public GraphicsDevice GraphicsDevice { get; private set; }
 

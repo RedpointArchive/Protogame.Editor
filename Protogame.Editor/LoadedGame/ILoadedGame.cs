@@ -6,6 +6,35 @@ namespace Protogame.Editor.LoadedGame
 {
     public interface ILoadedGame
     {
+        void Update(IGameContext gameContext, IUpdateContext updateContext);
+
+        void Render(IGameContext gameContext, IRenderContext renderContext);
+
+        void IncrementReadRenderTargetIfPossible();
+
+        RenderTarget2D GetCurrentGameRenderTarget();
+
+        void SetPositionOffset(Point offset);
+
+        void SetRenderTargetSize(Point size);
+
+        Point? GetRenderTargetSize();
+
+        void QueueEvent(Event @event);
+
+        string GetBaseDirectory();
+
+        LoadedGameState GetPlaybackState();
+
+        void SetPlaybackStateInternal(Grpc.Editor.PlaybackStateChangedRequest changedRequest);
+
+        void SetPlaybackMode(bool playing);
+
+        void RequestRestart();
+
+        DateTime? GetPlayingStartTime();
+
+        /*
         LoadedGameState State { get; }
 
         bool Playing { get; set; }
@@ -14,22 +43,7 @@ namespace Protogame.Editor.LoadedGame
 
         void Restart();
 
-        void Update(IGameContext gameContext, IUpdateContext updateContext);
-
-        void Render(IGameContext gameContext, IRenderContext renderContext);
-
-        void SetPositionOffset(Point offset);
-
-        void SetRenderTargetSize(Point size);
-
-        Point? GetRenderTargetSize();
-
-        void IncrementReadRenderTargetIfPossible();
-
-        RenderTarget2D GetCurrentGameRenderTarget();
-
-        void QueueEvent(Event @event);
-
         Tuple<bool, bool> GetStallState();
+        */
     }
 }

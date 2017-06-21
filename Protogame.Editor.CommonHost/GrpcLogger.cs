@@ -1,7 +1,7 @@
 ﻿using Grpc.Core.Logging;
 using System;
 
-namespace Protogame.Editor.ExtHost
+namespace Protogame.Editor.CommonHost
 {
     public class GrpcLogger : ILogger
     {
