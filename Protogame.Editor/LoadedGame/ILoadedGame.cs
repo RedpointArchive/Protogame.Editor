@@ -34,6 +34,10 @@ namespace Protogame.Editor.LoadedGame
 
         DateTime? GetPlayingStartTime();
 
+        void RunInDebug();
+
+        void RunInDebugGpu();
+
         /*
         LoadedGameState State { get; }
 

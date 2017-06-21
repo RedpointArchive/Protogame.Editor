@@ -29,6 +29,9 @@ namespace Protogame.Editor
         private readonly IEditorWindowFactory _editorWindowFactory;
         private readonly IProjectManager _projectManager;
         private readonly ILoadedGame _loadedGame;
+        private Button _vsButton;
+        private Button _debugButton;
+        private Button _debugGpuButton;
         private Button _playButton;
         private Button _pauseButton;
         private Button _stopButton;
@@ -119,15 +122,18 @@ namespace Protogame.Editor
             toolContainer.AddChild(CreateToolButton("texture.IconToolSelect", "select"), new Rectangle(16 + 30 * 4, 8, 28, 28));
 
             var gameControlContainer = new RelativeContainer();
-            gameControlContainer.AddChild(_playButton = CreatePlayButton("texture.IconPlay"), new Rectangle(30 * 0, 8, 28, 28));
-            gameControlContainer.AddChild(_pauseButton = CreatePauseButton("texture.IconPause"), new Rectangle(30 * 1, 8, 28, 28));
-            gameControlContainer.AddChild(_stopButton = CreateStopButton("texture.IconStop"), new Rectangle(30 * 2, 8, 28, 28));
+            gameControlContainer.AddChild(_vsButton = CreateVisualStudioButton("texture.IconVisualStudio"), new Rectangle(30 * 0, 8, 28, 28));
+            gameControlContainer.AddChild(_debugButton = CreateDebugButton("texture.IconDebug"), new Rectangle(30 * 2, 8, 28, 28));
+            gameControlContainer.AddChild(_debugGpuButton = CreateDebugGpuButton("texture.IconDebugGpu"), new Rectangle(30 * 3, 8, 28, 28));
+            gameControlContainer.AddChild(_playButton = CreatePlayButton("texture.IconPlay"), new Rectangle(30 * 5, 8, 28, 28));
+            gameControlContainer.AddChild(_pauseButton = CreatePauseButton("texture.IconPause"), new Rectangle(30 * 6, 8, 28, 28));
+            gameControlContainer.AddChild(_stopButton = CreateStopButton("texture.IconStop"), new Rectangle(30 * 7, 8, 28, 28));
 
             var unusedContainer = new RelativeContainer();
 
             var horizontalContainer = new HorizontalContainer();
             horizontalContainer.AddChild(toolContainer, "*");
-            horizontalContainer.AddChild(gameControlContainer, "88");
+            horizontalContainer.AddChild(gameControlContainer, ((30 * 8) - 2).ToString());
             horizontalContainer.AddChild(unusedContainer, "*");
 
             var verticalContainer = new VerticalContainer();
@@ -137,6 +143,49 @@ namespace Protogame.Editor
             _canvas.SetChild(verticalContainer);
 
             _windowManagement.SetMainDocumentContainer(_workspaceContainer);
+        }
+
+        private Button CreateVisualStudioButton(string texture)
+        {
+            var button = new Button
+            {
+                Icon = _assetManager.Get<TextureAsset>(texture)
+            };
+            button.Click += (sender, e) =>
+            {
+                // TODO: Need to find extension and call into it.
+                //_loadedGame.RunInDebug();
+                _workspaceContainer.ActivateWhere(x => x is GameEditorWindow);
+            };
+            return button;
+        }
+
+        private Button CreateDebugButton(string texture)
+        {
+            var button = new Button
+            {
+                Icon = _assetManager.Get<TextureAsset>(texture)
+            };
+            button.Click += (sender, e) =>
+            {
+                _loadedGame.RunInDebug();
+                _workspaceContainer.ActivateWhere(x => x is GameEditorWindow);
+            };
+            return button;
+        }
+
+        private Button CreateDebugGpuButton(string texture)
+        {
+            var button = new Button
+            {
+                Icon = _assetManager.Get<TextureAsset>(texture)
+            };
+            button.Click += (sender, e) =>
+            {
+                _loadedGame.RunInDebugGpu();
+                _workspaceContainer.ActivateWhere(x => x is GameEditorWindow);
+            };
+            return button;
         }
 
         private Button CreatePlayButton(string texture)
@@ -241,6 +290,10 @@ namespace Protogame.Editor
             _playButton.Enabled = _projectManager.Project != null && state != LoadedGameState.Loading;
             _pauseButton.Enabled = state == LoadedGameState.Playing || state == LoadedGameState.Paused;
             _stopButton.Enabled = state == LoadedGameState.Playing || state == LoadedGameState.Paused;
+
+            _vsButton.Enabled = _projectManager.Project != null;
+            _debugButton.Enabled = _projectManager.Project != null && state == LoadedGameState.Loaded;
+            _debugGpuButton.Enabled = _projectManager.Project != null && state == LoadedGameState.Loaded;
 
             foreach (var t in _toolButtons)
             {
