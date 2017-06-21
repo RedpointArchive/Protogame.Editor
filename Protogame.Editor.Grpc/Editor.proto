@@ -75,6 +75,7 @@ message Definition {
 service GameHoster {
   rpc GetBackBufferDimensions(GetBackBufferDimensionsRequest) returns (GetBackBufferDimensionsResponse);
   rpc GetBaseDirectory(GetBaseDirectoryRequest) returns (GetBaseDirectoryResponse);
+  rpc PlaybackStateChanged(PlaybackStateChangedRequest) returns (PlaybackStateChangedResponse);
 }
 
 message GetBackBufferDimensionsRequest {
@@ -90,4 +91,23 @@ message GetBaseDirectoryRequest {
 
 message GetBaseDirectoryResponse {
   string baseDirectory = 1;
+}
+
+enum PlaybackState {
+  Loading = 0;
+  Loaded = 1;
+  Playing = 2;
+  Paused = 3;
+}
+
+message PlaybackStateChangedRequest {
+  PlaybackState state = 1;
+  Timestamp startTime = 2;
+}
+
+message PlaybackStateChangedResponse {
+}
+
+message Timestamp {
+  uint64 unixTimestamp = 1;
 }

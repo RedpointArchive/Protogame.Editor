@@ -72,6 +72,7 @@
     <Compile Include="LoadedGame\DefaultLoadedGame.cs" />
     <Compile Include="LoadedGame\EditorCanvasRenderPass.cs" />
     <Compile Include="LoadedGame\ILoadedGame.cs" />
+    <Compile Include="LoadedGame\LoadedGameState.cs" />
     <Compile Include="Menu\ActionManagerMenuProvider.cs" />
     <Compile Include="Menu\EnumerableExtensions.cs" />
     <Compile Include="Menu\ExtensionBasedMenuProvider.cs" />

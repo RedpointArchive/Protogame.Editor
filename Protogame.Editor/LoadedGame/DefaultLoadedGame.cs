@@ -14,6 +14,8 @@ using Protogame.Editor.Grpc.Editor;
 using static Protogame.Editor.Grpc.GameHost.GameHostServer;
 using Protogame.Editor.Grpc.GameHost;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
+using Google.Protobuf;
 
 namespace Protogame.Editor.LoadedGame
 {
@@ -24,7 +26,8 @@ namespace Protogame.Editor.LoadedGame
         private readonly IConsoleHandle _consoleHandle;
         private readonly IRenderTargetBackBufferUtilities _renderTargetBackBufferUtilities;
         private readonly SharedRendererHost _sharedRendererHost;
-        
+        private readonly BinaryFormatter _formatter;
+
         private FileInfo _executingFile;
         private bool _isDebugging;
         private bool _shouldDebug;
@@ -33,6 +36,7 @@ namespace Protogame.Editor.LoadedGame
         private Channel _channel;
         private GameHostServerClient _gameHostClient;
         private string _baseDirectory;
+        private LoadedGameState? _loadedGameState;
 
         private Point _offset;
         private bool _requiresDelaySync;
@@ -49,6 +53,7 @@ namespace Protogame.Editor.LoadedGame
             _grpcServer = grpcServer;
             _sharedRendererHost = sharedRendererHostFactory.CreateSharedRendererHost();
             _sharedRendererHost.TexturesRecreated += OnTexturesRecreated;
+            _formatter = new BinaryFormatter();
         }
 
         private void OnTexturesRecreated(object sender, EventArgs e)
@@ -65,6 +70,8 @@ namespace Protogame.Editor.LoadedGame
 
         private void SendTexturesToGameHost()
         {
+            _consoleHandle.LogInfo("Sending textures and memory mapped filename to game host from editor...");
+
             var req = new SetRenderTargetsRequest();
             req.SharedPointer.AddRange(_sharedRendererHost.WritableTextureIntPtrs.Select(x => x.ToInt64()));
             req.SyncMmappedFileName = _sharedRendererHost.SynchronisationMemoryMappedFileName;
@@ -85,7 +92,27 @@ namespace Protogame.Editor.LoadedGame
 
         public void QueueEvent(Event @event)
         {
-            // TODO FIX
+            if (_gameHostClient != null)
+            {
+                try
+                {
+                    using (var memory = new MemoryStream())
+                    {
+                        _formatter.Serialize(memory, @event);
+                        var bytes = new byte[memory.Position];
+                        memory.Seek(0, SeekOrigin.Begin);
+                        memory.Read(bytes, 0, bytes.Length);
+                        _gameHostClient.QueueSerializedEvent(new QueueSerializedEventRequest
+                        {
+                            SerializedEvent = ByteString.CopyFrom(bytes)
+                        });
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _consoleHandle.LogWarning(ex.Message + Environment.NewLine + ex.StackTrace);
+                }
+            }
         }
 
         public void Render(IGameContext gameContext, IRenderContext renderContext)
@@ -151,6 +178,10 @@ namespace Protogame.Editor.LoadedGame
                     _process = null;
                     _channel = null;
                     _gameHostClient = null;
+                    _loadedGameState = null;
+                    // The process may have exited mid-draw, which could keep a texture locked.  Destroy
+                    // the textures and recreate them to ensure they're not locked.
+                    _sharedRendererHost.DestroyTextures();
                 }
                 _process = Process.Start(processStartInfo);
                 _process.Exited += (sender, e) =>
@@ -160,6 +191,10 @@ namespace Protogame.Editor.LoadedGame
                     _channel = null;
                     _gameHostClient = null;
                     _shouldDebug = false;
+                    _loadedGameState = null;
+                    // The process may have exited mid-draw, which could keep a texture locked.  Destroy
+                    // the textures and recreate them to ensure they're not locked.
+                    _sharedRendererHost.DestroyTextures();
                 };
                 _process.OutputDataReceived += (sender, e) =>
                 {
@@ -180,6 +215,7 @@ namespace Protogame.Editor.LoadedGame
                     _consoleHandle.LogDebug("Creating gRPC channel on {0}...", url);
                     _channel = new Channel(url, ChannelCredentials.Insecure);
                     _gameHostClient = new GameHostServerClient(_channel);
+                    _requiresDelaySync = true;
                 };
                 _process.ErrorDataReceived += (sender, e) =>
                 {
@@ -217,6 +253,44 @@ namespace Protogame.Editor.LoadedGame
         public Point? GetRenderTargetSize()
         {
             return _sharedRendererHost.Size;
+        }
+
+        public LoadedGameState GetPlaybackState()
+        {
+            return _loadedGameState ?? LoadedGameState.Loading;
+        }
+
+        public void SetPlaybackMode(bool playing)
+        {
+            _gameHostClient?.SetPlaybackMode(new SetPlaybackModeRequest
+            {
+                Playing = playing
+            });
+        }
+
+        public void SetPlaybackStateInternal(PlaybackStateChangedRequest changedRequest)
+        {
+            _loadedGameState = LoadedGameState.Loading;
+            switch (changedRequest.State)
+            {
+                case PlaybackState.Loading:
+                    _loadedGameState = LoadedGameState.Loading;
+                    break;
+                case PlaybackState.Loaded:
+                    _loadedGameState = LoadedGameState.Loaded;
+                    break;
+                case PlaybackState.Playing:
+                    _loadedGameState = LoadedGameState.Playing;
+                    break;
+                case PlaybackState.Paused:
+                    _loadedGameState = LoadedGameState.Paused;
+                    break;
+            }
+        }
+
+        public void RequestRestart()
+        {
+            _shouldRestart = true;
         }
     }
 }

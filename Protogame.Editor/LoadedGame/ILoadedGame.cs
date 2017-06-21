@@ -24,6 +24,14 @@ namespace Protogame.Editor.LoadedGame
 
         string GetBaseDirectory();
 
+        LoadedGameState GetPlaybackState();
+
+        void SetPlaybackStateInternal(Grpc.Editor.PlaybackStateChangedRequest changedRequest);
+
+        void SetPlaybackMode(bool playing);
+
+        void RequestRestart();
+
         /*
         LoadedGameState State { get; }
 

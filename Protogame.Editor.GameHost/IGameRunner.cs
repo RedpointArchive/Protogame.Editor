@@ -11,5 +11,7 @@ namespace Protogame.Editor.GameHost
         bool GetMousePositionToSet(ref int x, ref int y);
 
         void SetHandles(IntPtr[] sharedTextures, string sharedMmapName);
+
+        void SetPlaybackMode(bool playing);
     }
 }

@@ -20,6 +20,8 @@ namespace Protogame.Editor.Grpc.GameHost {
     static readonly grpc::Marshaller<global::Protogame.Editor.Grpc.GameHost.GetMousePositionResponse> __Marshaller_GetMousePositionResponse = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Protogame.Editor.Grpc.GameHost.GetMousePositionResponse.Parser.ParseFrom);
     static readonly grpc::Marshaller<global::Protogame.Editor.Grpc.GameHost.QueueSerializedEventRequest> __Marshaller_QueueSerializedEventRequest = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Protogame.Editor.Grpc.GameHost.QueueSerializedEventRequest.Parser.ParseFrom);
     static readonly grpc::Marshaller<global::Protogame.Editor.Grpc.GameHost.QueueSerializedEventResponse> __Marshaller_QueueSerializedEventResponse = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Protogame.Editor.Grpc.GameHost.QueueSerializedEventResponse.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Protogame.Editor.Grpc.GameHost.SetPlaybackModeRequest> __Marshaller_SetPlaybackModeRequest = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Protogame.Editor.Grpc.GameHost.SetPlaybackModeRequest.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Protogame.Editor.Grpc.GameHost.SetPlaybackModeResponse> __Marshaller_SetPlaybackModeResponse = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Protogame.Editor.Grpc.GameHost.SetPlaybackModeResponse.Parser.ParseFrom);
 
     static readonly grpc::Method<global::Protogame.Editor.Grpc.GameHost.SetRenderTargetsRequest, global::Protogame.Editor.Grpc.GameHost.SetRenderTargetsResponse> __Method_SetRenderTargets = new grpc::Method<global::Protogame.Editor.Grpc.GameHost.SetRenderTargetsRequest, global::Protogame.Editor.Grpc.GameHost.SetRenderTargetsResponse>(
         grpc::MethodType.Unary,
@@ -49,6 +51,13 @@ namespace Protogame.Editor.Grpc.GameHost {
         __Marshaller_QueueSerializedEventRequest,
         __Marshaller_QueueSerializedEventResponse);
 
+    static readonly grpc::Method<global::Protogame.Editor.Grpc.GameHost.SetPlaybackModeRequest, global::Protogame.Editor.Grpc.GameHost.SetPlaybackModeResponse> __Method_SetPlaybackMode = new grpc::Method<global::Protogame.Editor.Grpc.GameHost.SetPlaybackModeRequest, global::Protogame.Editor.Grpc.GameHost.SetPlaybackModeResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "SetPlaybackMode",
+        __Marshaller_SetPlaybackModeRequest,
+        __Marshaller_SetPlaybackModeResponse);
+
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
     {
@@ -74,6 +83,11 @@ namespace Protogame.Editor.Grpc.GameHost {
       }
 
       public virtual global::System.Threading.Tasks.Task<global::Protogame.Editor.Grpc.GameHost.QueueSerializedEventResponse> QueueSerializedEvent(global::Protogame.Editor.Grpc.GameHost.QueueSerializedEventRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      public virtual global::System.Threading.Tasks.Task<global::Protogame.Editor.Grpc.GameHost.SetPlaybackModeResponse> SetPlaybackMode(global::Protogame.Editor.Grpc.GameHost.SetPlaybackModeRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -167,6 +181,22 @@ namespace Protogame.Editor.Grpc.GameHost {
       {
         return CallInvoker.AsyncUnaryCall(__Method_QueueSerializedEvent, null, options, request);
       }
+      public virtual global::Protogame.Editor.Grpc.GameHost.SetPlaybackModeResponse SetPlaybackMode(global::Protogame.Editor.Grpc.GameHost.SetPlaybackModeRequest request, grpc::Metadata headers = null, DateTime? deadline = null, CancellationToken cancellationToken = default(CancellationToken))
+      {
+        return SetPlaybackMode(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      public virtual global::Protogame.Editor.Grpc.GameHost.SetPlaybackModeResponse SetPlaybackMode(global::Protogame.Editor.Grpc.GameHost.SetPlaybackModeRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_SetPlaybackMode, null, options, request);
+      }
+      public virtual grpc::AsyncUnaryCall<global::Protogame.Editor.Grpc.GameHost.SetPlaybackModeResponse> SetPlaybackModeAsync(global::Protogame.Editor.Grpc.GameHost.SetPlaybackModeRequest request, grpc::Metadata headers = null, DateTime? deadline = null, CancellationToken cancellationToken = default(CancellationToken))
+      {
+        return SetPlaybackModeAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      public virtual grpc::AsyncUnaryCall<global::Protogame.Editor.Grpc.GameHost.SetPlaybackModeResponse> SetPlaybackModeAsync(global::Protogame.Editor.Grpc.GameHost.SetPlaybackModeRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_SetPlaybackMode, null, options, request);
+      }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       protected override GameHostServerClient NewInstance(ClientBaseConfiguration configuration)
       {
@@ -182,7 +212,8 @@ namespace Protogame.Editor.Grpc.GameHost {
           .AddMethod(__Method_SetRenderTargets, serviceImpl.SetRenderTargets)
           .AddMethod(__Method_SetMousePosition, serviceImpl.SetMousePosition)
           .AddMethod(__Method_GetMousePosition, serviceImpl.GetMousePosition)
-          .AddMethod(__Method_QueueSerializedEvent, serviceImpl.QueueSerializedEvent).Build();
+          .AddMethod(__Method_QueueSerializedEvent, serviceImpl.QueueSerializedEvent)
+          .AddMethod(__Method_SetPlaybackMode, serviceImpl.SetPlaybackMode).Build();
     }
 
   }

@@ -147,9 +147,9 @@ namespace Protogame.Editor
             };
             button.Click += (sender, e) =>
             {
-                /*_loadedGame.Playing = true;
+                _loadedGame.SetPlaybackMode(true);
                 button.Toggled = true;
-                _workspaceContainer.ActivateWhere(x => x is GameEditorWindow);*/
+                _workspaceContainer.ActivateWhere(x => x is GameEditorWindow);
             };
             return button;
         }
@@ -162,16 +162,16 @@ namespace Protogame.Editor
             };
             button.Click += (sender, e) =>
             {
-                /*if (_loadedGame.State == LoadedGameState.Playing)
+                if (_loadedGame.GetPlaybackState() == LoadedGameState.Playing)
                 {
-                    _loadedGame.Playing = false;
+                    _loadedGame.SetPlaybackMode(false);
                     button.Toggled = true;
                 }
-                else if (_loadedGame.State == LoadedGameState.Paused)
+                else if (_loadedGame.GetPlaybackState() == LoadedGameState.Paused)
                 {
-                    _loadedGame.Playing = true;
+                    _loadedGame.SetPlaybackMode(true);
                     button.Toggled = false;
-                }*/
+                }
             };
             return button;
         }
@@ -184,12 +184,12 @@ namespace Protogame.Editor
             };
             button.Click += (sender, e) =>
             {
-                /*if (_loadedGame.State == LoadedGameState.Playing ||
-                    _loadedGame.State == LoadedGameState.Paused)
+                if (_loadedGame.GetPlaybackState() == LoadedGameState.Playing ||
+                    _loadedGame.GetPlaybackState() == LoadedGameState.Paused)
                 {
-                    _loadedGame.Restart();
+                    _loadedGame.RequestRestart();
                     _workspaceContainer.ActivateWhere(x => x is WorldEditorWindow);
-                }*/
+                }
             };
             return button;
         }
@@ -233,12 +233,14 @@ namespace Protogame.Editor
         {
             _mainMenuController.Update(gameContext, updateContext);
 
-            /*_playButton.Toggled = _loadedGame.State == LoadedGameState.Playing || _loadedGame.State == LoadedGameState.Paused;
-            _pauseButton.Toggled = _loadedGame.State == LoadedGameState.Paused;
+            var state = _loadedGame.GetPlaybackState();
 
-            _playButton.Enabled = _projectManager.Project != null && _loadedGame.State != LoadedGameState.Loading;
-            _pauseButton.Enabled = _loadedGame.State == LoadedGameState.Playing || _loadedGame.State == LoadedGameState.Paused;
-            _stopButton.Enabled = _loadedGame.State == LoadedGameState.Playing || _loadedGame.State == LoadedGameState.Paused;*/
+            _playButton.Toggled = state == LoadedGameState.Playing || state == LoadedGameState.Paused;
+            _pauseButton.Toggled = state == LoadedGameState.Paused;
+
+            _playButton.Enabled = _projectManager.Project != null && state != LoadedGameState.Loading;
+            _pauseButton.Enabled = state == LoadedGameState.Playing || state == LoadedGameState.Paused;
+            _stopButton.Enabled = state == LoadedGameState.Playing || state == LoadedGameState.Paused;
 
             foreach (var t in _toolButtons)
             {

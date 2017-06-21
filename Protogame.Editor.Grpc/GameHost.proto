@@ -7,6 +7,7 @@ service GameHostServer {
   rpc SetMousePosition(SetMousePositionRequest) returns (SetMousePositionResponse);
   rpc GetMousePosition(GetMousePositionRequest) returns (GetMousePositionResponse);
   rpc QueueSerializedEvent(QueueSerializedEventRequest) returns (QueueSerializedEventResponse);
+  rpc SetPlaybackMode(SetPlaybackModeRequest) returns (SetPlaybackModeResponse);
 }
 
 message SetMousePositionRequest {
@@ -38,4 +39,11 @@ message SetRenderTargetsRequest {
 }
 
 message SetRenderTargetsResponse {
+}
+
+message SetPlaybackModeRequest {
+  bool playing = 1;
+}
+
+message SetPlaybackModeResponse {
 }

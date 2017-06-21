@@ -389,6 +389,8 @@ namespace Protogame.Editor.Grpc.Editor {
     static readonly grpc::Marshaller<global::Protogame.Editor.Grpc.Editor.GetBackBufferDimensionsResponse> __Marshaller_GetBackBufferDimensionsResponse = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Protogame.Editor.Grpc.Editor.GetBackBufferDimensionsResponse.Parser.ParseFrom);
     static readonly grpc::Marshaller<global::Protogame.Editor.Grpc.Editor.GetBaseDirectoryRequest> __Marshaller_GetBaseDirectoryRequest = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Protogame.Editor.Grpc.Editor.GetBaseDirectoryRequest.Parser.ParseFrom);
     static readonly grpc::Marshaller<global::Protogame.Editor.Grpc.Editor.GetBaseDirectoryResponse> __Marshaller_GetBaseDirectoryResponse = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Protogame.Editor.Grpc.Editor.GetBaseDirectoryResponse.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Protogame.Editor.Grpc.Editor.PlaybackStateChangedRequest> __Marshaller_PlaybackStateChangedRequest = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Protogame.Editor.Grpc.Editor.PlaybackStateChangedRequest.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Protogame.Editor.Grpc.Editor.PlaybackStateChangedResponse> __Marshaller_PlaybackStateChangedResponse = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Protogame.Editor.Grpc.Editor.PlaybackStateChangedResponse.Parser.ParseFrom);
 
     static readonly grpc::Method<global::Protogame.Editor.Grpc.Editor.GetBackBufferDimensionsRequest, global::Protogame.Editor.Grpc.Editor.GetBackBufferDimensionsResponse> __Method_GetBackBufferDimensions = new grpc::Method<global::Protogame.Editor.Grpc.Editor.GetBackBufferDimensionsRequest, global::Protogame.Editor.Grpc.Editor.GetBackBufferDimensionsResponse>(
         grpc::MethodType.Unary,
@@ -403,6 +405,13 @@ namespace Protogame.Editor.Grpc.Editor {
         "GetBaseDirectory",
         __Marshaller_GetBaseDirectoryRequest,
         __Marshaller_GetBaseDirectoryResponse);
+
+    static readonly grpc::Method<global::Protogame.Editor.Grpc.Editor.PlaybackStateChangedRequest, global::Protogame.Editor.Grpc.Editor.PlaybackStateChangedResponse> __Method_PlaybackStateChanged = new grpc::Method<global::Protogame.Editor.Grpc.Editor.PlaybackStateChangedRequest, global::Protogame.Editor.Grpc.Editor.PlaybackStateChangedResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "PlaybackStateChanged",
+        __Marshaller_PlaybackStateChangedRequest,
+        __Marshaller_PlaybackStateChangedResponse);
 
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
@@ -419,6 +428,11 @@ namespace Protogame.Editor.Grpc.Editor {
       }
 
       public virtual global::System.Threading.Tasks.Task<global::Protogame.Editor.Grpc.Editor.GetBaseDirectoryResponse> GetBaseDirectory(global::Protogame.Editor.Grpc.Editor.GetBaseDirectoryRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      public virtual global::System.Threading.Tasks.Task<global::Protogame.Editor.Grpc.Editor.PlaybackStateChangedResponse> PlaybackStateChanged(global::Protogame.Editor.Grpc.Editor.PlaybackStateChangedRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -480,6 +494,22 @@ namespace Protogame.Editor.Grpc.Editor {
       {
         return CallInvoker.AsyncUnaryCall(__Method_GetBaseDirectory, null, options, request);
       }
+      public virtual global::Protogame.Editor.Grpc.Editor.PlaybackStateChangedResponse PlaybackStateChanged(global::Protogame.Editor.Grpc.Editor.PlaybackStateChangedRequest request, grpc::Metadata headers = null, DateTime? deadline = null, CancellationToken cancellationToken = default(CancellationToken))
+      {
+        return PlaybackStateChanged(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      public virtual global::Protogame.Editor.Grpc.Editor.PlaybackStateChangedResponse PlaybackStateChanged(global::Protogame.Editor.Grpc.Editor.PlaybackStateChangedRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_PlaybackStateChanged, null, options, request);
+      }
+      public virtual grpc::AsyncUnaryCall<global::Protogame.Editor.Grpc.Editor.PlaybackStateChangedResponse> PlaybackStateChangedAsync(global::Protogame.Editor.Grpc.Editor.PlaybackStateChangedRequest request, grpc::Metadata headers = null, DateTime? deadline = null, CancellationToken cancellationToken = default(CancellationToken))
+      {
+        return PlaybackStateChangedAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      public virtual grpc::AsyncUnaryCall<global::Protogame.Editor.Grpc.Editor.PlaybackStateChangedResponse> PlaybackStateChangedAsync(global::Protogame.Editor.Grpc.Editor.PlaybackStateChangedRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_PlaybackStateChanged, null, options, request);
+      }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       protected override GameHosterClient NewInstance(ClientBaseConfiguration configuration)
       {
@@ -493,7 +523,8 @@ namespace Protogame.Editor.Grpc.Editor {
     {
       return grpc::ServerServiceDefinition.CreateBuilder()
           .AddMethod(__Method_GetBackBufferDimensions, serviceImpl.GetBackBufferDimensions)
-          .AddMethod(__Method_GetBaseDirectory, serviceImpl.GetBaseDirectory).Build();
+          .AddMethod(__Method_GetBaseDirectory, serviceImpl.GetBaseDirectory)
+          .AddMethod(__Method_PlaybackStateChanged, serviceImpl.PlaybackStateChanged).Build();
     }
 
   }

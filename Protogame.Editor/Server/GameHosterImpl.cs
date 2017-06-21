@@ -34,5 +34,11 @@ namespace Protogame.Editor.Server
 
             return Task.FromResult(new GetBackBufferDimensionsResponse { Width = 640, Height = 480 });
         }
+
+        public override Task<PlaybackStateChangedResponse> PlaybackStateChanged(PlaybackStateChangedRequest request, ServerCallContext context)
+        {
+            _loadedGame.Value.SetPlaybackStateInternal(request);
+            return Task.FromResult(new PlaybackStateChangedResponse());
+        }
     }
 }

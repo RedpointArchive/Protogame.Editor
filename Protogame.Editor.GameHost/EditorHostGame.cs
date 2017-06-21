@@ -89,6 +89,12 @@ namespace Protogame.Editor.GameHost
 
         public void Render(TimeSpan totalTimeSpan, TimeSpan elapsedTimeSpan)
         {
+            if (_graphicsDeviceService.RenderTarget == null)
+            {
+                // Can't render unless we have a surface to render on.
+                return;
+            }
+
             var didPush = false;
             if (_coreGame.RenderContext != null && _coreGame.RenderContext.GraphicsDevice != null)
             {

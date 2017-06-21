@@ -4,6 +4,8 @@ using Protogame.Editor.Grpc.GameHost;
 using static Protogame.Editor.Grpc.GameHost.GameHostServer;
 using System;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 namespace Protogame.Editor.GameHost
 {
@@ -11,6 +13,7 @@ namespace Protogame.Editor.GameHost
     {
         private readonly IGameRunner _gameRunner;
         private readonly HostedEventEngineHook _hostedEventEngineHook;
+        private readonly BinaryFormatter _formatter;
 
         public GameHostServerImpl(
             IGameRunner gameRunner,
@@ -18,6 +21,7 @@ namespace Protogame.Editor.GameHost
         {
             _gameRunner = gameRunner;
             _hostedEventEngineHook = hostedEventEngineHook;
+            _formatter = new BinaryFormatter();
         }
 
         public override Task<SetRenderTargetsResponse> SetRenderTargets(SetRenderTargetsRequest request, ServerCallContext context)
@@ -41,6 +45,22 @@ namespace Protogame.Editor.GameHost
                 X = x,
                 Y = y
             });
+        }
+
+        public override Task<SetPlaybackModeResponse> SetPlaybackMode(SetPlaybackModeRequest request, ServerCallContext context)
+        {
+            _gameRunner.SetPlaybackMode(request.Playing);
+            return Task.FromResult(new SetPlaybackModeResponse());
+        }
+
+        public override Task<QueueSerializedEventResponse> QueueSerializedEvent(QueueSerializedEventRequest request, ServerCallContext context)
+        {
+            using (var memory = new MemoryStream(request.SerializedEvent.ToByteArray()))
+            {
+                var @event = _formatter.Deserialize(memory) as Event;
+                _hostedEventEngineHook.QueueEvent(@event);
+            }   
+            return Task.FromResult(new QueueSerializedEventResponse());
         }
     }
 }

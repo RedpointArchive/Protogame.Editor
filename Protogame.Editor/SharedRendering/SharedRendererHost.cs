@@ -66,6 +66,8 @@ namespace Protogame.Editor.SharedRendering
                 _mustDestroyRenderTargets = false;
             }
 
+            var didRecreate = false;
+
             for (var i = 0; i < RTBufferSize; i++)
             {
                 var oldRenderTarget = _renderTargets[i];
@@ -82,8 +84,12 @@ namespace Protogame.Editor.SharedRendering
                 {
                     // Release the lock we will have.
                     _renderTargets[i].ReleaseLock(1234);
+                    didRecreate = true;
                 }
+            }
 
+            if (didRecreate)
+            {
                 TexturesRecreated?.Invoke(this, EventArgs.Empty);
             }
         }

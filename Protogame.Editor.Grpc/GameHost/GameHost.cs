@@ -30,15 +30,18 @@ namespace Protogame.Editor.Grpc.GameHost {
             "DCIeChxRdWV1ZVNlcmlhbGl6ZWRFdmVudFJlc3BvbnNlIk0KF1NldFJlbmRl",
             "clRhcmdldHNSZXF1ZXN0EhUKDXNoYXJlZFBvaW50ZXIYASADKAMSGwoTc3lu",
             "Y01tYXBwZWRGaWxlTmFtZRgCIAEoCSIaChhTZXRSZW5kZXJUYXJnZXRzUmVz",
-            "cG9uc2UywAIKDkdhbWVIb3N0U2VydmVyEkcKEFNldFJlbmRlclRhcmdldHMS",
-            "GC5TZXRSZW5kZXJUYXJnZXRzUmVxdWVzdBoZLlNldFJlbmRlclRhcmdldHNS",
-            "ZXNwb25zZRJHChBTZXRNb3VzZVBvc2l0aW9uEhguU2V0TW91c2VQb3NpdGlv",
-            "blJlcXVlc3QaGS5TZXRNb3VzZVBvc2l0aW9uUmVzcG9uc2USRwoQR2V0TW91",
-            "c2VQb3NpdGlvbhIYLkdldE1vdXNlUG9zaXRpb25SZXF1ZXN0GhkuR2V0TW91",
-            "c2VQb3NpdGlvblJlc3BvbnNlElMKFFF1ZXVlU2VyaWFsaXplZEV2ZW50Ehwu",
-            "UXVldWVTZXJpYWxpemVkRXZlbnRSZXF1ZXN0Gh0uUXVldWVTZXJpYWxpemVk",
-            "RXZlbnRSZXNwb25zZUIhqgIeUHJvdG9nYW1lLkVkaXRvci5HcnBjLkdhbWVI",
-            "b3N0YgZwcm90bzM="));
+            "cG9uc2UiKQoWU2V0UGxheWJhY2tNb2RlUmVxdWVzdBIPCgdwbGF5aW5nGAEg",
+            "ASgIIhkKF1NldFBsYXliYWNrTW9kZVJlc3BvbnNlMoYDCg5HYW1lSG9zdFNl",
+            "cnZlchJHChBTZXRSZW5kZXJUYXJnZXRzEhguU2V0UmVuZGVyVGFyZ2V0c1Jl",
+            "cXVlc3QaGS5TZXRSZW5kZXJUYXJnZXRzUmVzcG9uc2USRwoQU2V0TW91c2VQ",
+            "b3NpdGlvbhIYLlNldE1vdXNlUG9zaXRpb25SZXF1ZXN0GhkuU2V0TW91c2VQ",
+            "b3NpdGlvblJlc3BvbnNlEkcKEEdldE1vdXNlUG9zaXRpb24SGC5HZXRNb3Vz",
+            "ZVBvc2l0aW9uUmVxdWVzdBoZLkdldE1vdXNlUG9zaXRpb25SZXNwb25zZRJT",
+            "ChRRdWV1ZVNlcmlhbGl6ZWRFdmVudBIcLlF1ZXVlU2VyaWFsaXplZEV2ZW50",
+            "UmVxdWVzdBodLlF1ZXVlU2VyaWFsaXplZEV2ZW50UmVzcG9uc2USRAoPU2V0",
+            "UGxheWJhY2tNb2RlEhcuU2V0UGxheWJhY2tNb2RlUmVxdWVzdBoYLlNldFBs",
+            "YXliYWNrTW9kZVJlc3BvbnNlQiGqAh5Qcm90b2dhbWUuRWRpdG9yLkdycGMu",
+            "R2FtZUhvc3RiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -49,7 +52,9 @@ namespace Protogame.Editor.Grpc.GameHost {
             new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.GameHost.QueueSerializedEventRequest), global::Protogame.Editor.Grpc.GameHost.QueueSerializedEventRequest.Parser, new[]{ "SerializedEvent" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.GameHost.QueueSerializedEventResponse), global::Protogame.Editor.Grpc.GameHost.QueueSerializedEventResponse.Parser, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.GameHost.SetRenderTargetsRequest), global::Protogame.Editor.Grpc.GameHost.SetRenderTargetsRequest.Parser, new[]{ "SharedPointer", "SyncMmappedFileName" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.GameHost.SetRenderTargetsResponse), global::Protogame.Editor.Grpc.GameHost.SetRenderTargetsResponse.Parser, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.GameHost.SetRenderTargetsResponse), global::Protogame.Editor.Grpc.GameHost.SetRenderTargetsResponse.Parser, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.GameHost.SetPlaybackModeRequest), global::Protogame.Editor.Grpc.GameHost.SetPlaybackModeRequest.Parser, new[]{ "Playing" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.GameHost.SetPlaybackModeResponse), global::Protogame.Editor.Grpc.GameHost.SetPlaybackModeResponse.Parser, null, null, null, null)
           }));
     }
     #endregion
@@ -938,6 +943,212 @@ namespace Protogame.Editor.Grpc.GameHost {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void MergeFrom(SetRenderTargetsResponse other) {
+      if (other == null) {
+        return;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class SetPlaybackModeRequest : pb::IMessage<SetPlaybackModeRequest> {
+    private static readonly pb::MessageParser<SetPlaybackModeRequest> _parser = new pb::MessageParser<SetPlaybackModeRequest>(() => new SetPlaybackModeRequest());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<SetPlaybackModeRequest> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Protogame.Editor.Grpc.GameHost.GameHostReflection.Descriptor.MessageTypes[8]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public SetPlaybackModeRequest() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public SetPlaybackModeRequest(SetPlaybackModeRequest other) : this() {
+      playing_ = other.playing_;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public SetPlaybackModeRequest Clone() {
+      return new SetPlaybackModeRequest(this);
+    }
+
+    /// <summary>Field number for the "playing" field.</summary>
+    public const int PlayingFieldNumber = 1;
+    private bool playing_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Playing {
+      get { return playing_; }
+      set {
+        playing_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as SetPlaybackModeRequest);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(SetPlaybackModeRequest other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Playing != other.Playing) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Playing != false) hash ^= Playing.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Playing != false) {
+        output.WriteRawTag(8);
+        output.WriteBool(Playing);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (Playing != false) {
+        size += 1 + 1;
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(SetPlaybackModeRequest other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Playing != false) {
+        Playing = other.Playing;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 8: {
+            Playing = input.ReadBool();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class SetPlaybackModeResponse : pb::IMessage<SetPlaybackModeResponse> {
+    private static readonly pb::MessageParser<SetPlaybackModeResponse> _parser = new pb::MessageParser<SetPlaybackModeResponse>(() => new SetPlaybackModeResponse());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<SetPlaybackModeResponse> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Protogame.Editor.Grpc.GameHost.GameHostReflection.Descriptor.MessageTypes[9]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public SetPlaybackModeResponse() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public SetPlaybackModeResponse(SetPlaybackModeResponse other) : this() {
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public SetPlaybackModeResponse Clone() {
+      return new SetPlaybackModeResponse(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as SetPlaybackModeResponse);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(SetPlaybackModeResponse other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(SetPlaybackModeResponse other) {
       if (other == null) {
         return;
       }

@@ -1,16 +1,14 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
 using System.IO.MemoryMappedFiles;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Protogame.Editor.CommonHost.SharedRendering
 {
     public class SharedRendererClient
     {
+        private readonly Api.Version1.Core.IConsoleHandle _consoleHandle;
+
         private string _sharedMmapName;
         private IntPtr[] _sharedTexturePointers;
         private RenderTarget2D[] _sharedTextures;
@@ -18,8 +16,9 @@ namespace Protogame.Editor.CommonHost.SharedRendering
         private MemoryMappedViewAccessor _readerWriterAccessor;
         private bool _mustRecreateTextures;
 
-        public SharedRendererClient()
+        public SharedRendererClient(Api.Version1.Core.IConsoleHandle consoleHandle)
         {
+            _consoleHandle = consoleHandle;
         }
 
         public bool GraphicsDeviceExpected => _sharedTexturePointers != null && _sharedTexturePointers.Length > 0;
@@ -53,30 +52,32 @@ namespace Protogame.Editor.CommonHost.SharedRendering
         {
             if (_mustRecreateTextures)
             {
+                _consoleHandle.LogInfo("Recreating shared textures in game host...");
+
                 if (_sharedTextures != null)
                 {
                     for (var i = 0; i < _sharedTextures.Length; i++)
                     {
                         _sharedTextures[i].Dispose();
                     }
+                }
 
-                    if (_sharedTexturePointers != null)
-                    {
-                        _sharedTextures = new RenderTarget2D[_sharedTexturePointers.Length];
-                    }
-                    else
-                    {
-                        _sharedTextures = null;
-                    }
+                if (_sharedTexturePointers != null)
+                {
+                    _sharedTextures = new RenderTarget2D[_sharedTexturePointers.Length];
+                }
+                else
+                {
+                    _sharedTextures = null;
+                }
 
-                    if (_sharedTextures != null)
+                if (_sharedTextures != null)
+                {
+                    for (var i = 0; i < _sharedTexturePointers.Length; i++)
                     {
-                        for (var i = 0; i < _sharedTexturePointers.Length; i++)
-                        {
-                            _sharedTextures[i] = RenderTarget2D.FromSharedResourceHandle(
-                                graphicsDevice,
-                                _sharedTexturePointers[i]);
-                        }
+                        _sharedTextures[i] = RenderTarget2D.FromSharedResourceHandle(
+                            graphicsDevice,
+                            _sharedTexturePointers[i]);
                     }
                 }
             }
@@ -84,6 +85,11 @@ namespace Protogame.Editor.CommonHost.SharedRendering
 
         public void IncrementWritableTextureIfPossible()
         {
+            if (_sharedTextures == null)
+            {
+                return;
+            }
+
             var nextIndex = GetWriteIndex() + 1;
             if (nextIndex == _sharedTextures.Length) { nextIndex = 0; }
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Protogame.Editor.Api.Version1.Core;
+using Protogame.Editor.CommonHost;
 using Protogame.Editor.CommonHost.SharedRendering;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using static Protogame.Editor.Grpc.Editor.GameHoster;
 
 namespace Protogame.Editor.GameHost
 {
@@ -18,14 +20,14 @@ namespace Protogame.Editor.GameHost
         private readonly Api.Version1.Core.IConsoleHandle _consoleHandle;
         private readonly ISharedRendererClientFactory _sharedRendererClientFactory;
         private readonly IWantsUpdateSignal[] _wantsUpdateSignals;
+        private readonly GameHosterClient _gameHosterClient;
 
         private EditorHostGame _editorHostGame;
         private bool _hasAssignedGame;
         private bool _hasRunGameUpdate;
         private IntPtr[] _sharedResourceHandles;
         private int _currentWriteIndex;
-
-        private TimeSpan _playingFor = TimeSpan.Zero;
+        
         private DateTime? _playingStartTime = null;
 
         private TimeSpan _accumulatedElapsedTime;
@@ -40,22 +42,25 @@ namespace Protogame.Editor.GameHost
         private bool _suppressDraw = false;
         private string _sharedMmapName;
         private bool _delayAssignSharedResourceHandles;
+        private bool _playing;
 
         public HostedGameRunner(
             ICoreGame game,
             ILogShipping logShipping,
             Api.Version1.Core.IConsoleHandle consoleHandle,
             ISharedRendererClientFactory sharedRendererClientFactory,
-            IWantsUpdateSignal[] wantsUpdateSignals)
+            IWantsUpdateSignal[] wantsUpdateSignals,
+            IEditorClientProvider editorClientProvider)
         {
             _game = game;
             _logShipping = logShipping;
             _consoleHandle = consoleHandle;
             _sharedRendererClientFactory = sharedRendererClientFactory;
             _wantsUpdateSignals = wantsUpdateSignals;
+            _gameHosterClient = editorClientProvider.GetClient<GameHosterClient>();
 
-            State = LoadedGameState.Loading;
-            Playing = false;
+            State = LoadedGameState.Loaded;
+            _playing = false;
         }
 
         public LoadedGameState State
@@ -64,12 +69,9 @@ namespace Protogame.Editor.GameHost
             private set;
         }
 
-        public TimeSpan PlayingFor => _playingFor;
-
-        public bool Playing
+        public void SetPlaybackMode(bool playing)
         {
-            get;
-            set;
+            _playing = playing;
         }
 
         public void Run()
@@ -92,7 +94,7 @@ namespace Protogame.Editor.GameHost
                     catch (Exception ex)
                     {
                         Console.Error.WriteLine(ex);
-                        Playing = false;
+                        _playing = false;
                     }
                 }
             }
@@ -237,12 +239,14 @@ namespace Protogame.Editor.GameHost
                 ws.Update();
             }
 
-            if (Playing)
+            if (_playing)
             {
                 if (State == LoadedGameState.Paused ||
                     State == LoadedGameState.Loaded)
                 {
                     State = LoadedGameState.Playing;
+
+                    SyncPlaybackStateToEditor();
                 }
             }
             else
@@ -250,6 +254,8 @@ namespace Protogame.Editor.GameHost
                 if (State == LoadedGameState.Playing)
                 {
                     State = LoadedGameState.Paused;
+
+                    SyncPlaybackStateToEditor();
                 }
             }
 
@@ -265,6 +271,8 @@ namespace Protogame.Editor.GameHost
                 _editorHostGame = new EditorHostGame(_game, _sharedRendererClientFactory);
                 InternalLog("Assigned host instance to game");
                 _hasAssignedGame = true;
+
+                SyncPlaybackStateToEditor();
             }
 
             if (State == LoadedGameState.Playing)
@@ -300,6 +308,10 @@ namespace Protogame.Editor.GameHost
 
             if (_delayAssignSharedResourceHandles)
             {
+                _consoleHandle.LogInfo("Delay assigning shared textures from editor for game hosting...");
+                _consoleHandle.LogInfo("Shared texture count: " + (_sharedResourceHandles == null ? "<null>" : _sharedResourceHandles.Length.ToString()));
+                _consoleHandle.LogInfo("Shared memory mapped filename: " + _sharedMmapName);
+
                 _editorHostGame.SetSharedResourceHandles(_sharedResourceHandles, _sharedMmapName);
                 _delayAssignSharedResourceHandles = false;
             }
@@ -323,9 +335,9 @@ namespace Protogame.Editor.GameHost
             if (_playingStartTime == null)
             {
                 _playingStartTime = DateTime.Now;
-            }
 
-            _playingFor = DateTime.Now - _playingStartTime.Value;
+                SyncPlaybackStateToEditor();
+            }
         }
 
         private void InternalLog(string message)
@@ -356,13 +368,53 @@ namespace Protogame.Editor.GameHost
             }
         }
 
+        private void SyncPlaybackStateToEditor()
+        {
+            Grpc.Editor.PlaybackState state = Grpc.Editor.PlaybackState.Loading;
+            switch (State)
+            {
+                case LoadedGameState.Loading:
+                    state = Grpc.Editor.PlaybackState.Loading;
+                    break;
+                case LoadedGameState.Loaded:
+                    state = Grpc.Editor.PlaybackState.Loaded;
+                    break;
+                case LoadedGameState.Playing:
+                    state = Grpc.Editor.PlaybackState.Playing;
+                    break;
+                case LoadedGameState.Paused:
+                    state = Grpc.Editor.PlaybackState.Paused;
+                    break;
+            }
+
+            Grpc.Editor.Timestamp timestamp = null;
+            if (_playingStartTime != null)
+            {
+                timestamp = new Grpc.Editor.Timestamp
+                {
+                    UnixTimestamp = (UInt64)(_playingStartTime.Value.Subtract(new DateTime(1970, 1, 1))).TotalSeconds
+                };
+            }
+
+            _gameHosterClient.PlaybackStateChanged(new Grpc.Editor.PlaybackStateChangedRequest
+            {
+                State = state,
+                StartTime = timestamp
+            });
+        }
+
         public void SetHandles(IntPtr[] sharedTextures, string sharedMmapName)
         {
+            _consoleHandle.LogInfo("Received shared textures from editor for game hosting...");
+            _consoleHandle.LogInfo("Shared texture count: " + (sharedTextures == null ? "<null>" : sharedTextures.Length.ToString()));
+            _consoleHandle.LogInfo("Shared memory mapped filename: " + sharedMmapName);
+
             _sharedResourceHandles = sharedTextures;
             _sharedMmapName = sharedMmapName;
 
             if (_editorHostGame == null)
             {
+                _consoleHandle.LogWarning("Needs delay-assignment of shared resource handles");
                 _delayAssignSharedResourceHandles = true;
             }
             else
