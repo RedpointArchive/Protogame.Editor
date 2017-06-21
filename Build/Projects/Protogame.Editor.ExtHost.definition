@@ -7,14 +7,21 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Runtime.Remoting" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Protogame.Editor.Api" />
-    <Reference Include="Protogame.Editor.Grpc" />
-    <Reference Include="Protogame.Editor.CommonHost" />
     <Reference Include="Grpc" />
     <Reference Include="Grpc.Native" />
     <Reference Include="System.Interactive.Async" />
     <Reference Include="Google.Protobuf" />
     <Reference Include="Protoinject" />
+    <Reference Include="Protogame.Editor.Grpc" />
+    <Reference Include="Protogame.Editor.Api" />
+    <Reference Include="Protogame.Editor.CommonHost" />
+    <Reference Include="protobuf-net" />
+    <Reference Include="Protoinject" />
+    <Reference Include="Mono.Cecil" />
+    <Reference Include="MonoGame.Framework" />
+    <Reference Include="Protogame" />
+    <Reference Include="Protogame.ThirdParty" />
+    <Reference Include="Jitter" />
   </References>
   <Properties>
     <DebugSymbolsOnRelease>full</DebugSymbolsOnRelease>

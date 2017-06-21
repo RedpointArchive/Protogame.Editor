@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using Protogame.Editor.Api.Version1.Core;
+using Protogame.Editor.CommonHost.SharedRendering;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -14,6 +16,8 @@ namespace Protogame.Editor.GameHost
         private readonly ICoreGame _game;
         private readonly ILogShipping _logShipping;
         private readonly Api.Version1.Core.IConsoleHandle _consoleHandle;
+        private readonly ISharedRendererClientFactory _sharedRendererClientFactory;
+        private readonly IWantsUpdateSignal[] _wantsUpdateSignals;
 
         private EditorHostGame _editorHostGame;
         private bool _hasAssignedGame;
@@ -34,15 +38,21 @@ namespace Protogame.Editor.GameHost
         private bool IsFixedTimeStep = true;
         private bool _shouldExit = false;
         private bool _suppressDraw = false;
+        private string _sharedMmapName;
+        private bool _delayAssignSharedResourceHandles;
 
         public HostedGameRunner(
             ICoreGame game,
             ILogShipping logShipping,
-            Api.Version1.Core.IConsoleHandle consoleHandle)
+            Api.Version1.Core.IConsoleHandle consoleHandle,
+            ISharedRendererClientFactory sharedRendererClientFactory,
+            IWantsUpdateSignal[] wantsUpdateSignals)
         {
             _game = game;
             _logShipping = logShipping;
             _consoleHandle = consoleHandle;
+            _sharedRendererClientFactory = sharedRendererClientFactory;
+            _wantsUpdateSignals = wantsUpdateSignals;
 
             State = LoadedGameState.Loading;
             Playing = false;
@@ -222,6 +232,11 @@ namespace Protogame.Editor.GameHost
 
         private void DoUpdate(GameTime gameTime)
         {
+            foreach (var ws in _wantsUpdateSignals)
+            {
+                ws.Update();
+            }
+
             if (Playing)
             {
                 if (State == LoadedGameState.Paused ||
@@ -247,7 +262,7 @@ namespace Protogame.Editor.GameHost
             if (!_hasAssignedGame)
             {
                 InternalLog("Assigning host instance to game");
-                _editorHostGame = new EditorHostGame(_game);
+                _editorHostGame = new EditorHostGame(_game, _sharedRendererClientFactory);
                 InternalLog("Assigned host instance to game");
                 _hasAssignedGame = true;
             }
@@ -283,13 +298,17 @@ namespace Protogame.Editor.GameHost
                 return;
             }*/
 
+            if (_delayAssignSharedResourceHandles)
+            {
+                _editorHostGame.SetSharedResourceHandles(_sharedResourceHandles, _sharedMmapName);
+                _delayAssignSharedResourceHandles = false;
+            }
+
             if (State != LoadedGameState.Playing)
             {
                 return;
             }
 
-            _editorHostGame?.SetSharedResourceHandles(_sharedResourceHandles, _currentWriteIndex);
-            
             try
             {
                 _editorHostGame?.Render(gameTime.TotalGameTime, gameTime.ElapsedGameTime);
@@ -299,23 +318,7 @@ namespace Protogame.Editor.GameHost
                 FlushLogs();
             }
 
-            /*lock (_incrementLock)
-            {
-                var nextIndex = _currentWriteTargetIndex + 1;
-                if (nextIndex == RenderTargetBufferConfiguration.RTBufferSize) { nextIndex = 0; }
-
-                if (nextIndex != _currentReadTargetIndex)
-                {
-                    // Only move the write index if the one we want is not the one
-                    // we're currently reading from.
-                    _currentWriteTargetIndex = nextIndex;
-                    _didWriteStall = false;
-                }
-                else
-                {
-                    _didWriteStall = true;
-                }
-            }*/
+            _editorHostGame?.IncrementWritableTextureIfPossible();
 
             if (_playingStartTime == null)
             {
@@ -350,6 +353,21 @@ namespace Protogame.Editor.GameHost
                         _consoleHandle.LogError(l.Message);
                         break;
                 }
+            }
+        }
+
+        public void SetHandles(IntPtr[] sharedTextures, string sharedMmapName)
+        {
+            _sharedResourceHandles = sharedTextures;
+            _sharedMmapName = sharedMmapName;
+
+            if (_editorHostGame == null)
+            {
+                _delayAssignSharedResourceHandles = true;
+            }
+            else
+            {
+                _editorHostGame.SetSharedResourceHandles(_sharedResourceHandles, _sharedMmapName);
             }
         }
     }

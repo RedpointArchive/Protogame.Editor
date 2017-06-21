@@ -2,6 +2,8 @@
 using Grpc.Core;
 using Protogame.Editor.Grpc.GameHost;
 using static Protogame.Editor.Grpc.GameHost.GameHostServer;
+using System;
+using System.Linq;
 
 namespace Protogame.Editor.GameHost
 {
@@ -16,6 +18,12 @@ namespace Protogame.Editor.GameHost
         {
             _gameRunner = gameRunner;
             _hostedEventEngineHook = hostedEventEngineHook;
+        }
+
+        public override Task<SetRenderTargetsResponse> SetRenderTargets(SetRenderTargetsRequest request, ServerCallContext context)
+        {
+            _gameRunner.SetHandles(request.SharedPointer.Select(x => new IntPtr(x)).ToArray(), request.SyncMmappedFileName);
+            return Task.FromResult(new SetRenderTargetsResponse());
         }
 
         public override Task<SetMousePositionResponse> SetMousePosition(SetMousePositionRequest request, ServerCallContext context)

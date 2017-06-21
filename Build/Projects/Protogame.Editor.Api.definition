@@ -7,6 +7,11 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Protoinject" />
+    <Reference Include="protobuf-net" />
+    <Reference Include="MonoGame.Framework" />
+    <Reference Include="Protogame" />
+    <Reference Include="Protogame.ThirdParty" />
+    <Reference Include="Jitter" />
   </References>
   <Properties>
     <DebugSymbolsOnRelease>full</DebugSymbolsOnRelease>
@@ -21,6 +26,7 @@
     <Compile Include="Version1\EditorWindow\IEditorWindowProvider.cs" />
     <Compile Include="Version1\ExtensionAttribute.cs" />
     <Compile Include="Version1\IEditorExtension.cs" />
+    <Compile Include="Version1\IGameHostExtension.cs" />
     <Compile Include="Version1\Menu\IMenuProvider.cs" />
     <Compile Include="Version1\Menu\MenuEntry.cs" />
     <Compile Include="Version1\ProjectManagement\IDefinitionInfo.cs" />

@@ -9,7 +9,7 @@ using Protogame.Editor.Grpc.Editor;
 
 namespace Protogame.Editor.CommonHost
 {
-    public class ConsoleHandle : IConsoleHandle
+    public class ConsoleHandle : Editor.Api.Version1.Core.IConsoleHandle
     {
         private readonly ConsoleClient _consoleHandle;
 

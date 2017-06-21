@@ -126,7 +126,7 @@ namespace Protogame.Editor.ExtHost
             kernel.Bind<IProjectManager>().To<ProjectManager>().InSingletonScope();
             kernel.Bind<IWantsUpdateSignal>().To<ProjectManagerUpdateSignal>().InSingletonScope();
             kernel.Bind<IWantsUpdateSignal>().To<PresenceCheckerUpdateSignal>().InSingletonScope();
-            kernel.Bind<IConsoleHandle>().To<ConsoleHandle>().InSingletonScope();
+            kernel.Bind<Editor.Api.Version1.Core.IConsoleHandle>().To<ConsoleHandle>().InSingletonScope();
             foreach (var ext in editorExtensions)
             {
                 ext.RegisterServices(kernel);

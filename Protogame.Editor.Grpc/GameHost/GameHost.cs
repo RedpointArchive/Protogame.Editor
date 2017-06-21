@@ -27,17 +27,18 @@ namespace Protogame.Editor.Grpc.GameHost {
             "bnNlIhkKF0dldE1vdXNlUG9zaXRpb25SZXF1ZXN0IjAKGEdldE1vdXNlUG9z",
             "aXRpb25SZXNwb25zZRIJCgF4GAEgASgFEgkKAXkYAiABKAUiNgobUXVldWVT",
             "ZXJpYWxpemVkRXZlbnRSZXF1ZXN0EhcKD3NlcmlhbGl6ZWRFdmVudBgBIAEo",
-            "DCIeChxRdWV1ZVNlcmlhbGl6ZWRFdmVudFJlc3BvbnNlIjAKF1NldFJlbmRl",
-            "clRhcmdldHNSZXF1ZXN0EhUKDXNoYXJlZFBvaW50ZXIYASADKAMiGgoYU2V0",
-            "UmVuZGVyVGFyZ2V0c1Jlc3BvbnNlMsACCg5HYW1lSG9zdFNlcnZlchJHChBT",
-            "ZXRSZW5kZXJUYXJnZXRzEhguU2V0UmVuZGVyVGFyZ2V0c1JlcXVlc3QaGS5T",
-            "ZXRSZW5kZXJUYXJnZXRzUmVzcG9uc2USRwoQU2V0TW91c2VQb3NpdGlvbhIY",
-            "LlNldE1vdXNlUG9zaXRpb25SZXF1ZXN0GhkuU2V0TW91c2VQb3NpdGlvblJl",
-            "c3BvbnNlEkcKEEdldE1vdXNlUG9zaXRpb24SGC5HZXRNb3VzZVBvc2l0aW9u",
-            "UmVxdWVzdBoZLkdldE1vdXNlUG9zaXRpb25SZXNwb25zZRJTChRRdWV1ZVNl",
-            "cmlhbGl6ZWRFdmVudBIcLlF1ZXVlU2VyaWFsaXplZEV2ZW50UmVxdWVzdBod",
-            "LlF1ZXVlU2VyaWFsaXplZEV2ZW50UmVzcG9uc2VCIaoCHlByb3RvZ2FtZS5F",
-            "ZGl0b3IuR3JwYy5HYW1lSG9zdGIGcHJvdG8z"));
+            "DCIeChxRdWV1ZVNlcmlhbGl6ZWRFdmVudFJlc3BvbnNlIk0KF1NldFJlbmRl",
+            "clRhcmdldHNSZXF1ZXN0EhUKDXNoYXJlZFBvaW50ZXIYASADKAMSGwoTc3lu",
+            "Y01tYXBwZWRGaWxlTmFtZRgCIAEoCSIaChhTZXRSZW5kZXJUYXJnZXRzUmVz",
+            "cG9uc2UywAIKDkdhbWVIb3N0U2VydmVyEkcKEFNldFJlbmRlclRhcmdldHMS",
+            "GC5TZXRSZW5kZXJUYXJnZXRzUmVxdWVzdBoZLlNldFJlbmRlclRhcmdldHNS",
+            "ZXNwb25zZRJHChBTZXRNb3VzZVBvc2l0aW9uEhguU2V0TW91c2VQb3NpdGlv",
+            "blJlcXVlc3QaGS5TZXRNb3VzZVBvc2l0aW9uUmVzcG9uc2USRwoQR2V0TW91",
+            "c2VQb3NpdGlvbhIYLkdldE1vdXNlUG9zaXRpb25SZXF1ZXN0GhkuR2V0TW91",
+            "c2VQb3NpdGlvblJlc3BvbnNlElMKFFF1ZXVlU2VyaWFsaXplZEV2ZW50Ehwu",
+            "UXVldWVTZXJpYWxpemVkRXZlbnRSZXF1ZXN0Gh0uUXVldWVTZXJpYWxpemVk",
+            "RXZlbnRSZXNwb25zZUIhqgIeUHJvdG9nYW1lLkVkaXRvci5HcnBjLkdhbWVI",
+            "b3N0YgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -47,7 +48,7 @@ namespace Protogame.Editor.Grpc.GameHost {
             new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.GameHost.GetMousePositionResponse), global::Protogame.Editor.Grpc.GameHost.GetMousePositionResponse.Parser, new[]{ "X", "Y" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.GameHost.QueueSerializedEventRequest), global::Protogame.Editor.Grpc.GameHost.QueueSerializedEventRequest.Parser, new[]{ "SerializedEvent" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.GameHost.QueueSerializedEventResponse), global::Protogame.Editor.Grpc.GameHost.QueueSerializedEventResponse.Parser, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.GameHost.SetRenderTargetsRequest), global::Protogame.Editor.Grpc.GameHost.SetRenderTargetsRequest.Parser, new[]{ "SharedPointer" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.GameHost.SetRenderTargetsRequest), global::Protogame.Editor.Grpc.GameHost.SetRenderTargetsRequest.Parser, new[]{ "SharedPointer", "SyncMmappedFileName" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protogame.Editor.Grpc.GameHost.SetRenderTargetsResponse), global::Protogame.Editor.Grpc.GameHost.SetRenderTargetsResponse.Parser, null, null, null, null)
           }));
     }
@@ -754,6 +755,7 @@ namespace Protogame.Editor.Grpc.GameHost {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public SetRenderTargetsRequest(SetRenderTargetsRequest other) : this() {
       sharedPointer_ = other.sharedPointer_.Clone();
+      syncMmappedFileName_ = other.syncMmappedFileName_;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -771,6 +773,17 @@ namespace Protogame.Editor.Grpc.GameHost {
       get { return sharedPointer_; }
     }
 
+    /// <summary>Field number for the "syncMmappedFileName" field.</summary>
+    public const int SyncMmappedFileNameFieldNumber = 2;
+    private string syncMmappedFileName_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string SyncMmappedFileName {
+      get { return syncMmappedFileName_; }
+      set {
+        syncMmappedFileName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as SetRenderTargetsRequest);
@@ -785,6 +798,7 @@ namespace Protogame.Editor.Grpc.GameHost {
         return true;
       }
       if(!sharedPointer_.Equals(other.sharedPointer_)) return false;
+      if (SyncMmappedFileName != other.SyncMmappedFileName) return false;
       return true;
     }
 
@@ -792,6 +806,7 @@ namespace Protogame.Editor.Grpc.GameHost {
     public override int GetHashCode() {
       int hash = 1;
       hash ^= sharedPointer_.GetHashCode();
+      if (SyncMmappedFileName.Length != 0) hash ^= SyncMmappedFileName.GetHashCode();
       return hash;
     }
 
@@ -803,12 +818,19 @@ namespace Protogame.Editor.Grpc.GameHost {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
       sharedPointer_.WriteTo(output, _repeated_sharedPointer_codec);
+      if (SyncMmappedFileName.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(SyncMmappedFileName);
+      }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
       size += sharedPointer_.CalculateSize(_repeated_sharedPointer_codec);
+      if (SyncMmappedFileName.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(SyncMmappedFileName);
+      }
       return size;
     }
 
@@ -818,6 +840,9 @@ namespace Protogame.Editor.Grpc.GameHost {
         return;
       }
       sharedPointer_.Add(other.sharedPointer_);
+      if (other.SyncMmappedFileName.Length != 0) {
+        SyncMmappedFileName = other.SyncMmappedFileName;
+      }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -831,6 +856,10 @@ namespace Protogame.Editor.Grpc.GameHost {
           case 10:
           case 8: {
             sharedPointer_.AddEntriesFrom(input, _repeated_sharedPointer_codec);
+            break;
+          }
+          case 18: {
+            SyncMmappedFileName = input.ReadString();
             break;
           }
         }

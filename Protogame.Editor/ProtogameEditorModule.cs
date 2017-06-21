@@ -7,6 +7,7 @@ using Protogame.Editor.EditorWindow;
 using Protogame.Editor.LoadedGame;
 using Protogame.Editor.Extension;
 using Protogame.Editor.Server;
+using Protogame.Editor.SharedRendering;
 
 namespace Protogame.Editor
 {
@@ -68,6 +69,8 @@ namespace Protogame.Editor
             kernel.Bind<IGrpcServer>().To<GrpcServer>().InSingletonScope();
 
             kernel.Bind<IWindowManagement>().To<DefaultWindowManagement>().InSingletonScope();
+
+            kernel.Bind<ISharedRendererHostFactory>().ToFactory();
 
             //kernel.Bind<Protogame.Editor.Api.Version1.Core.IConsoleHandle>().To<ExtensionConsoleHandle>().InSingletonScope();
         }

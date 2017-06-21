@@ -3,10 +3,17 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Protogame.Editor.ProjectManagement;
 using Protogame.Editor.Server;
+using Protogame.Editor.SharedRendering;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.IO.MemoryMappedFiles;
 using System.Reflection;
+using static Protogame.Editor.Grpc.Editor.GameHoster;
+using Protogame.Editor.Grpc.Editor;
+using static Protogame.Editor.Grpc.GameHost.GameHostServer;
+using Protogame.Editor.Grpc.GameHost;
+using System.Linq;
 
 namespace Protogame.Editor.LoadedGame
 {
@@ -16,45 +23,59 @@ namespace Protogame.Editor.LoadedGame
         private readonly IGrpcServer _grpcServer;
         private readonly IConsoleHandle _consoleHandle;
         private readonly IRenderTargetBackBufferUtilities _renderTargetBackBufferUtilities;
-
+        private readonly SharedRendererHost _sharedRendererHost;
+        
         private FileInfo _executingFile;
         private bool _isDebugging;
         private bool _shouldDebug;
         private bool _shouldRestart;
         private Process _process;
         private Channel _channel;
+        private GameHostServerClient _gameHostClient;
         private string _baseDirectory;
 
-        private bool _mustDestroyRenderTargets;
-        private int _currentWriteTargetIndex;
-        private int _currentReadTargetIndex;
-        private RenderTarget2D[] _renderTargets;
-        private IntPtr[] _renderTargetSharedHandles;
-        private Point? _renderTargetSize;
-        private int RTBufferSize = 3;
-
         private Point _offset;
-
-        private bool _didReadStall;
-        private bool _didWriteStall;
-
-        private static object _incrementLock = new object();
+        private bool _requiresDelaySync;
 
         public DefaultLoadedGame(
             IConsoleHandle consoleHandle,
             IProjectManager projectManager,
             IGrpcServer grpcServer,
-            IRenderTargetBackBufferUtilities renderTargetBackBufferUtilities)
+            IRenderTargetBackBufferUtilities renderTargetBackBufferUtilities,
+            ISharedRendererHostFactory sharedRendererHostFactory)
         {
             _consoleHandle = consoleHandle;
             _projectManager = projectManager;
             _grpcServer = grpcServer;
-            _renderTargetBackBufferUtilities = renderTargetBackBufferUtilities;
-            _renderTargetSize = new Point(640, 480);
-            _renderTargets = new RenderTarget2D[RTBufferSize];
-            _renderTargetSharedHandles = new IntPtr[RTBufferSize];
-            _currentWriteTargetIndex = RTBufferSize >= 2 ? 1 : 0;
-            _currentReadTargetIndex = 0;
+            _sharedRendererHost = sharedRendererHostFactory.CreateSharedRendererHost();
+            _sharedRendererHost.TexturesRecreated += OnTexturesRecreated;
+        }
+
+        private void OnTexturesRecreated(object sender, EventArgs e)
+        {
+            if (_gameHostClient != null)
+            {
+                SendTexturesToGameHost();
+            }
+            else
+            {
+                _requiresDelaySync = true;
+            }
+        }
+
+        private void SendTexturesToGameHost()
+        {
+            var req = new SetRenderTargetsRequest();
+            req.SharedPointer.AddRange(_sharedRendererHost.WritableTextureIntPtrs.Select(x => x.ToInt64()));
+            req.SyncMmappedFileName = _sharedRendererHost.SynchronisationMemoryMappedFileName;
+            try
+            {
+                _gameHostClient.SetRenderTargets(req);
+            }
+            catch
+            {
+                _requiresDelaySync = true;
+            }
         }
 
         public void SetPositionOffset(Point offset)
@@ -62,85 +83,24 @@ namespace Protogame.Editor.LoadedGame
             _offset = offset;
         }
 
-        public void SetRenderTargetSize(Point size)
-        {
-            _renderTargetSize = size;
-        }
-
-        public Point? GetRenderTargetSize()
-        {
-            return _renderTargetSize;
-        }
-
-        public RenderTarget2D GetCurrentGameRenderTarget()
-        {
-            return _renderTargets[_currentReadTargetIndex];
-        }
-
         public void QueueEvent(Event @event)
         {
             // TODO FIX
         }
 
-        public void IncrementReadRenderTargetIfPossible()
-        {
-            lock (_incrementLock)
-            {
-                var nextIndex = _currentReadTargetIndex + 1;
-                if (nextIndex == RTBufferSize) { nextIndex = 0; }
-
-                if (nextIndex != _currentWriteTargetIndex)
-                {
-                    // Only move the write index if the one we want is not the one
-                    // we're currently reading from.
-                    _currentReadTargetIndex = nextIndex;
-                    _didReadStall = false;
-                }
-                else
-                {
-                    _didReadStall = true;
-                }
-            }
-        }
-
         public void Render(IGameContext gameContext, IRenderContext renderContext)
         {
-            if (_mustDestroyRenderTargets)
-            {
-                for (var i = 0; i < RTBufferSize; i++)
-                {
-                    if (_renderTargets[i] != null)
-                    {
-                        _renderTargets[i].Dispose();
-                        _renderTargets[i] = null;
-                    }
-                }
-
-                _mustDestroyRenderTargets = false;
-            }
-
-            for (var i = 0; i < RTBufferSize; i++)
-            {
-                var oldRenderTarget = _renderTargets[i];
-                _renderTargets[i] = _renderTargetBackBufferUtilities.UpdateCustomSizedRenderTarget(
-                    _renderTargets[i],
-                    renderContext,
-                    _renderTargetSize.Value.ToVector2(),
-                    null,
-                    null,
-                    0, // We must NOT have MSAA on this render target for sharing to work properly!
-                    true);
-                _renderTargetSharedHandles[i] = _renderTargets[i]?.GetSharedHandle() ?? IntPtr.Zero;
-                if (_renderTargets[i] != null && _renderTargets[i] != oldRenderTarget)
-                {
-                    // Release the lock we will have.
-                    _renderTargets[i].ReleaseLock(1234);
-                }
-            }
+            _sharedRendererHost.UpdateTextures(gameContext, renderContext);
         }
 
         public void Update(IGameContext gameContext, IUpdateContext updateContext)
         {
+            if (_requiresDelaySync && _gameHostClient != null)
+            {
+                SendTexturesToGameHost();
+                _requiresDelaySync = false;
+            }
+
             if (_projectManager.Project == null ||
                 _projectManager.Project.DefaultGameBinPath == null)
             {
@@ -190,6 +150,7 @@ namespace Protogame.Editor.LoadedGame
                     _consoleHandle.LogDebug("Game host process was killed for reload: {0}", _projectManager.Project.DefaultGameBinPath.FullName);
                     _process = null;
                     _channel = null;
+                    _gameHostClient = null;
                 }
                 _process = Process.Start(processStartInfo);
                 _process.Exited += (sender, e) =>
@@ -197,6 +158,7 @@ namespace Protogame.Editor.LoadedGame
                     _consoleHandle.LogWarning("Game host process has unexpectedly quit: {0}", _projectManager.Project.DefaultGameBinPath.FullName);
                     _process = null;
                     _channel = null;
+                    _gameHostClient = null;
                     _shouldDebug = false;
                 };
                 _process.OutputDataReceived += (sender, e) =>
@@ -217,6 +179,7 @@ namespace Protogame.Editor.LoadedGame
                     var url = e.Data?.Trim();
                     _consoleHandle.LogDebug("Creating gRPC channel on {0}...", url);
                     _channel = new Channel(url, ChannelCredentials.Insecure);
+                    _gameHostClient = new GameHostServerClient(_channel);
                 };
                 _process.ErrorDataReceived += (sender, e) =>
                 {
@@ -234,6 +197,26 @@ namespace Protogame.Editor.LoadedGame
         public string GetBaseDirectory()
         {
             return _baseDirectory;
+        }
+
+        public void IncrementReadRenderTargetIfPossible()
+        {
+            _sharedRendererHost.IncrementReadableTextureIfPossible();
+        }
+
+        public RenderTarget2D GetCurrentGameRenderTarget()
+        {
+            return _sharedRendererHost.ReadableTexture;
+        }
+
+        public void SetRenderTargetSize(Point size)
+        {
+            _sharedRendererHost.Size = size;
+        }
+
+        public Point? GetRenderTargetSize()
+        {
+            return _sharedRendererHost.Size;
         }
     }
 }

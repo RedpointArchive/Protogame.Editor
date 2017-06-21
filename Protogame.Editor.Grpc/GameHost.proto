@@ -34,6 +34,7 @@ message QueueSerializedEventResponse {
 
 message SetRenderTargetsRequest {
   repeated int64 sharedPointer = 1;
+  string syncMmappedFileName = 2;
 }
 
 message SetRenderTargetsResponse {

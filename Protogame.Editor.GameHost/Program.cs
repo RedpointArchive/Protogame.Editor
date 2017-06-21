@@ -3,6 +3,7 @@ using Protogame.Editor.Api.Version1;
 using Protogame.Editor.Api.Version1.Core;
 using Protogame.Editor.Api.Version1.ProjectManagement;
 using Protogame.Editor.CommonHost;
+using Protogame.Editor.CommonHost.SharedRendering;
 using Protogame.Editor.Grpc.ExtensionHost;
 using Protogame.Editor.Grpc.GameHost;
 using Protoinject;
@@ -113,6 +114,7 @@ namespace Protogame.Editor.GameHost
             kernel.Bind<Api.Version1.Core.IConsoleHandle>().To<ConsoleHandle>().InSingletonScope();
             kernel.Bind<IGameRunner>().To<HostedGameRunner>().InSingletonScope();
             kernel.Bind<HostedEventEngineHook>().To<HostedEventEngineHook>().InSingletonScope();
+            kernel.Bind<ISharedRendererClientFactory>().ToFactory();
 
             System.Console.Error.WriteLine("Configuring editor client provider with URL: {0}", editorUrl);
             var editorClientProvider = kernel.Get<IEditorClientProvider>();

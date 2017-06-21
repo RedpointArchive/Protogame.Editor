@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Threading;
+using Protogame.Editor.CommonHost.SharedRendering;
 
 namespace Protogame.Editor.GameHost
 {
@@ -21,12 +22,12 @@ namespace Protogame.Editor.GameHost
         private int _currentMouseY;
         private bool _wantsMouseSet;
 
-        public EditorHostGame(ICoreGame coreGame)
+        public EditorHostGame(ICoreGame coreGame, ISharedRendererClientFactory sharedRendererClientFactory)
         {
             _coreGame = coreGame;
             _serviceContainer = new GameServiceContainer();
 
-            _graphicsDeviceService = new EditorGraphicsDeviceService();
+            _graphicsDeviceService = new EditorGraphicsDeviceService(sharedRendererClientFactory);
             _serviceContainer.AddService<IGraphicsDeviceService>(_graphicsDeviceService);
             _editorGameWindow = new EditorGameWindow(this);
             _contentManager = new ContentManager(_serviceContainer, "Content");
@@ -64,9 +65,9 @@ namespace Protogame.Editor.GameHost
             return false;
         }
 
-        public void SetSharedResourceHandles(IntPtr[] sharedResourceHandles, int currentWriteIndex)
+        public void SetSharedResourceHandles(IntPtr[] sharedResourceHandles, string sharedMmapName)
         {
-            _graphicsDeviceService.UpdateHandles(sharedResourceHandles, currentWriteIndex);
+            _graphicsDeviceService.UpdateHandles(sharedResourceHandles, sharedMmapName);
 
             if (_graphicsDeviceService.RenderTarget != null)
             {
@@ -109,6 +110,11 @@ namespace Protogame.Editor.GameHost
 
                 _graphicsDeviceService.RenderTarget.ReleaseLock(1234);
             }
+        }
+
+        public void IncrementWritableTextureIfPossible()
+        {
+            _graphicsDeviceService.IncrementWritableTextureIfPossible();
         }
 
         #region IHostGame implementation

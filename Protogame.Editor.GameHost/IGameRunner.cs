@@ -1,4 +1,6 @@
-﻿namespace Protogame.Editor.GameHost
+﻿using System;
+
+namespace Protogame.Editor.GameHost
 {
     public interface IGameRunner
     {
@@ -7,5 +9,7 @@
         void SetMousePositionToGet(int x, int y);
 
         bool GetMousePositionToSet(ref int x, ref int y);
+
+        void SetHandles(IntPtr[] sharedTextures, string sharedMmapName);
     }
 }
