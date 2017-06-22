@@ -29,7 +29,6 @@ namespace Protogame.Editor.LoadedGame
         private readonly BinaryFormatter _formatter;
 
         private FileInfo _executingFile;
-        private bool _isDebugging;
         private bool _shouldDebug;
         private bool _shouldRestart;
         private Process _process;
@@ -38,6 +37,8 @@ namespace Protogame.Editor.LoadedGame
         private string _baseDirectory;
         private LoadedGameState? _loadedGameState;
         private DateTime? _playingStartTime;
+        private bool _runAfterRestart;
+        private bool _shouldDebugGpu;
 
         private Point _offset;
         private bool _requiresDelaySync;
@@ -144,7 +145,7 @@ namespace Protogame.Editor.LoadedGame
                 _process.HasExited ||
                 // TODO: Use file watcher...
                 (_executingFile != null && _executingFile.LastWriteTimeUtc != new FileInfo(_executingFile.FullName).LastWriteTimeUtc) ||
-                _shouldDebug != _isDebugging ||
+                _shouldDebug ||
                 _shouldRestart)
             {
                 var extHostPath = Path.Combine(new FileInfo(Assembly.GetExecutingAssembly().Location).DirectoryName, "Protogame.Editor.GameHost.exe");
@@ -165,7 +166,7 @@ namespace Protogame.Editor.LoadedGame
                 // Update last write time.
                 _baseDirectory = _projectManager.Project.DefaultGameBinPath.DirectoryName;
                 _executingFile = new FileInfo(_projectManager.Project.DefaultGameBinPath.FullName);
-                _isDebugging = _shouldDebug;
+                _shouldDebug = false;
                 _shouldRestart = false;
                 if (_process != null)
                 {
@@ -191,7 +192,6 @@ namespace Protogame.Editor.LoadedGame
                     _process = null;
                     _channel = null;
                     _gameHostClient = null;
-                    _shouldDebug = false;
                     _loadedGameState = null;
                     // The process may have exited mid-draw, which could keep a texture locked.  Destroy
                     // the textures and recreate them to ensure they're not locked.
@@ -217,6 +217,16 @@ namespace Protogame.Editor.LoadedGame
                     _channel = new Channel(url, ChannelCredentials.Insecure);
                     _gameHostClient = new GameHostServerClient(_channel);
                     _requiresDelaySync = true;
+
+                    if (_runAfterRestart)
+                    {
+                        _gameHostClient?.SetPlaybackMode(new SetPlaybackModeRequest
+                        {
+                            Playing = true
+                        });
+
+                        _runAfterRestart = false;
+                    }
                 };
                 _process.ErrorDataReceived += (sender, e) =>
                 {
@@ -308,6 +318,20 @@ namespace Protogame.Editor.LoadedGame
         public DateTime? GetPlayingStartTime()
         {
             return _playingStartTime;
+        }
+
+        public void RunInDebug()
+        {
+            _shouldDebug = true;
+            _shouldRestart = true;
+            _runAfterRestart = true;
+        }
+
+        public void RunInDebugGpu()
+        {
+            _shouldDebugGpu = true;
+            _shouldRestart = true;
+            _runAfterRestart = true;
         }
     }
 }

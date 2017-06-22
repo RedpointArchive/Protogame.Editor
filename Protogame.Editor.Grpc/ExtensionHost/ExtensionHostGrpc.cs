@@ -124,5 +124,121 @@ namespace Protogame.Editor.Grpc.ExtensionHost {
     }
 
   }
+  public static partial class ToolbarEntries
+  {
+    static readonly string __ServiceName = "ToolbarEntries";
+
+    static readonly grpc::Marshaller<global::Protogame.Editor.Grpc.ExtensionHost.GetToolbarItemsRequest> __Marshaller_GetToolbarItemsRequest = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Protogame.Editor.Grpc.ExtensionHost.GetToolbarItemsRequest.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Protogame.Editor.Grpc.ExtensionHost.GetToolbarItemsResponse> __Marshaller_GetToolbarItemsResponse = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Protogame.Editor.Grpc.ExtensionHost.GetToolbarItemsResponse.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Protogame.Editor.Grpc.ExtensionHost.ToolbarItemClickedRequest> __Marshaller_ToolbarItemClickedRequest = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Protogame.Editor.Grpc.ExtensionHost.ToolbarItemClickedRequest.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Protogame.Editor.Grpc.ExtensionHost.ToolbarItemClickedResponse> __Marshaller_ToolbarItemClickedResponse = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Protogame.Editor.Grpc.ExtensionHost.ToolbarItemClickedResponse.Parser.ParseFrom);
+
+    static readonly grpc::Method<global::Protogame.Editor.Grpc.ExtensionHost.GetToolbarItemsRequest, global::Protogame.Editor.Grpc.ExtensionHost.GetToolbarItemsResponse> __Method_GetToolbarItems = new grpc::Method<global::Protogame.Editor.Grpc.ExtensionHost.GetToolbarItemsRequest, global::Protogame.Editor.Grpc.ExtensionHost.GetToolbarItemsResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "GetToolbarItems",
+        __Marshaller_GetToolbarItemsRequest,
+        __Marshaller_GetToolbarItemsResponse);
+
+    static readonly grpc::Method<global::Protogame.Editor.Grpc.ExtensionHost.ToolbarItemClickedRequest, global::Protogame.Editor.Grpc.ExtensionHost.ToolbarItemClickedResponse> __Method_ToolbarItemClicked = new grpc::Method<global::Protogame.Editor.Grpc.ExtensionHost.ToolbarItemClickedRequest, global::Protogame.Editor.Grpc.ExtensionHost.ToolbarItemClickedResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "ToolbarItemClicked",
+        __Marshaller_ToolbarItemClickedRequest,
+        __Marshaller_ToolbarItemClickedResponse);
+
+    /// <summary>Service descriptor</summary>
+    public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
+    {
+      get { return global::Protogame.Editor.Grpc.ExtensionHost.ExtensionHostReflection.Descriptor.Services[1]; }
+    }
+
+    /// <summary>Base class for server-side implementations of ToolbarEntries</summary>
+    public abstract partial class ToolbarEntriesBase
+    {
+      public virtual global::System.Threading.Tasks.Task<global::Protogame.Editor.Grpc.ExtensionHost.GetToolbarItemsResponse> GetToolbarItems(global::Protogame.Editor.Grpc.ExtensionHost.GetToolbarItemsRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      public virtual global::System.Threading.Tasks.Task<global::Protogame.Editor.Grpc.ExtensionHost.ToolbarItemClickedResponse> ToolbarItemClicked(global::Protogame.Editor.Grpc.ExtensionHost.ToolbarItemClickedRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+    }
+
+    /// <summary>Client for ToolbarEntries</summary>
+    public partial class ToolbarEntriesClient : grpc::ClientBase<ToolbarEntriesClient>
+    {
+      /// <summary>Creates a new client for ToolbarEntries</summary>
+      /// <param name="channel">The channel to use to make remote calls.</param>
+      public ToolbarEntriesClient(grpc::Channel channel) : base(channel)
+      {
+      }
+      /// <summary>Creates a new client for ToolbarEntries that uses a custom <c>CallInvoker</c>.</summary>
+      /// <param name="callInvoker">The callInvoker to use to make remote calls.</param>
+      public ToolbarEntriesClient(grpc::CallInvoker callInvoker) : base(callInvoker)
+      {
+      }
+      /// <summary>Protected parameterless constructor to allow creation of test doubles.</summary>
+      protected ToolbarEntriesClient() : base()
+      {
+      }
+      /// <summary>Protected constructor to allow creation of configured clients.</summary>
+      /// <param name="configuration">The client configuration.</param>
+      protected ToolbarEntriesClient(ClientBaseConfiguration configuration) : base(configuration)
+      {
+      }
+
+      public virtual global::Protogame.Editor.Grpc.ExtensionHost.GetToolbarItemsResponse GetToolbarItems(global::Protogame.Editor.Grpc.ExtensionHost.GetToolbarItemsRequest request, grpc::Metadata headers = null, DateTime? deadline = null, CancellationToken cancellationToken = default(CancellationToken))
+      {
+        return GetToolbarItems(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      public virtual global::Protogame.Editor.Grpc.ExtensionHost.GetToolbarItemsResponse GetToolbarItems(global::Protogame.Editor.Grpc.ExtensionHost.GetToolbarItemsRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_GetToolbarItems, null, options, request);
+      }
+      public virtual grpc::AsyncUnaryCall<global::Protogame.Editor.Grpc.ExtensionHost.GetToolbarItemsResponse> GetToolbarItemsAsync(global::Protogame.Editor.Grpc.ExtensionHost.GetToolbarItemsRequest request, grpc::Metadata headers = null, DateTime? deadline = null, CancellationToken cancellationToken = default(CancellationToken))
+      {
+        return GetToolbarItemsAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      public virtual grpc::AsyncUnaryCall<global::Protogame.Editor.Grpc.ExtensionHost.GetToolbarItemsResponse> GetToolbarItemsAsync(global::Protogame.Editor.Grpc.ExtensionHost.GetToolbarItemsRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_GetToolbarItems, null, options, request);
+      }
+      public virtual global::Protogame.Editor.Grpc.ExtensionHost.ToolbarItemClickedResponse ToolbarItemClicked(global::Protogame.Editor.Grpc.ExtensionHost.ToolbarItemClickedRequest request, grpc::Metadata headers = null, DateTime? deadline = null, CancellationToken cancellationToken = default(CancellationToken))
+      {
+        return ToolbarItemClicked(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      public virtual global::Protogame.Editor.Grpc.ExtensionHost.ToolbarItemClickedResponse ToolbarItemClicked(global::Protogame.Editor.Grpc.ExtensionHost.ToolbarItemClickedRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_ToolbarItemClicked, null, options, request);
+      }
+      public virtual grpc::AsyncUnaryCall<global::Protogame.Editor.Grpc.ExtensionHost.ToolbarItemClickedResponse> ToolbarItemClickedAsync(global::Protogame.Editor.Grpc.ExtensionHost.ToolbarItemClickedRequest request, grpc::Metadata headers = null, DateTime? deadline = null, CancellationToken cancellationToken = default(CancellationToken))
+      {
+        return ToolbarItemClickedAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      public virtual grpc::AsyncUnaryCall<global::Protogame.Editor.Grpc.ExtensionHost.ToolbarItemClickedResponse> ToolbarItemClickedAsync(global::Protogame.Editor.Grpc.ExtensionHost.ToolbarItemClickedRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_ToolbarItemClicked, null, options, request);
+      }
+      /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
+      protected override ToolbarEntriesClient NewInstance(ClientBaseConfiguration configuration)
+      {
+        return new ToolbarEntriesClient(configuration);
+      }
+    }
+
+    /// <summary>Creates service definition that can be registered with a server</summary>
+    /// <param name="serviceImpl">An object implementing the server-side handling logic.</param>
+    public static grpc::ServerServiceDefinition BindService(ToolbarEntriesBase serviceImpl)
+    {
+      return grpc::ServerServiceDefinition.CreateBuilder()
+          .AddMethod(__Method_GetToolbarItems, serviceImpl.GetToolbarItems)
+          .AddMethod(__Method_ToolbarItemClicked, serviceImpl.ToolbarItemClicked).Build();
+    }
+
+  }
 }
 #endregion

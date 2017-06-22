@@ -8,6 +8,7 @@ using Protogame.Editor.LoadedGame;
 using Protogame.Editor.Extension;
 using Protogame.Editor.Server;
 using Protogame.Editor.SharedRendering;
+using Protogame.Editor.Toolbar;
 
 namespace Protogame.Editor
 {
@@ -40,6 +41,10 @@ namespace Protogame.Editor
             kernel.Bind<IMenuProvider>().To<ActionManagerMenuProvider>().InSingletonScope();
             kernel.Bind<IMenuProvider>().To<ExtensionBasedMenuProvider>().InSingletonScope();
             kernel.Bind<IMenuProvider>().To<ExtensionManagerMenuProvider>().InSingletonScope();
+
+            kernel.Bind<IToolbarProvider>().To<ExtensionBasedToolbarProvider>().InSingletonScope();
+            kernel.Bind<IToolbarProvider>().To<DebugToolbarProvider>().InSingletonScope();
+            kernel.Bind<IToolbarProvider>().To<GameRuntimeToolbarProvider>().InSingletonScope();
 
             kernel.Bind<IProjectManager>().To<ProjectManager>().InSingletonScope();
             kernel.Bind<IProjectManagerUi>().To<ProjectManagerUi>().InSingletonScope();

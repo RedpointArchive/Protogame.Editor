@@ -28,3 +28,29 @@ message MenuItemClickedRequest {
 
 message MenuItemClickedResponse {
 }
+
+service ToolbarEntries {
+  rpc GetToolbarItems(GetToolbarItemsRequest) returns (GetToolbarItemsResponse);
+  rpc ToolbarItemClicked(ToolbarItemClickedRequest) returns (ToolbarItemClickedResponse);
+}
+
+message GetToolbarItemsRequest {
+}
+
+message GetToolbarItemsResponse {
+  repeated GenericToolbarItem toolbarItems = 1;
+}
+
+message GenericToolbarItem {
+  int64 id = 1;
+  string icon = 2;
+  bool toggled = 3;
+  bool enabled = 4;
+}
+
+message ToolbarItemClickedRequest {
+  int64 toolbarId = 1;
+}
+
+message ToolbarItemClickedResponse {
+}

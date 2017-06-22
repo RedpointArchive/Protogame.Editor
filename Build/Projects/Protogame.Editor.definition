@@ -125,6 +125,11 @@
     <Compile Include="Server\ProjectManagerImpl.cs" />
     <Compile Include="SharedRendering\ISharedRendererHostFactory.cs" />
     <Compile Include="SharedRendering\SharedRendererHost.cs" />
+    <Compile Include="Toolbar\DebugToolbarProvider.cs" />
+    <Compile Include="Toolbar\ExtensionBasedToolbarProvider.cs" />
+    <Compile Include="Toolbar\GameRuntimeToolbarProvider.cs" />
+    <Compile Include="Toolbar\GenericToolbarEntry.cs" />
+    <Compile Include="Toolbar\IToolbarProvider.cs" />
     <Content Include="Properties\AndroidManifest.xml">
       <Platforms>Android,Ouya</Platforms>
     </Content>

@@ -1,38 +1,37 @@
 ﻿using Google.Protobuf.Collections;
-using Grpc.Core;
 using Protogame.Editor.Extension;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Protogame.Editor.Menu
+namespace Protogame.Editor.Toolbar
 {
-    public class ExtensionBasedMenuProvider : IMenuProvider
+    public class ExtensionBasedToolbarProvider : IToolbarProvider
     {
         private readonly IExtensionManager _extensionManager;
         private Task _updateMenuItems;
-        private MenuEntry[] _menuItems;
+        private GenericToolbarEntry[] _menuItems;
         private List<WeakReference<Extension.Extension>> _ignoredExtensions;
         private readonly IConsoleHandle _consoleHandle;
 
-        public ExtensionBasedMenuProvider(
+        public ExtensionBasedToolbarProvider(
             IConsoleHandle consoleHandle,
             IExtensionManager extensionManager)
         {
             _consoleHandle = consoleHandle;
             _extensionManager = extensionManager;
-            _menuItems = new MenuEntry[0];
+            _menuItems = new GenericToolbarEntry[0];
             _ignoredExtensions = new List<WeakReference<Extension.Extension>>();
         }
 
-        public MenuEntry[] GetMenuItems()
+        public GenericToolbarEntry[] GetToolbarItems()
         {
             if (_updateMenuItems == null || _updateMenuItems.IsCompleted)
             {
                 _updateMenuItems = Task.Run(async () =>
                 {
-                    var items = new List<MenuEntry>();
+                    var items = new List<GenericToolbarEntry>();
                     foreach (var ext in _extensionManager.Extensions)
                     {
                         var toRemove = new List<WeakReference<Extension.Extension>>();
@@ -54,12 +53,12 @@ namespace Protogame.Editor.Menu
                         }
                         _ignoredExtensions.RemoveAll(toRemove.Contains);
 
-                        var client = ext.GetClient<Grpc.ExtensionHost.MenuEntries.MenuEntriesClient>();
-                        RepeatedField<Grpc.ExtensionHost.MenuItem> rawItems;
+                        var client = ext.GetClient<Grpc.ExtensionHost.ToolbarEntries.ToolbarEntriesClient>();
+                        RepeatedField<Grpc.ExtensionHost.GenericToolbarItem> rawItems;
                         try
                         {
-                            var result = await client.GetMenuItemsAsync(new Grpc.ExtensionHost.GetMenuItemsRequest());
-                            rawItems = result.MenuItems;
+                            var result = await client.GetToolbarItemsAsync(new Grpc.ExtensionHost.GetToolbarItemsRequest());
+                            rawItems = result.ToolbarItems;
                         }
                         catch (Exception ex)
                         {
@@ -69,13 +68,13 @@ namespace Protogame.Editor.Menu
                         }
                         items.AddRange(rawItems.Select(y =>
                         {
-                            MenuClickHandler clickCallback = e =>
+                            ToolbarClickHandler clickCallback = e =>
                             {
                                 Task.Run(async () =>
                                 {
                                     try
                                     {
-                                        await client.MenuItemClickedAsync(new Grpc.ExtensionHost.MenuItemClickedRequest { MenuItemId = y.Id });
+                                        await client.ToolbarItemClickedAsync(new Grpc.ExtensionHost.ToolbarItemClickedRequest { ToolbarId = y.Id });
                                     }
                                     catch (Exception ex)
                                     {
@@ -83,7 +82,7 @@ namespace Protogame.Editor.Menu
                                     }
                                 });
                             };
-                            return new MenuEntry(y.Path, y.Enabled, (int)y.Order, clickCallback, null);
+                            return new GenericToolbarEntry(y.Id, y.Icon, y.Toggled, y.Enabled, clickCallback, null);
                         }));
                     }
                     _menuItems = items.ToArray();
@@ -95,4 +94,3 @@ namespace Protogame.Editor.Menu
         }
     }
 }
-

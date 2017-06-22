@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Protogame.Editor.Layout;
 using Protoinject;
 
@@ -12,6 +13,11 @@ namespace Protogame.Editor.EditorWindow
         public DefaultWindowManagement(IKernel kernel)
         {
             _kernel = kernel;
+        }
+
+        public void ActivateWhere(Func<object, bool> filter)
+        {
+            _workspaceContainer.ActivateWhere(filter);
         }
 
         public void OpenDocument<T>(object parameters) where T : EditorWindow
