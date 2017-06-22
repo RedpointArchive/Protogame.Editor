@@ -7,5 +7,7 @@
         void Update();
 
         void DebugExtension(Extension extension);
+
+        void RestartExtension(Extension extension);
     }
 }

@@ -13,6 +13,7 @@
     <DebugSymbolsOnRelease>full</DebugSymbolsOnRelease>
   </Properties>
   <Files>
+    <Compile Include="ApiReferenceService.cs" />
     <Compile Include="CodeManagerEditorExtension.cs" />
     <Compile Include="CodeManagerMenuProvider.cs" />
     <Compile Include="CodeManagerService.cs" />

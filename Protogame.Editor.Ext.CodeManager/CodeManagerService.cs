@@ -13,13 +13,16 @@ namespace Protogame.Editor.Ext.CodeManager
         private readonly IConsoleHandle _consoleHandle;
         private IProject _project;
         private Process _process;
+        private readonly IApiReferenceService _apiReferenceService;
 
         public CodeManagerService(
             IProjectManager projectManager,
-            IConsoleHandle consoleHandle)
+            IConsoleHandle consoleHandle,
+            IApiReferenceService apiReferenceService)
         {
             _projectManager = projectManager;
             _consoleHandle = consoleHandle;
+            _apiReferenceService = apiReferenceService;
         }
 
         public bool IsProcessRunning => _process != null;
@@ -64,6 +67,7 @@ namespace Protogame.Editor.Ext.CodeManager
                 return;
             }
 
+            _apiReferenceService.ForceCheck();
             StartProtobuild("--resync", null);
         }
 
@@ -74,6 +78,7 @@ namespace Protogame.Editor.Ext.CodeManager
                 return;
             }
 
+            _apiReferenceService.ForceCheck();
             StartProtobuild("--sync", null);
         }
 
@@ -84,6 +89,7 @@ namespace Protogame.Editor.Ext.CodeManager
                 return;
             }
 
+            _apiReferenceService.ForceCheck();
             StartProtobuild("--generate", null);
         }
 
@@ -94,6 +100,7 @@ namespace Protogame.Editor.Ext.CodeManager
                 return;
             }
 
+            _apiReferenceService.ForceCheck();
             StartProtobuild("--upgrade-all", null);
         }
 
