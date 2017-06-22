@@ -50,20 +50,24 @@ namespace Protogame.Editor.EditorWindow
                 {
                     Text = "Debug"
                 };
-                var disableButton = new Button
+                var restartButton = new Button
                 {
-                    Text = "Disable",
-                    Enabled = false
+                    Text = "Restart"
                 };
 
                 debugButton.Click += (sender, e) =>
                 {
                     _extensionManager.DebugExtension(ext);
                 };
+                restartButton.Click += (sender, e) =>
+                {
+                    _extensionManager.RestartExtension(ext);
+                };
+
 
                 var buttonContainer = new VerticalContainer();
                 buttonContainer.AddChild(debugButton, "24");
-                buttonContainer.AddChild(disableButton, "24");
+                buttonContainer.AddChild(restartButton, "24");
 
                 var horizontalContainer = new HorizontalContainer();
                 horizontalContainer.Userdata = ext;

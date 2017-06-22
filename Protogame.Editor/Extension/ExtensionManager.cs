@@ -47,6 +47,17 @@ namespace Protogame.Editor.Extension
             managedExtension.ShouldRestart = true;
         }
 
+        public void RestartExtension(Extension extension)
+        {
+            if (!_extensions.ContainsKey(extension.Path))
+            {
+                return;
+            }
+
+            var managedExtension = _extensions[extension.Path];
+            managedExtension.ShouldRestart = true;
+        }
+
         public void Update()
         {
             if (!_hasLoadedBundledExtensions)
